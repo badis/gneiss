@@ -1,8 +1,10 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { Header } from "@/components/header";
+import { Container } from "@mui/material";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function About() {
   return (
@@ -14,9 +16,11 @@ export default function About() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-       <h1>About Page</h1> 
-        <a href="/">Home</a>
+        <Container>
+          <Header />
+          <h1>About Page</h1>
+        </Container>
       </main>
     </>
-  )
+  );
 }
