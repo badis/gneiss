@@ -2,8 +2,8 @@ version: "3.9"
 services:
   frontend:
     build: ./ui
-    container_name: frontend
-    ports: 
+    container_name: gneiss_frontend
+    ports:
       - "3333:3000"
     environment:
       WATCHPACK_POLLING: "true"
@@ -12,7 +12,7 @@ services:
       - /app/node_modules
   backend:
     build: ./api
-    container_name: backend
+    container_name: gneiss_backend
     ports:
       - "5555:3000"
     depends_on:
@@ -22,7 +22,7 @@ services:
       - /app/node_modules
   database:
     build: ./db
-    container_name: database
+    container_name: gneiss_database
     ports:
       - "5432:5432"
     environment:
@@ -33,9 +33,8 @@ services:
       - ./db/data:/var/lib/postgresql/data
   adminer:
     image: adminer
+    container_name: gneiss_adminer
     ports:
       - "8888:8080"
     depends_on:
       - database
-
-
