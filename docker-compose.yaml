@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  frontend:
+    build: ./ui
+    container_name: frontend
+    ports: 
+      - "3333:3000"
+    environment:
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
+  backend:
+    build: ./api
+    container_name: backend
+    ports:
+      - "5555:3000"
+    depends_on:
+      - database
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+  database:
+    build: ./db
+    container_name: database
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: gneiss_user
+      POSTGRES_PASSWORD: gneiss_password
+      POSTGRES_DB: gneiss_db
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    ports:
+      - "8888:8080"
+    depends_on:
+      - database
+
+
