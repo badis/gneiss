@@ -1,15 +1,8 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Header } from "@/components/header";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Container,
-  TextField,
-} from "@/components/presentational";
+import { Container } from "@/components/presentational";
+import { PostCreateForm } from "@/components/features/posts/forms";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,15 +17,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <Container>
-          <Header />
-          <Card>
-            <CardContent>
-              <TextField label="Post"></TextField>
-            </CardContent>
-            <CardActions>
-              <Button label="Submit"></Button>
-            </CardActions>
-          </Card>
+          <PostCreateForm />
         </Container>
       </main>
     </>
