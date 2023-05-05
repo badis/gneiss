@@ -1,3 +1,11 @@
 table:
   name: post
   schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - id
+        - message
+      filter: {}

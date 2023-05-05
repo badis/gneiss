@@ -3,10 +3,18 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Container } from "@/components/presentational";
 import { PostCreateForm } from "@/components/features/posts/forms";
+import { useQuery } from "@apollo/client";
+import { GET_POSTS } from "@/api/graphql/post";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { loading, error, data } = useQuery(GET_POSTS);
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+  if (!data) return;
+  console.log(data);
   return (
     <>
       <Head>
@@ -18,6 +26,10 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <Container>
           <PostCreateForm />
+
+          {data.posts.map((p: any) => (
+            <p key={p.id}>{p.message}</p>
+          ))}
         </Container>
       </main>
     </>
