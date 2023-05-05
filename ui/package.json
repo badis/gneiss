@@ -10,6 +10,7 @@
     "test": "cypress run -- --e2e"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.14",
     "@emotion/cache": "^11.10.8",
     "@emotion/react": "^11.10.8",
     "@emotion/server": "^11.10.0",
@@ -21,6 +22,7 @@
     "@types/react-dom": "18.2.1",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
+    "graphql": "^16.6.0",
     "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
