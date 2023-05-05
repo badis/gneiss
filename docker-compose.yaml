@@ -10,9 +10,9 @@ services:
     volumes:
       - ./ui:/app
       - /app/node_modules
-  backend:
+  backend-rest:
     build: ./api
-    container_name: gneiss_backend
+    container_name: gneiss_backend_rest
     ports:
       - "5555:3000"
     depends_on:
@@ -20,6 +20,29 @@ services:
     volumes:
       - ./api:/app
       - /app/node_modules
+  backend-graphql:
+    image: hasura/graphql-engine:v2.24.1
+    container_name: gneiss_backend_graphql
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    restart: always
+    environment:
+      ## postgres database to store Hasura metadata
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://gneiss_user:gneiss_password@database:5432/gneiss_db
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      PG_DATABASE_URL: postgres://gneiss_user:gneiss_password@database:5432/gneiss_db
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
+      # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: adminsecret
+
   database:
     build: ./db
     container_name: gneiss_database
