@@ -1,25 +1,10 @@
 import { Colors } from "@/theme";
-import { TextField } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 import { FC } from "react";
 
-interface StyledTextFieldProps {
-  label: string;
-  multiline?: boolean;
-  size?: "small" | "medium";
-}
-
-const StyledTextField: FC<StyledTextFieldProps> = ({
-  label,
-  multiline,
-  size,
-}) => {
+const StyledTextField: FC<TextFieldProps> = (props) => {
   return (
     <TextField
-      label={label}
-      multiline={multiline}
-      maxRows={8}
-      fullWidth={true}
-      size={size}
       sx={{
         "& label": {
           fontSize: "default",
@@ -40,6 +25,7 @@ const StyledTextField: FC<StyledTextFieldProps> = ({
           // },
         },
       }}
+      {...props}
     />
   );
 };
