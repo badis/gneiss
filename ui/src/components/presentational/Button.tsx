@@ -1,17 +1,11 @@
 import { fontWeights } from "@/theme";
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { FC } from "react";
 
-interface StyledButtonProps {
-  label: string;
-  type?: "button" | "reset" | "submit";
-}
-
-const StyledButton: FC<StyledButtonProps> = ({ label, type }) => {
+const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
   return (
     <Button
       disableElevation
-      variant="contained"
       sx={{
         fontSize: "default",
         borderRadius: "3px",
@@ -20,9 +14,9 @@ const StyledButton: FC<StyledButtonProps> = ({ label, type }) => {
         padding: "8px 16px",
         textTransform: "capitalize",
       }}
-      type={type}
+      {...props}
     >
-      {label}
+      {children}
     </Button>
   );
 };

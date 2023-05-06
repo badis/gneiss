@@ -15,3 +15,13 @@ export const GET_POSTS = gql`
     }
   }
 `;
+
+export const CREATE_POST = gql`
+  mutation CreatePost($message: String!) {
+    insert_post_one(object: { message: $message }) {
+      id
+      message
+      created_at
+    }
+  }
+`;

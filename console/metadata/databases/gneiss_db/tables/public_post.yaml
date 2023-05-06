@@ -1,6 +1,12 @@
 table:
   name: post
   schema: public
+insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+        - message
 select_permissions:
   - role: anonymous
     permission:
