@@ -26,7 +26,7 @@ const PostCreateForm: FC<PostCreateFormProps> = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
+      createPost({ variables: { message: values.message } });
     },
   });
 
@@ -50,7 +50,9 @@ const PostCreateForm: FC<PostCreateFormProps> = () => {
           <Divider />
         </CardContent>
         <CardActions>
-          <Button label="Submit" type="submit"></Button>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
         </CardActions>
       </Card>
     </form>
