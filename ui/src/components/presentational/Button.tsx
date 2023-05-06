@@ -4,9 +4,10 @@ import { FC } from "react";
 
 interface StyledButtonProps {
   label: string;
+  type?: "button" | "reset" | "submit";
 }
 
-const StyledButton: FC<StyledButtonProps> = ({ label }) => {
+const StyledButton: FC<StyledButtonProps> = ({ label, type }) => {
   return (
     <Button
       disableElevation
@@ -19,6 +20,7 @@ const StyledButton: FC<StyledButtonProps> = ({ label }) => {
         padding: "8px 16px",
         textTransform: "capitalize",
       }}
+      type={type}
     >
       {label}
     </Button>
