@@ -8,7 +8,7 @@ export interface Post {
 
 export const GET_POSTS = gql`
   query GetPosts {
-    posts: post(order_by: { created_at: desc }) {
+    posts: post(order_by: { created_at: desc }, limit: 2, offset: 0) {
       id
       message
       created_at
