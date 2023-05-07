@@ -1,5 +1,10 @@
 import { fontWeights } from "@/theme";
-import { Button, ButtonProps } from "@mui/material";
+import {
+  Button,
+  ButtonProps,
+  IconButton,
+  IconButtonProps,
+} from "@mui/material";
 import { FC } from "react";
 
 const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
@@ -22,3 +27,18 @@ const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
 };
 
 export { StyledButton as Button };
+
+const StyledIconButton: FC<IconButtonProps> = ({ children, ...props }) => {
+  return (
+    <IconButton
+      sx={{
+        padding: "5px",
+      }}
+      {...props}
+    >
+      {children}
+    </IconButton>
+  );
+};
+
+export { StyledIconButton as IconButton };

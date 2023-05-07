@@ -1,7 +1,6 @@
-import { Divider } from "@mui/material";
+import { Divider, DividerProps } from "@mui/material";
 import { FC } from "react";
 
-interface DividerProps {}
 const StyledDivider: FC<DividerProps> = () => {
   return (
     <Divider
