@@ -5,7 +5,7 @@ import { Container } from "@/components/presentational";
 import { PostCreateForm } from "@/components/features/posts/forms";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS, Post } from "@/api/graphql/post";
-import { PostCard } from "@/components/features/posts/PostCard";
+import { PostCard } from "@/components/features/posts/post/PostCard";
 
 const inter = Inter({ subsets: ["latin"] });
 

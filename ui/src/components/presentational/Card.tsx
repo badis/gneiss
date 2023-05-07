@@ -1,11 +1,16 @@
-import { Card, CardActions, CardContent } from "@mui/material";
-import { FC, ReactNode } from "react";
+import {
+  Card,
+  CardActions,
+  CardActionsProps,
+  CardContent,
+  CardContentProps,
+  CardHeader,
+  CardHeaderProps,
+  CardProps,
+} from "@mui/material";
+import { FC } from "react";
 
-interface StyledCardProps {
-  children: ReactNode;
-}
-
-const StyledCard: FC<StyledCardProps> = ({ children }) => {
+const StyledCard: FC<CardProps> = ({ children }) => {
   return (
     <Card
       elevation={1}
@@ -20,24 +25,21 @@ const StyledCard: FC<StyledCardProps> = ({ children }) => {
   );
 };
 
-interface StyledCardContentProps {
-  children: ReactNode;
-}
+const StyledCardHeader: FC<CardHeaderProps> = (props) => {
+  return <CardHeader sx={{ padding: 0 }} {...props} />;
+};
 
-const StyledCardContent: FC<StyledCardContentProps> = ({ children }) => {
+const StyledCardContent: FC<CardContentProps> = ({ children }) => {
   return <CardContent sx={{ padding: 0 }}>{children}</CardContent>;
 };
 
-interface StyledCardActionsProps {
-  children: ReactNode;
-}
-
-const StyledCardActions: FC<StyledCardActionsProps> = ({ children }) => {
+const StyledCardActions: FC<CardActionsProps> = ({ children }) => {
   return <CardActions sx={{ padding: 0 }}>{children}</CardActions>;
 };
 
 export {
   StyledCard as Card,
+  StyledCardHeader as CardHeader,
   StyledCardContent as CardContent,
   StyledCardActions as CardActions,
 };
