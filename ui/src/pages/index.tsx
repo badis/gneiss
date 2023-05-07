@@ -5,7 +5,7 @@ import { Container } from "@/components/presentational";
 import { PostCreateForm } from "@/components/features/posts/forms";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS, Post } from "@/api/graphql/post";
-import { SinglePost } from "@/components/features/posts/SinglePost";
+import { PostCard } from "@/components/features/posts/PostCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,6 @@ export default function Home() {
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   if (!data) return;
-  console.log(data);
   return (
     <>
       <Head>
@@ -29,7 +28,7 @@ export default function Home() {
           <PostCreateForm />
 
           {data.posts.map((p: Post, index: number) => (
-            <SinglePost key={index} post={p} />
+            <PostCard key={index} post={p} />
           ))}
         </Container>
       </main>

@@ -9,7 +9,7 @@ import {
 } from "@/components/presentational";
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, useState } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -18,15 +18,26 @@ const validationSchema = Yup.object({
 
 interface PostCreateFormProps {}
 const PostCreateForm: FC<PostCreateFormProps> = () => {
-  const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
+  const [submitting, setSubmitting] = useState(false);
+
+  const [createPost, { data, loading, error }] = useMutation(CREATE_POST, {
+    refetchQueries: ["GetPosts"],
+  });
 
   const formik = useFormik({
     initialValues: {
       message: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      createPost({ variables: { message: values.message } });
+    onSubmit: async (values) => {
+      setSubmitting(true);
+      const response = await createPost({
+        variables: { message: values.message },
+      });
+      if (response.data?.insert_post_one.id) {
+        formik.resetForm();
+        setSubmitting(false);
+      }
     },
   });
 
@@ -50,7 +61,7 @@ const PostCreateForm: FC<PostCreateFormProps> = () => {
           <Divider />
         </CardContent>
         <CardActions>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={submitting}>
             Submit
           </Button>
         </CardActions>

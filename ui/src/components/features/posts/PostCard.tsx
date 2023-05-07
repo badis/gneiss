@@ -9,14 +9,16 @@ import {
 import { timeAgo } from "@/utils/datetime";
 import { FC } from "react";
 
-interface SinglePostProps {
+interface PostCardProps {
   post: Post;
 }
-export const SinglePost: FC<SinglePostProps> = ({ post }) => {
+export const PostCard: FC<PostCardProps> = ({ post }) => {
   return (
     <Card>
       <CardContent>
-        <Box>{timeAgo(post.created_at)}</Box>
+        <Box component="span" sx={{ fontSize: "10px" }}>
+          {timeAgo(post.created_at)}
+        </Box>
         <Divider />
         <Box>{post.message}</Box>
       </CardContent>
