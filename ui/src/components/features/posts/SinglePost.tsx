@@ -6,6 +6,7 @@ import {
   CardContent,
   Divider,
 } from "@/components/presentational";
+import { timeAgo } from "@/utils/datetime";
 import { FC } from "react";
 
 interface SinglePostProps {
@@ -15,7 +16,7 @@ export const SinglePost: FC<SinglePostProps> = ({ post }) => {
   return (
     <Card>
       <CardContent>
-        <br />
+        <Box>{timeAgo(post.created_at)}</Box>
         <Divider />
         <Box>{post.message}</Box>
       </CardContent>
