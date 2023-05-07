@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export interface Post {
   id: number;
   message: string;
-  created_at: number;
+  created_at: string;
 }
 
 export const GET_POSTS = gql`
