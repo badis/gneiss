@@ -1,5 +1,4 @@
 import { Post } from "@/api/graphql/post";
-import { MoreVertIcon } from "@/components/icons";
 import {
   Box,
   Card,
@@ -7,7 +6,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  IconButton,
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { FC } from "react";
@@ -20,7 +18,7 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
   return (
     <Card>
       <CardHeader
-        action={<PostMenu />}
+        action={<PostMenu post={post} />}
         subheader={
           <Box component="span" sx={{ fontSize: "12px" }}>
             {timeAgo(post.created_at)}

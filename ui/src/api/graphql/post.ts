@@ -25,3 +25,20 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
+export const UPDATE_POST = gql`
+  mutation UpdatePost($id: Int!, $message: String!) {
+    update_post_by_pk(pk_columns: { id: $id }, _set: { message: $message }) {
+      id
+      message
+    }
+  }
+`;
+
+export const DELETE_POST = gql`
+  mutation DeletePost($id: Int!) {
+    delete_post_by_pk(id: $id) {
+      id
+    }
+  }
+`;
