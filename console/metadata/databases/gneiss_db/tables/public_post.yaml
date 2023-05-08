@@ -15,3 +15,14 @@ select_permissions:
         - id
         - message
       filter: {}
+update_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - message
+      filter: {}
+      check: {}
+delete_permissions:
+  - role: anonymous
+    permission:
+      filter: {}

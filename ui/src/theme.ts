@@ -17,16 +17,47 @@ export const fontWeights = {
 };
 
 const grays = {
-  200: "#ededed",
+  50: "#fafafa",
+  100: "#f5f5f5",
+  200: "#eeeeee",
+  300: "#e0e0e0",
+  400: "#bdbdbd",
+  500: "#9e9e9e",
+  600: "#757575",
+  700: "#616161",
+  800: "#424242",
+  900: "#212121",
 };
 
 export const Colors = {
   grays,
 };
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    default: Palette["primary"];
+  }
+
+  // allow configuration using `createTheme`
+  interface PaletteOptions {
+    default?: PaletteOptions["primary"];
+  }
+}
+
+// @babel-ignore-comment-in-output Update the Button's color prop options
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    default: true;
+  }
+}
+
 // Create a theme instance.
 const theme = createTheme({
   palette: {
+    default: {
+      main: "#7a7a7a",
+      contrastText: "#f3f3f3",
+    },
     primary: {
       main: "#00aae6",
       contrastText: "#fff",

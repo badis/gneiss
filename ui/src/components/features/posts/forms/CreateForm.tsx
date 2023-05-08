@@ -20,7 +20,7 @@ interface PostCreateFormProps {}
 const PostCreateForm: FC<PostCreateFormProps> = () => {
   const [submitting, setSubmitting] = useState(false);
 
-  const [createPost, { data, loading, error }] = useMutation(CREATE_POST, {
+  const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: ["GetPosts"],
   });
 
