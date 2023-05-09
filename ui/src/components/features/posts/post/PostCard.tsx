@@ -20,8 +20,13 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
       <CardHeader
         action={<PostMenu post={post} />}
         subheader={
-          <Box component="span" sx={{ fontSize: "12px" }}>
-            {timeAgo(post.created_at)}
+          <Box>
+            <Box component="span" sx={{ fontSize: "12px" }}>
+              {timeAgo(post.created_at)}
+            </Box>
+            <Box component="span" sx={{ fontSize: "12px" }}>
+              {post.created_at !== post.updated_at ? " (edited)" : null}
+            </Box>
           </Box>
         }
       />

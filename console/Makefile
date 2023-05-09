@@ -15,7 +15,7 @@ down:
 migrate:
 	hasura migrate apply --database-name gneiss_db --skip-update-check  --admin-secret adminsecret
 metadata:
-	hasura metadata apply --skip-update-check & hasura metadata reload --skip-update-check  --admin-secret adminsecret
+	hasura metadata apply --skip-update-check --admin-secret adminsecret && hasura metadata reload --skip-update-check  --admin-secret adminsecret
 console:
 	hasura console --skip-update-check --console-port 9095 --api-port 9093 --admin-secret adminsecret
 
