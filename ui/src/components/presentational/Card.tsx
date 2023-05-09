@@ -34,7 +34,11 @@ const StyledCardContent: FC<CardContentProps> = ({ children }) => {
 };
 
 const StyledCardActions: FC<CardActionsProps> = ({ children }) => {
-  return <CardActions sx={{ padding: 0 }}>{children}</CardActions>;
+  return (
+    <CardActions sx={{ padding: 0, paddingTop: "10px" }}>
+      {children}
+    </CardActions>
+  );
 };
 
 export {
