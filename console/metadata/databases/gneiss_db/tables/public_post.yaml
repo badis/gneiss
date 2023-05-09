@@ -1,6 +1,14 @@
 table:
   name: post
   schema: public
+array_relationships:
+  - name: likes
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: like
+          schema: public
 insert_permissions:
   - role: anonymous
     permission:

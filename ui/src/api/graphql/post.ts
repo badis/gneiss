@@ -1,10 +1,12 @@
 import { gql } from "@apollo/client";
+import { Like } from "./like";
 
 export interface Post {
   id: number;
   message: string;
   created_at: string;
   updated_at: string;
+  likes: Array<Partial<Like>>;
 }
 
 export const GET_POSTS = gql`
@@ -14,6 +16,9 @@ export const GET_POSTS = gql`
       message
       created_at
       updated_at
+      likes {
+        id
+      }
     }
   }
 `;
