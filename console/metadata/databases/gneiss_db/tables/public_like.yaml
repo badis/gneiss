@@ -1,0 +1,22 @@
+table:
+  name: like
+  schema: public
+insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+        - post_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - id
+        - post_id
+        - updated_at
+      filter: {}
+delete_permissions:
+  - role: anonymous
+    permission:
+      filter: {}
