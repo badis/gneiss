@@ -4,6 +4,7 @@ export interface Post {
   id: number;
   message: string;
   created_at: string;
+  updated_at: string;
 }
 
 export const GET_POSTS = gql`
@@ -12,6 +13,7 @@ export const GET_POSTS = gql`
       id
       message
       created_at
+      updated_at
     }
   }
 `;
