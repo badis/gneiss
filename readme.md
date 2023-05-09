@@ -1,8 +1,10 @@
-# Social Network Kit  
+# Gneiss
 
 Gneiss is an open-source social network kit that allows you to build your own private social network.
 
--------------------
+---
+![Gneiss Social Network Kit](assets/gneiss.png)
+
 
 ## Features
 
