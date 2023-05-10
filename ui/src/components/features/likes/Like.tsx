@@ -1,5 +1,5 @@
 import { CREATE_LIKE, DELETE_LIKE } from "@/api/graphql/like";
-import { FavoriteIcon } from "@/components/icons";
+import { FavoriteBorderIcon, FavoriteIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
 import { useMutation } from "@apollo/client";
 import { FC } from "react";
@@ -35,7 +35,11 @@ export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
 
   return (
     <IconButton onClick={handleToggleLike} disableRipple>
-      <FavoriteIcon fontSize="small" color={like_id ? "primary" : undefined} />
+      {like_id ? (
+        <FavoriteIcon fontSize="small" color="primary" />
+      ) : (
+        <FavoriteBorderIcon fontSize="small" />
+      )}
     </IconButton>
   );
 };
