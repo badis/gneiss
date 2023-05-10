@@ -9,6 +9,7 @@ import {
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { FC } from "react";
+import { Comment } from "@/components/features/comment/Comment";
 import { Like } from "@/components/features/like/Like";
 import { PostMenu } from "./PostMenu";
 interface PostCardProps {
@@ -39,6 +40,7 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
           post_id={post.id}
           like_id={post.likes.length > 0 ? post.likes[0].id : undefined}
         />
+        <Comment post_id={post.id} />
       </CardActions>
     </Card>
   );

@@ -1,7 +1,7 @@
 import { Divider, DividerProps } from "@mui/material";
 import { FC } from "react";
 
-const StyledDivider: FC<DividerProps> = () => {
+const StyledDivider: FC<DividerProps> = (props) => {
   return (
     <Divider
       sx={{
@@ -10,6 +10,7 @@ const StyledDivider: FC<DividerProps> = () => {
         marginTop: "10px",
         marginBottom: "10px",
       }}
+      {...props}
     />
   );
 };

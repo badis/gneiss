@@ -2,6 +2,13 @@ table:
   name: post
   schema: public
 array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: comment
+          schema: public
   - name: likes
     using:
       foreign_key_constraint_on:

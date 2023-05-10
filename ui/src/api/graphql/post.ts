@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { Comment } from "./comment";
 import { Like } from "./like";
 
 export interface Post {
@@ -6,18 +7,40 @@ export interface Post {
   message: string;
   created_at: string;
   updated_at: string;
-  likes: Array<Partial<Like>>;
+  likes: Array<Like>;
+  comments: Array<Comment>;
 }
 
 export const GET_POSTS = gql`
   query GetPosts {
-    posts: post(order_by: { created_at: desc }, limit: 2, offset: 0) {
+    posts: post(order_by: { created_at: desc }, limit: 5, offset: 0) {
       id
       message
       created_at
       updated_at
       likes {
         id
+      }
+    }
+  }
+`;
+
+export const GET_POST_BY_ID = gql`
+  query GetPostById($id: Int!) {
+    post: post_by_pk(id: $id) {
+      id
+      message
+      created_at
+      updated_at
+      likes {
+        id
+      }
+      comments(order_by: { created_at: asc }) {
+        id
+        post_id
+        message
+        created_at
+        updated_at
       }
     }
   }
