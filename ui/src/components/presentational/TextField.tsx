@@ -2,7 +2,7 @@ import { Colors } from "@/theme";
 import { TextField, TextFieldProps } from "@mui/material";
 import { FC } from "react";
 
-const StyledTextField: FC<TextFieldProps> = (props) => {
+const StyledTextField: FC<TextFieldProps> = ({ sx, ...props }) => {
   return (
     <TextField
       sx={{
@@ -24,6 +24,7 @@ const StyledTextField: FC<TextFieldProps> = (props) => {
           //   borderColor: "#ededed",
           // },
         },
+        ...sx,
       }}
       {...props}
     />

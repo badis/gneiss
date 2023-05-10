@@ -34,7 +34,7 @@ export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
   };
 
   return (
-    <IconButton onClick={handleToggleLike} disableRipple>
+    <IconButton onClick={handleToggleLike}>
       {like_id ? (
         <FavoriteIcon fontSize="small" color="primary" />
       ) : (

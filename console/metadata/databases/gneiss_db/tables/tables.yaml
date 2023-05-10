@@ -1,2 +1,3 @@
+- "!include public_comment.yaml"
 - "!include public_like.yaml"
 - "!include public_post.yaml"

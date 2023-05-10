@@ -1,4 +1,6 @@
 export {
+  ChatBubbleOutlineRounded as ChatBubbleOutlineRoundedIcon,
+  ChevronRightSharp as ChevronRightSharpIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   Favorite as FavoriteIcon,

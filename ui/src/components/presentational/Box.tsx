@@ -1,9 +1,9 @@
 import { Box, BoxProps } from "@mui/material";
 import { FC } from "react";
 
-const StyledBox: FC<BoxProps> = ({ children, ...props }) => {
+const StyledBox: FC<BoxProps> = ({ children, sx, ...props }) => {
   return (
-    <Box sx={{ fontSize: "default" }} {...props}>
+    <Box sx={{ fontSize: "default", ...sx }} {...props}>
       {children}
     </Box>
   );
