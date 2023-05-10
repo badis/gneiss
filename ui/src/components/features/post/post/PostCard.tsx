@@ -9,7 +9,7 @@ import {
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { FC } from "react";
-import { Like } from "@/components/features/likes/Like";
+import { Like } from "@/components/features/like/Like";
 import { PostMenu } from "./PostMenu";
 interface PostCardProps {
   post: Post;

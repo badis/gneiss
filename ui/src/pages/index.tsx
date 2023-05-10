@@ -2,10 +2,10 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Container } from "@/components/presentational";
-import { PostCreateForm } from "@/components/features/posts/forms";
+import { PostCreateForm } from "@/components/features/post/forms";
 import { useQuery } from "@apollo/client";
 import { GET_POSTS, Post } from "@/api/graphql/post";
-import { PostCard } from "@/components/features/posts/post/PostCard";
+import { PostCard } from "@/components/features/post/post/PostCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
