@@ -1,3 +1,5 @@
+import { useMutation } from "@apollo/client";
+import { FC, useState } from "react";
 import { DELETE_POST } from "@/api/graphql/post";
 import {
   AlertColor,
@@ -9,8 +11,6 @@ import {
   DialogTitle,
   EnhancedSnackbar,
 } from "@/components/presentational";
-import { useMutation } from "@apollo/client";
-import { FC, useState } from "react";
 
 interface DeletePostDialogProps {
   id: number;

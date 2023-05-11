@@ -1,3 +1,7 @@
+import { useMutation } from "@apollo/client";
+import { useFormik } from "formik";
+import { FC, useState } from "react";
+import * as Yup from "yup";
 import { CREATE_POST } from "@/api/graphql/post";
 import {
   Button,
@@ -7,10 +11,6 @@ import {
   Divider,
   TextField,
 } from "@/components/presentational";
-import { useMutation } from "@apollo/client";
-import { useFormik } from "formik";
-import { FC, useState } from "react";
-import * as Yup from "yup";
 
 const validationSchema = Yup.object({
   message: Yup.string().required("Write something!"),
