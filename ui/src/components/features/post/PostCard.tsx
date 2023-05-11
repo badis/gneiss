@@ -1,4 +1,8 @@
+import { FC } from "react";
 import { Post } from "@/api/graphql/post";
+import { Comment } from "@/components/features/comment/Comment";
+import { Like } from "@/components/features/like/Like";
+import { PostMenu } from "@/components/features/post/PostMenu";
 import {
   Box,
   Card,
@@ -8,10 +12,7 @@ import {
   Divider,
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
-import { FC } from "react";
-import { Comment } from "@/components/features/comment/Comment";
-import { Like } from "@/components/features/like/Like";
-import { PostMenu } from "./PostMenu";
+
 interface PostCardProps {
   post: Post;
 }

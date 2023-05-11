@@ -1,3 +1,7 @@
+import { FC, useState } from "react";
+import { Post } from "@/api/graphql/post";
+import { DeletePostDialog } from "@/components/features/post/DeletePostDialog";
+import { EditPostDialog } from "@/components/features/post/EditPostDialog";
 import { DeleteIcon, EditIcon, MoreVertIcon } from "@/components/icons";
 import {
   Box,
@@ -6,10 +10,6 @@ import {
   Menu,
   MenuItem,
 } from "@/components/presentational";
-import { FC, useState } from "react";
-import { DeletePostDialog } from "./DeletePostDialog";
-import { EditPostDialog } from "./EditPostDialog";
-import { Post } from "@/api/graphql/post";
 
 interface PostMenuProps {
   post: Post;
