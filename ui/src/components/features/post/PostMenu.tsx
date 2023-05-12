@@ -48,7 +48,7 @@ export const PostMenu: FC<PostMenuProps> = ({ post }) => {
 
   return (
     <Box>
-      <IconButton onClick={handleClick} disableRipple>
+      <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} onClose={handleClose} open={open}>
