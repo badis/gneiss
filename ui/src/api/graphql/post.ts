@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
-import { Comment } from "./comment";
-import { Like } from "./like";
+import { TComment } from "./comment";
+import { TLike } from "./like";
 
-export interface Post {
+export interface TPost {
   id: number;
   message: string;
   created_at: string;
   updated_at: string;
-  likes: Array<Like>;
-  comments: Array<Comment>;
+  likes: Array<TLike>;
+  comments: Array<TComment>;
 }
 
 export const GET_POSTS = gql`

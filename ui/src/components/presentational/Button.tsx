@@ -28,11 +28,12 @@ const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
 
 export { StyledButton as Button };
 
-const StyledIconButton: FC<IconButtonProps> = ({ children, ...props }) => {
+const StyledIconButton: FC<IconButtonProps> = ({ children, sx, ...props }) => {
   return (
     <IconButton
       sx={{
         padding: "5px",
+        ...sx,
       }}
       {...props}
     >
