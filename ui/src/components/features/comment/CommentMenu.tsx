@@ -37,7 +37,7 @@ export const CommentMenu: FC<CommentMenuProps> = ({ comment }) => {
 
   return (
     <Box>
-      <IconButton onClick={handleClick} disableRipple>
+      <IconButton onClick={handleClick}>
         <MoreVertIcon fontSize="small" />
       </IconButton>
       <Menu anchorEl={anchorEl} onClose={handleClose} open={open}>
