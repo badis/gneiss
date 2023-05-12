@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { CommentDialog } from "@/components/features/comment/CommentDialog";
+import { CommentDialog } from "@/components/features/comment";
 import { ChatBubbleOutlineRoundedIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
 

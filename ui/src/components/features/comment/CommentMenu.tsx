@@ -1,8 +1,5 @@
 import { FC, useState } from "react";
-import { TPost } from "@/api/graphql/post";
-import { DeletePostDialog } from "@/components/features/post/DeletePostDialog";
-import { EditPostDialog } from "@/components/features/post/EditPostDialog";
-import { DeleteIcon, EditIcon, MoreVertIcon } from "@/components/icons";
+import { TComment } from "@/api/graphql/comment";
 import {
   Box,
   IconButton,
@@ -10,12 +7,13 @@ import {
   Menu,
   MenuItem,
 } from "@/components/presentational";
+import { DeleteIcon, MoreVertIcon } from "@/components/icons";
+import { DeleteCommentDialog } from "@/components/features/comment/DeleteCommentDialog";
 
-interface PostMenuProps {
-  post: TPost;
+interface CommentMenuProps {
+  comment: TComment;
 }
-export const PostMenu: FC<PostMenuProps> = ({ post }) => {
-  const [openEditPostModal, setOpenEditPostModal] = useState(false);
+export const CommentMenu: FC<CommentMenuProps> = ({ comment }) => {
   const [openDeletePostDialog, setOpenDeletePostDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -28,18 +26,9 @@ export const PostMenu: FC<PostMenuProps> = ({ post }) => {
     setAnchorEl(null);
   };
 
-  const handleEditPostClick = () => {
-    setOpenEditPostModal(true);
-    setAnchorEl(null);
-  };
-
   const handleDeletePostClick = () => {
     setOpenDeletePostDialog(true);
     setAnchorEl(null);
-  };
-
-  const handleCloseEditPostModal = () => {
-    setOpenEditPostModal(false);
   };
 
   const handleCloseDeletePostDialog = () => {
@@ -49,15 +38,9 @@ export const PostMenu: FC<PostMenuProps> = ({ post }) => {
   return (
     <Box>
       <IconButton onClick={handleClick} disableRipple>
-        <MoreVertIcon />
+        <MoreVertIcon fontSize="small" />
       </IconButton>
       <Menu anchorEl={anchorEl} onClose={handleClose} open={open}>
-        <MenuItem onClick={handleEditPostClick}>
-          <ListItemIcon>
-            <EditIcon sx={{ fontSize: "16px" }} />
-          </ListItemIcon>
-          Edit
-        </MenuItem>
         <MenuItem onClick={handleDeletePostClick}>
           <ListItemIcon>
             <DeleteIcon sx={{ fontSize: "16px" }} />
@@ -65,13 +48,8 @@ export const PostMenu: FC<PostMenuProps> = ({ post }) => {
           Delete
         </MenuItem>
       </Menu>
-      <EditPostDialog
-        post={post}
-        open={openEditPostModal}
-        onClose={handleCloseEditPostModal}
-      />
-      <DeletePostDialog
-        id={post.id}
+      <DeleteCommentDialog
+        id={comment.id}
         open={openDeletePostDialog}
         onClose={handleCloseDeletePostDialog}
       />

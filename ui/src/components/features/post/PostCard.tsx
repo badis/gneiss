@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Post } from "@/api/graphql/post";
-import { Comment } from "@/components/features/comment/Comment";
-import { Like } from "@/components/features/like/Like";
-import { PostMenu } from "@/components/features/post/PostMenu";
+import { TPost } from "@/api/graphql/post";
+import { Comment } from "@/components/features/comment";
+import { Like } from "@/components/features/like";
+import { PostMenu } from "@/components/features/post";
 import {
   Box,
   Card,
@@ -14,7 +14,7 @@ import {
 import { timeAgo } from "@/utils/datetime";
 
 interface PostCardProps {
-  post: Post;
+  post: TPost;
 }
 export const PostCard: FC<PostCardProps> = ({ post }) => {
   return (

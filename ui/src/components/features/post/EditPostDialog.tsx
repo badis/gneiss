@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { Post, UPDATE_POST } from "@/api/graphql/post";
+import { TPost, UPDATE_POST } from "@/api/graphql/post";
 import {
   AlertColor,
   Button,
@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
 });
 
 interface EditPostDialogProps {
-  post: Post;
+  post: TPost;
   open: boolean;
   onClose: () => void;
 }

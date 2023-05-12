@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export interface Comment {
+export interface TComment {
   id: number;
   post_id: number;
   message: string;
@@ -16,6 +16,14 @@ export const CREATE_COMMENT = gql`
       message
       created_at
       updated_at
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($id: Int!) {
+    delete_comment_by_pk(id: $id) {
+      id
     }
   }
 `;

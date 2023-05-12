@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export interface Like {
+export interface TLike {
   id: number;
   post_id: number;
   created_at: string;

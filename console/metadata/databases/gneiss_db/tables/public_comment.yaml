@@ -18,3 +18,7 @@ select_permissions:
         - post_id
         - updated_at
       filter: {}
+delete_permissions:
+  - role: anonymous
+    permission:
+      filter: {}
