@@ -5,7 +5,6 @@ Gneiss is an open-source social network kit that allows you to build your own pr
 ---
 ![Gneiss Social Network Kit](assets/gneiss.png)
 
-
 ## Features
 
 * **Posts**:  Create, edit, delete posts

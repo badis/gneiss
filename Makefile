@@ -15,4 +15,7 @@ testapi:
 	cd api; npm test
 test: testui testapi
 
-.PHONY: dev down testui testapi test
+amend:
+	git commit --amend --no-edit && git push -f
+
+.PHONY: dev down testui testapi test amend
