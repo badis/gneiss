@@ -83,9 +83,49 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
+
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          h1: "h1",
+          h2: "h2",
+          h3: "h2",
+          h4: "h4",
+          h5: "h4",
+          h6: "h4",
+          subtitle1: "h1",
+          subtitle2: "h2",
+          body1: "p",
+          body2: "span",
+        },
+      },
+    },
+  },
   typography: {
     fontFamily: roboto.style.fontFamily,
     fontSize: 14,
+    h1: {
+      fontSize: "22px",
+    },
+    h2: {
+      fontSize: "20px",
+    },
+    h4: {
+      fontSize: "18px",
+    },
+    subtitle1: {
+      fontSize: "22px",
+    },
+    subtitle2: {
+      fontSize: "20px",
+    },
+    body1: {
+      fontSize: "14px",
+    },
+    body2: {
+      fontSize: "12px",
+    },
   },
   breakpoints: {
     values: {

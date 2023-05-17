@@ -1,1 +1,1 @@
-DROP TABLE "public"."post";
+DROP TABLE "public"."post" CASCADE;
