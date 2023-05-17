@@ -1,0 +1,25 @@
+table:
+  name: user
+  schema: public
+insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+        - email
+        - password
+        - status
+        - username
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - email
+        - hashed_refresh_token
+        - id
+        - password
+        - status
+        - updated_at
+        - username
+      filter: {}

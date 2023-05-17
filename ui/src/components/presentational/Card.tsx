@@ -17,7 +17,7 @@ const StyledCard: FC<CardProps> = ({ children }) => {
       sx={{
         boxShadow: "0 0 3px #dadada",
         marginBottom: "15px",
-        padding: "10px",
+        padding: "15px",
       }}
     >
       {children}

@@ -9,7 +9,8 @@ CREATE TABLE "public"."comment" (
 );
 
 CREATE
-OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"() RETURNS TRIGGER AS $ $ DECLARE _new record;
+OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"() RETURNS TRIGGER AS $$ 
+DECLARE _new record;
 
 BEGIN _new := NEW;
 
@@ -19,7 +20,7 @@ RETURN _new;
 
 END;
 
-$ $ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER "set_public_comment_updated_at" BEFORE
 UPDATE

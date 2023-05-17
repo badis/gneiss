@@ -1,41 +1,53 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Container, Skeleton } from "@/components/presentational";
-import { PostCreateForm } from "@/components/features/post";
+import { Button, Container, Skeleton } from "@/components/presentational";
 import { useQuery } from "@apollo/client";
-import { GET_POSTS, Post } from "@/api/graphql/post";
-import { PostCard } from "@/components/features/post/PostCard";
+import { GET_POSTS, TPost } from "@/api/graphql/post";
+import { PostCard, PostCreateForm } from "@/components/features/post";
+import { useSession } from "@/hooks/use-session";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { loading, error, data } = useQuery(GET_POSTS);
+  const router = useRouter();
+  const {
+    session: { isAuthenticated, loading, signout },
+  } = useSession();
 
-  if (loading)
-    return <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />;
+  useEffect(() => {
+    // Protected route
+    if (!loading && !isAuthenticated) {
+      router.push("/auth/signin");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, isAuthenticated]);
 
-  if (error) return `Error! ${error.message}`;
+  const { data, loading: loadingPosts } = useQuery(GET_POSTS);
 
-  if (!data) return;
+  if (data && isAuthenticated && !loading && !loadingPosts) {
+    return (
+      <>
+        <Head>
+          <title>Home</title>
+          <meta name="description" content="Home" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <main className={`${styles.main} ${inter.className}`}>
+          <Container>
+            <Button onClick={signout}>Sign out</Button>
+            <PostCreateForm />
+            {data.posts.map((p: TPost, index: number) => (
+              <PostCard key={index} post={p} />
+            ))}
+          </Container>
+        </main>
+      </>
+    );
+  }
 
-  return (
-    <>
-      <Head>
-        <title>Home</title>
-        <meta name="description" content="Home" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <Container>
-          <PostCreateForm />
-
-          {data.posts.map((p: Post, index: number) => (
-            <PostCard key={index} post={p} />
-          ))}
-        </Container>
-      </main>
-    </>
-  );
+  return <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />;
 }

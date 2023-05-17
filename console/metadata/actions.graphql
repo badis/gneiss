@@ -1,0 +1,67 @@
+type Query {
+  currentUser: CurrentUser
+}
+
+type Query {
+  refresh: RefreshTokenOutput
+}
+
+type Mutation {
+  signin(
+    username: String!
+    password: String!
+  ): SigninOutput
+}
+
+type Query {
+  signout: SignoutOutput
+}
+
+type Mutation {
+  signup(
+    username: String!
+    email: String!
+    password: String!
+  ): SignupOutput
+}
+
+input SignupInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type SignupOutput {
+  accessToken: String
+  refreshToken: String
+  response: ErrorResponse
+}
+
+type ErrorResponse {
+  statusCode: Int
+  message: [String]
+  error: String
+}
+
+type SigninOutput {
+  accessToken: String
+  refreshToken: String
+  response: ErrorResponse
+}
+
+type CurrentUser {
+  username: String
+  response: ErrorResponse
+}
+
+type RefreshTokenOutput {
+  accessToken: String
+  refreshToken: String
+  response: ErrorResponse
+}
+
+type SignoutOutput {
+  ok: Boolean
+  response: ErrorResponse
+}
+
