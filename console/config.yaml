@@ -3,4 +3,4 @@ endpoint: http://localhost:8080
 metadata_directory: metadata
 actions:
   kind: synchronous
-  handler_webhook_baseurl: http://backend-rest:5555
+  handler_webhook_baseurl: http://backend-rest:3000

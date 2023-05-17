@@ -8,6 +8,7 @@ import { PostCard, PostCreateForm } from "@/components/features/post";
 import { useSession } from "@/hooks/use-session";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { AccountMenu, Wall } from "@/components/features/dashboard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,9 +26,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, isAuthenticated]);
 
-  const { data, loading: loadingPosts } = useQuery(GET_POSTS);
-
-  if (data && isAuthenticated && !loading && !loadingPosts) {
+  if (isAuthenticated && !loading) {
     return (
       <>
         <Head>
@@ -38,11 +37,8 @@ export default function Home() {
         </Head>
         <main className={`${styles.main} ${inter.className}`}>
           <Container>
-            <Button onClick={signout}>Sign out</Button>
-            <PostCreateForm />
-            {data.posts.map((p: TPost, index: number) => (
-              <PostCard key={index} post={p} />
-            ))}
+            <AccountMenu />
+            <Wall />
           </Container>
         </main>
       </>
