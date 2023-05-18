@@ -1,19 +1,23 @@
 import {
   ConflictException,
   ForbiddenException,
+  Inject,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UsersService } from '../users/users.service';
-import { SignupDto } from './dto/signup.dto';
-import { Tokens } from './types';
-import { SigninDto } from './dto';
+import { Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
+
 import { pgErrorCodes } from 'src/database/database-error-codes';
-import { RequestPasswordDto } from './dto/request-password.dto';
 import { MailService } from 'src/mail/mail.service';
+import { UsersService } from 'src/users/users.service';
+
+import { RequestPasswordDto, SigninDto, SignupDto } from './dto';
+import { PasswordResetToken } from './entities';
+import { Tokens } from './types';
 
 const DAY = 24 * 60 * 60;
 const MINUTE = 60;
@@ -22,6 +26,8 @@ const SALT_ROUNDS = 10;
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject('PASSWORD_RESET_TOKEN_REPOSITORY')
+    private prtRepository: Repository<PasswordResetToken>,
     private config: ConfigService,
     private jwtService: JwtService,
     private mailService: MailService,
@@ -98,17 +104,28 @@ export class AuthService {
   }
 
   // `Request new password` Route
-  async requestPassword(dto: RequestPasswordDto): Promise<any> {
+  async requestResetPassword(dto: RequestPasswordDto): Promise<any> {
     try {
       const user = await this.usersService.findOneByEmail(dto.email);
+      const token = uuidv4();
+      const hashed_reset_token = await bcrypt.hash(token, SALT_ROUNDS);
+      const passwordResetToken: Partial<PasswordResetToken> = {
+        user_id: user.id,
+        hashed_reset_token,
+      };
+      await this.prtRepository.save(passwordResetToken);
 
+      const resetPasswordUrl = `${this.config.get(
+        'FRONTEND_URL',
+      )}/auth/reset-password?token=${token}`;
       const subject = '[Gneiss] Reset password request';
+
       const content = `<div>
 Please use the following link within the next day to reset your password.
 </div>
 <div>
   <a
-    href="#"
+    href="${resetPasswordUrl}"
     style="
       background: #00aae6;
       font-size: 12px;
@@ -127,7 +144,8 @@ Please use the following link within the next day to reset your password.
 <div>If you don't use this link within 24 hours, it will expire.</div>
 `;
 
-      const response = await this.mailService.sendEmail(
+      // Generate and send a magic link to reset password
+      await this.mailService.sendEmail(
         user.email,
         subject,
         user.username,
@@ -135,12 +153,17 @@ Please use the following link within the next day to reset your password.
         'reset-password',
       );
 
-      return response;
+      return {
+        response: {
+          statusCode: 200,
+          message: ['Reset password email sent successfully'],
+          error: null,
+        },
+      };
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException(error);
     }
-    // Generate and send a magic link to reset password
   }
 
   // `RefreshToken` Route

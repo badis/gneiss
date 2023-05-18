@@ -60,7 +60,7 @@ export class AuthController {
   @Public()
   @Post('request-password')
   @HttpCode(HttpStatus.CREATED)
-  requestPassword(@Body() dto: RequestPasswordDto): Promise<any> {
-    return this.authService.requestPassword(dto);
+  requestResetPassword(@Body() dto: RequestPasswordDto): Promise<any> {
+    return this.authService.requestResetPassword(dto);
   }
 }

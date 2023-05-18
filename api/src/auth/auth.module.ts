@@ -6,10 +6,23 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AccessTokenStrategy, RefreshTokenStrategy } from './strategies';
 import { MailModule } from 'src/mail/mail.module';
+import { authProviders } from './auth.providers';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [JwtModule.register({}), MailModule, PassportModule, UsersModule],
+  imports: [
+    JwtModule.register({}),
+    MailModule,
+    PassportModule,
+    UsersModule,
+    DatabaseModule,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  providers: [
+    ...authProviders,
+    AuthService,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+  ],
 })
 export class AuthModule {}
