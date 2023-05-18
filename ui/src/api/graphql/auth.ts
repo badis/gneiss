@@ -1,9 +1,40 @@
 import { gql } from "@apollo/client";
 
-export interface TSignup {
+export interface SignupInput {
   username: string;
   email: string;
   password: string;
+}
+
+export interface SignupOutput {
+  accessToken: string;
+  refreshToken: string;
+  response: RestApiResponse;
+}
+
+export interface SigninInput {
+  username: string;
+  password: string;
+}
+
+export interface SigninOutput {
+  accessToken: string;
+  refreshToken: string;
+  response: RestApiResponse;
+}
+
+export interface RequestPasswordOutput {
+  response: RestApiResponse;
+}
+
+export interface CurrentUser {
+  username: string;
+}
+
+export interface RestApiResponse {
+  statusCode: number;
+  error: string;
+  message: string[];
 }
 
 export const SIGNUP = gql`
@@ -19,11 +50,6 @@ export const SIGNUP = gql`
     }
   }
 `;
-
-export interface TSignin {
-  username: string;
-  password: string;
-}
 
 export const SIGNIN = gql`
   mutation Signin($username: String!, $password: String!) {
@@ -52,10 +78,6 @@ export const SIGNOUT = gql`
   }
 `;
 
-export interface CurrentUser {
-  username: string;
-}
-
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     currentUser {
@@ -74,6 +96,18 @@ export const REFRESH_TOKEN = gql`
     refresh {
       accessToken
       refreshToken
+      response {
+        error
+        statusCode
+        message
+      }
+    }
+  }
+`;
+
+export const REQUEST_PASSWORD = gql`
+  mutation RequestPassword($email: String!) {
+    requestPassword(email: $email) {
       response {
         error
         statusCode

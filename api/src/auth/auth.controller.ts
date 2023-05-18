@@ -14,6 +14,7 @@ import { Public, getCurrentUser, getCurrentUserId } from './decorators';
 import { SigninDto } from './dto';
 import { RtGuard } from './guards';
 import { User } from 'src/users/entities/user.entity';
+import { RequestPasswordDto } from './dto/request-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -54,5 +55,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   logout(@getCurrentUserId() userId: number) {
     return this.authService.signout(userId);
+  }
+
+  @Public()
+  @Post('request-password')
+  @HttpCode(HttpStatus.CREATED)
+  requestPassword(@Body() dto: RequestPasswordDto): Promise<any> {
+    return this.authService.requestPassword(dto);
   }
 }

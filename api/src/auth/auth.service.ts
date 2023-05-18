@@ -12,6 +12,8 @@ import { SignupDto } from './dto/signup.dto';
 import { Tokens } from './types';
 import { SigninDto } from './dto';
 import { pgErrorCodes } from 'src/database/database-error-codes';
+import { RequestPasswordDto } from './dto/request-password.dto';
+import { MailService } from 'src/mail/mail.service';
 
 const DAY = 24 * 60 * 60;
 const MINUTE = 60;
@@ -20,9 +22,10 @@ const SALT_ROUNDS = 10;
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
     private config: ConfigService,
+    private jwtService: JwtService,
+    private mailService: MailService,
+    private usersService: UsersService,
   ) {}
 
   // `Signup` Route
@@ -94,6 +97,20 @@ export class AuthService {
     }
   }
 
+  // `Request new password` Route
+  async requestPassword(dto: RequestPasswordDto): Promise<any> {
+    // Generate and send a magic link to reset password
+
+    const response = await this.mailService.sendEmail(
+      dto.email,
+      'Welcome s',
+      'Hello world',
+      'reset-password',
+    );
+
+    return response;
+  }
+
   // `RefreshToken` Route
   async refreshTokens(id: number, refreshToken: string) {
     const user = await this.usersService.findOne(id);
@@ -134,21 +151,6 @@ export class AuthService {
     username: string,
     email: string,
   ): Promise<Tokens> {
-    // Hasura JWT
-    // {
-    //   "sub": "1234567890",
-    //   "name": "John Doe",
-    //   "admin": true,
-    //   "iat": 1516239022,
-    //   "https://hasura.io/jwt/claims": {
-    //     "x-hasura-default-role": "user",
-    //     "x-hasura-allowed-roles": ["user", "admin"],
-    //     "x-hasura-user-id": "123",
-    //     "x-hasura-org-id": "456",
-    //     "x-hasura-custom": "custom-value"
-    //   }
-    // }
-
     const payload = {
       sub: id,
       username,

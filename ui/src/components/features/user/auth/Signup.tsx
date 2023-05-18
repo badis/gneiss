@@ -210,15 +210,13 @@ export const Signup: FC<SignupProps> = () => {
                     width: "100%",
                   }}
                 >
-                  <Box>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      disabled={submitting}
-                    >
-                      Sign up
-                    </Button>
-                  </Box>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={submitting}
+                  >
+                    Sign up
+                  </Button>
 
                   <Typography
                     variant="body1"
