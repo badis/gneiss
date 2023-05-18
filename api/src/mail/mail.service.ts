@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
 
@@ -11,11 +11,16 @@ const ejs = require('ejs');
 export class MailService {
   constructor(private config: ConfigService) {}
 
-  async renderFile(receiver: string, content: string, template: string) {
+  async renderFile(
+    user: string,
+    receiver: string,
+    content: string,
+    template: string,
+  ) {
     return new Promise<string>((resolve, reject) => {
       return ejs.renderFile(
         join(__dirname, './templates/' + template + '.ejs'),
-        { receiver, content },
+        { user, receiver, content },
         (err, data) => {
           if (err) {
             reject(err);
@@ -62,14 +67,19 @@ export class MailService {
   async sendEmail(
     receiver: string,
     subject: string,
+    user: string,
     content: string,
     template: string,
   ) {
     let data = '';
     try {
-      data = await this.renderFile(subject, content, template);
+      content = await this.renderFile(user, receiver, content, template);
+      data = await this.renderFile(user, receiver, content, 'layouts/main');
     } catch (e) {
       console.error(e);
+      return new InternalServerErrorException([
+        'Mail service: Unable to send email',
+      ]);
     }
 
     let response;
@@ -77,6 +87,9 @@ export class MailService {
       response = await this.sendMailAsync(receiver, subject, data);
     } catch (e) {
       console.error(e);
+      return new InternalServerErrorException([
+        'Mail service: Unable to send email',
+      ]);
     }
 
     return response;

@@ -99,16 +99,48 @@ export class AuthService {
 
   // `Request new password` Route
   async requestPassword(dto: RequestPasswordDto): Promise<any> {
+    try {
+      const user = await this.usersService.findOneByEmail(dto.email);
+
+      const subject = '[Gneiss] Reset password request';
+      const content = `<div>
+Please use the following link within the next day to reset your password.
+</div>
+<div>
+  <a
+    href="#"
+    style="
+      background: #00aae6;
+      font-size: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 12px;
+      display: block;
+      margin: 30px 0;
+      border-radius: 4px;
+      width: fit-content;
+    "
+  >
+    <strong> Reset Password </strong>
+  </a>
+</div>
+<div>If you don't use this link within 24 hours, it will expire.</div>
+`;
+
+      const response = await this.mailService.sendEmail(
+        user.email,
+        subject,
+        user.username,
+        content,
+        'reset-password',
+      );
+
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(error);
+    }
     // Generate and send a magic link to reset password
-
-    const response = await this.mailService.sendEmail(
-      dto.email,
-      'Welcome s',
-      'Hello world',
-      'reset-password',
-    );
-
-    return response;
   }
 
   // `RefreshToken` Route
