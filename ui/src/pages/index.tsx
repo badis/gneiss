@@ -1,10 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Button, Container, Skeleton } from "@/components/presentational";
-import { useQuery } from "@apollo/client";
-import { GET_POSTS, TPost } from "@/api/graphql/post";
-import { PostCard, PostCreateForm } from "@/components/features/post";
+import { Container, Skeleton } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
