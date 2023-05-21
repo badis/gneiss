@@ -50,6 +50,60 @@ actions:
     permissions:
       - role: anonymous
     comment: Generate new access and refresh tokens
+  - name: requestPassword
+    definition:
+      kind: synchronous
+      handler: http://backend-rest:3000/auth/request-password
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "email": {{$body.input.email}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "response": {{$body?.response}}
+            }
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: anonymous
+    comment: Request new password
+  - name: resetPassword
+    definition:
+      kind: synchronous
+      handler: http://backend-rest:3000/auth/reset-password
+      request_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "token": {{$body.input.token}},
+              "password": {{$body.input.password}}
+            }
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+      response_transform:
+        body:
+          action: transform
+          template: |-
+            {
+              "response": {{$body?.response}}
+            }
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: anonymous
   - name: signin
     definition:
       kind: synchronous
@@ -141,4 +195,6 @@ custom_types:
     - name: CurrentUser
     - name: RefreshTokenOutput
     - name: SignoutOutput
+    - name: RequestPasswordOutput
+    - name: ResetPasswordOutput
   scalars: []

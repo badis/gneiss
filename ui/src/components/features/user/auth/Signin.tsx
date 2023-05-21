@@ -169,24 +169,31 @@ export const Signin: FC<SigninProps> = () => {
                     width: "100%",
                   }}
                 >
-                  <Box>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      disabled={submitting}
-                    >
-                      Sign in
-                    </Button>
-                  </Box>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={submitting}
+                  >
+                    Sign in
+                  </Button>
 
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    sx={{ marginTop: "20px", textAlign: "center" }}
+                  >
+                    <Box component="span">Don&#39;t have an account? </Box>
+                    <Link href="/auth/signup" underline="none">
+                      Sign up
+                    </Link>
+                  </Typography>
                   <Typography
                     variant="body1"
                     component="p"
                     sx={{ margin: "20px", textAlign: "center" }}
                   >
-                    <Box component="span">Don&#39;t have an account? </Box>
-                    <Link href="/auth/signup" underline="none">
-                      Sign up
+                    <Link href="/auth/request-password" underline="none">
+                      Forget your password?
                     </Link>
                   </Typography>
                 </Box>

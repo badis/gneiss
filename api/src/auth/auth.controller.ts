@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { Tokens } from './types';
 import { Public, getCurrentUser, getCurrentUserId } from './decorators';
-import { SigninDto } from './dto';
+import { RequestPasswordDto, ResetPasswordDto, SigninDto } from './dto';
 import { RtGuard } from './guards';
 import { User } from 'src/users/entities/user.entity';
 
@@ -54,5 +54,19 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   logout(@getCurrentUserId() userId: number) {
     return this.authService.signout(userId);
+  }
+
+  @Public()
+  @Post('request-password')
+  @HttpCode(HttpStatus.OK)
+  requestResetPassword(@Body() dto: RequestPasswordDto): Promise<any> {
+    return this.authService.requestResetPassword(dto);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  verifyResetToken(@Body() dto: ResetPasswordDto): Promise<any> {
+    return this.authService.resetPassword(dto);
   }
 }

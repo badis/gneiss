@@ -1,4 +1,10 @@
-import { Alert, AlertColor, Snackbar, SnackbarProps } from "@mui/material";
+import {
+  Alert,
+  AlertColor,
+  Snackbar,
+  SnackbarOrigin,
+  SnackbarProps,
+} from "@mui/material";
 import React from "react";
 import { FC } from "react";
 
@@ -12,12 +18,16 @@ interface EnhancedSnackbarProps {
   open: boolean;
   message: string;
   severity: AlertColor;
+  duration?: number;
+  anchorOrigin?: SnackbarOrigin;
   onClose: () => void;
 }
 export const EnhancedSnackbar: FC<EnhancedSnackbarProps> = ({
+  duration = 3000,
   open,
   message,
   severity,
+  anchorOrigin = { vertical: "bottom", horizontal: "center" },
   onClose,
 }) => {
   const handleClose = (
@@ -32,9 +42,9 @@ export const EnhancedSnackbar: FC<EnhancedSnackbarProps> = ({
   return (
     <StyledSnackbar
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={duration}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      anchorOrigin={anchorOrigin}
     >
       <div>
         {severity ? (
