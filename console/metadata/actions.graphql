@@ -7,6 +7,19 @@ type Query {
 }
 
 type Mutation {
+  requestPassword(
+    email: String!
+  ): RequestPasswordOutput
+}
+
+type Mutation {
+  resetPassword(
+    token: String!
+    password: String!
+  ): ResetPasswordOutput
+}
+
+type Mutation {
   signin(
     username: String!
     password: String!
@@ -62,6 +75,14 @@ type RefreshTokenOutput {
 
 type SignoutOutput {
   ok: Boolean
+  response: ErrorResponse
+}
+
+type RequestPasswordOutput {
+  response: ErrorResponse
+}
+
+type ResetPasswordOutput {
   response: ErrorResponse
 }
 
