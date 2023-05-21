@@ -1,23 +1,31 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Inject,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 
 import { pgErrorCodes } from 'src/database/database-error-codes';
 import { MailService } from 'src/mail/mail.service';
 import { UsersService } from 'src/users/users.service';
 
-import { RequestPasswordDto, SigninDto, SignupDto } from './dto';
+import {
+  RequestPasswordDto,
+  ResetPasswordDto,
+  SigninDto,
+  SignupDto,
+} from './dto';
 import { PasswordResetToken } from './entities';
 import { Tokens } from './types';
+import * as crypto from 'node:crypto';
+import * as util from 'util';
 
 const DAY = 24 * 60 * 60;
 const MINUTE = 60;
@@ -33,6 +41,52 @@ export class AuthService {
     private mailService: MailService,
     private usersService: UsersService,
   ) {}
+
+  async generateHash(data: string): Promise<string> {
+    return await bcrypt.hash(data, SALT_ROUNDS);
+  }
+
+  async updateRefreshTokenHash(
+    id: number,
+    refreshToken: string,
+  ): Promise<void> {
+    const hash = await this.generateHash(refreshToken);
+    await this.usersService.update(id, { hashed_refresh_token: hash });
+  }
+
+  async generateTokens(
+    id: number,
+    username: string,
+    email: string,
+  ): Promise<Tokens> {
+    const payload = {
+      sub: id,
+      username,
+      email,
+      'https://hasura.io/jwt/claims': {
+        'x-hasura-allowed-roles': ['user'],
+        'x-hasura-default-role': 'user',
+        'x-hasura-role': 'user',
+        'x-hasura-user-id': id,
+      },
+    };
+
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload, {
+        secret: this.config.get('JWT_ACCESS_TOKEN_SECRET_KEY'),
+        expiresIn: this.config.get('ACCESS_TOKEN_LIFE_TIME') * MINUTE,
+      }),
+      this.jwtService.signAsync(payload, {
+        secret: this.config.get('JWT_REFRESH_TOKEN_SECRET_KEY'),
+        expiresIn: this.config.get('REFRESH_TOKEN_LIFE_TIME') * DAY,
+      }),
+    ]);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
 
   // `Signup` Route
   async signup(dto: SignupDto): Promise<Tokens> {
@@ -103,21 +157,51 @@ export class AuthService {
     }
   }
 
+  // `RefreshToken` Route
+  async refreshTokens(id: number, refreshToken: string) {
+    const user = await this.usersService.findOne(id);
+
+    if (!user || !user.hashed_refresh_token)
+      throw new ForbiddenException(['Access denied']);
+
+    const refreshTokenMatches = await bcrypt.compare(
+      refreshToken,
+      user.hashed_refresh_token,
+    );
+
+    if (!refreshTokenMatches) throw new ForbiddenException(['Access denied']);
+
+    const tokens: Tokens = await this.generateTokens(
+      user.id,
+      user.username,
+      user.email,
+    );
+    await this.updateRefreshTokenHash(user.id, tokens.refreshToken);
+    return tokens;
+  }
+
   // `Request new password` Route
   async requestResetPassword(dto: RequestPasswordDto): Promise<any> {
     try {
+      const randomBytes = util.promisify(crypto.randomBytes);
+      const resetToken = (await randomBytes(32)).toString('hex');
+      const hashed_reset_token = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
       const user = await this.usersService.findOneByEmail(dto.email);
-      const token = uuidv4();
-      const hashed_reset_token = await bcrypt.hash(token, SALT_ROUNDS);
+      if (!user) return new NotFoundException(['User not found']);
+
       const passwordResetToken: Partial<PasswordResetToken> = {
         user_id: user.id,
         hashed_reset_token,
       };
-      await this.prtRepository.save(passwordResetToken);
+      await this.prtRepository.upsert(passwordResetToken, ['user_id']);
 
       const resetPasswordUrl = `${this.config.get(
         'FRONTEND_URL',
-      )}/auth/reset-password?token=${token}`;
+      )}/auth/reset-password?token=${resetToken}`;
       const subject = '[Gneiss] Reset password request';
 
       const content = `<div>
@@ -132,7 +216,7 @@ Please use the following link within the next day to reset your password.
       color: white;
       text-decoration: none;
       padding: 12px;
-      display: block;
+      display: inline-block;
       margin: 30px 0;
       border-radius: 4px;
       width: fit-content;
@@ -166,72 +250,47 @@ Please use the following link within the next day to reset your password.
     }
   }
 
-  // `RefreshToken` Route
-  async refreshTokens(id: number, refreshToken: string) {
-    const user = await this.usersService.findOne(id);
+  async resetPassword(dto: ResetPasswordDto): Promise<any> {
+    const { token, password } = dto;
 
-    if (!user || !user.hashed_refresh_token)
-      throw new ForbiddenException(['Access denied']);
+    if (!token) {
+      throw new BadRequestException(['Token is missing']);
+    }
 
-    const refreshTokenMatches = await bcrypt.compare(
-      refreshToken,
-      user.hashed_refresh_token,
-    );
+    const hashed_reset_token = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
 
-    if (!refreshTokenMatches) throw new ForbiddenException(['Access denied']);
+    try {
+      const record = await this.prtRepository.findOneBy({ hashed_reset_token });
+      if (!record) {
+        return {
+          response: {
+            statusCode: 400,
+            message: ['Invalid or expired password reset token'],
+            error: null,
+          },
+        };
+      }
 
-    const tokens: Tokens = await this.generateTokens(
-      user.id,
-      user.username,
-      user.email,
-    );
-    await this.updateRefreshTokenHash(user.id, tokens.refreshToken);
-    return tokens;
-  }
+      const hashed_password = await this.generateHash(password);
+      await this.usersService.update(record.user_id, {
+        password: hashed_password,
+      });
 
-  async generateHash(data: string): Promise<string> {
-    return await bcrypt.hash(data, SALT_ROUNDS);
-  }
+      await this.prtRepository.delete({ hashed_reset_token });
 
-  async updateRefreshTokenHash(
-    id: number,
-    refreshToken: string,
-  ): Promise<void> {
-    const hash = await this.generateHash(refreshToken);
-    await this.usersService.update(id, { hashed_refresh_token: hash });
-  }
-
-  async generateTokens(
-    id: number,
-    username: string,
-    email: string,
-  ): Promise<Tokens> {
-    const payload = {
-      sub: id,
-      username,
-      email,
-      'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': ['user'],
-        'x-hasura-default-role': 'user',
-        'x-hasura-role': 'user',
-        'x-hasura-user-id': id,
-      },
-    };
-
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload, {
-        secret: this.config.get('JWT_ACCESS_TOKEN_SECRET_KEY'),
-        expiresIn: this.config.get('ACCESS_TOKEN_LIFE_TIME') * MINUTE,
-      }),
-      this.jwtService.signAsync(payload, {
-        secret: this.config.get('JWT_REFRESH_TOKEN_SECRET_KEY'),
-        expiresIn: this.config.get('REFRESH_TOKEN_LIFE_TIME') * DAY,
-      }),
-    ]);
-
-    return {
-      accessToken,
-      refreshToken,
-    };
+      return {
+        response: {
+          statusCode: 200,
+          message: ['Password reset successfully'],
+          error: null,
+        },
+      };
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(error);
+    }
   }
 }

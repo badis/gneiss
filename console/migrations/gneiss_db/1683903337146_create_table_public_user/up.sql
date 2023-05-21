@@ -24,9 +24,7 @@ CREATE TABLE "public"."user" (
     "created_at" timestamptz NOT NULL DEFAULT now(),
     "updated_at" timestamptz NOT NULL DEFAULT now(),
     PRIMARY KEY ("id"),
-    FOREIGN KEY ("status") REFERENCES "public"."user_status"("value") ON UPDATE cascade ON DELETE
-    set
-        default
+    FOREIGN KEY ("status") REFERENCES "public"."user_status"("value") ON UPDATE cascade ON DELETE restrict
 );
 
 CREATE

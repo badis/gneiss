@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
-@Entity('password_reset_token')
-@Unique(['user_id', 'hashed_reset_token'])
+@Entity('user_password_reset_token')
+@Unique(['user_id'])
 export class PasswordResetToken {
   @PrimaryGeneratedColumn()
   id: number;

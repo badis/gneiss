@@ -13,6 +13,13 @@ type Mutation {
 }
 
 type Mutation {
+  resetPassword(
+    token: String!
+    password: String!
+  ): ResetPasswordOutput
+}
+
+type Mutation {
   signin(
     username: String!
     password: String!
@@ -71,11 +78,11 @@ type SignoutOutput {
   response: ErrorResponse
 }
 
-type RequestPasswordResponse {
+type RequestPasswordOutput {
   response: ErrorResponse
 }
 
-type RequestPasswordOutput {
+type ResetPasswordOutput {
   response: ErrorResponse
 }
 

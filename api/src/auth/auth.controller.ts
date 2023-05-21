@@ -6,15 +6,15 @@ import {
   Get,
   Post,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { Tokens } from './types';
 import { Public, getCurrentUser, getCurrentUserId } from './decorators';
-import { SigninDto } from './dto';
+import { RequestPasswordDto, ResetPasswordDto, SigninDto } from './dto';
 import { RtGuard } from './guards';
 import { User } from 'src/users/entities/user.entity';
-import { RequestPasswordDto } from './dto/request-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -62,5 +62,12 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   requestResetPassword(@Body() dto: RequestPasswordDto): Promise<any> {
     return this.authService.requestResetPassword(dto);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  verifyResetToken(@Body() dto: ResetPasswordDto): Promise<any> {
+    return this.authService.resetPassword(dto);
   }
 }

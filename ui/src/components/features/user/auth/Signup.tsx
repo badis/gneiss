@@ -65,8 +65,8 @@ export const Signup: FC<SignupProps> = () => {
           variables: { username, email, password },
         });
         if (response.data?.signup.accessToken) {
-          setAccessToken(response.data?.signin.accessToken);
-          setRefreshToken(response.data?.signin.refreshToken);
+          setAccessToken(response.data?.signup.accessToken);
+          setRefreshToken(response.data?.signup.refreshToken);
 
           setErrors([]);
           formik.resetForm();
