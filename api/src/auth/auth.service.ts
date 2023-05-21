@@ -11,6 +11,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import * as crypto from 'node:crypto';
+import * as util from 'util';
 
 import { pgErrorCodes } from 'src/database/database-error-codes';
 import { MailService } from 'src/mail/mail.service';
@@ -24,8 +26,6 @@ import {
 } from './dto';
 import { PasswordResetToken } from './entities';
 import { Tokens } from './types';
-import * as crypto from 'node:crypto';
-import * as util from 'util';
 
 const DAY = 24 * 60 * 60;
 const MINUTE = 60;
@@ -204,36 +204,12 @@ export class AuthService {
       )}/auth/reset-password?token=${resetToken}`;
       const subject = '[Gneiss] Reset password request';
 
-      const content = `<div>
-Please use the following link within the next day to reset your password.
-</div>
-<div>
-  <a
-    href="${resetPasswordUrl}"
-    style="
-      background: #00aae6;
-      font-size: 12px;
-      color: white;
-      text-decoration: none;
-      padding: 12px;
-      display: inline-block;
-      margin: 30px 0;
-      border-radius: 4px;
-      width: fit-content;
-    "
-  >
-    <strong> Reset Password </strong>
-  </a>
-</div>
-<div>If you don't use this link within 24 hours, it will expire.</div>
-`;
-
       // Generate and send a magic link to reset password
       await this.mailService.sendEmail(
         user.email,
         subject,
         user.username,
-        content,
+        resetPasswordUrl,
         'reset-password',
       );
 

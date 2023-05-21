@@ -79,12 +79,13 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
               router.push("/");
               break;
             case 400:
+            case 500:
               setErrors(message);
               setSubmitting(false);
               break;
-            case 500:
-              break;
             default:
+              setErrors(["Error occured: unable to reset password"]);
+              setSubmitting(false);
               break;
           }
         }

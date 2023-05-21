@@ -6,7 +6,6 @@ import {
   Get,
   Post,
   UseGuards,
-  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
@@ -59,7 +58,7 @@ export class AuthController {
 
   @Public()
   @Post('request-password')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.OK)
   requestResetPassword(@Body() dto: RequestPasswordDto): Promise<any> {
     return this.authService.requestResetPassword(dto);
   }
