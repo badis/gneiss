@@ -13,7 +13,7 @@ import { Tokens } from './types';
 import { Public, getCurrentUser, getCurrentUserId } from './decorators';
 import { RequestPasswordDto, ResetPasswordDto, SigninDto } from './dto';
 import { RtGuard } from './guards';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {

@@ -14,9 +14,9 @@ import { Repository } from 'typeorm';
 import * as crypto from 'node:crypto';
 import * as util from 'util';
 
-import { pgErrorCodes } from 'src/database/database-error-codes';
-import { MailService } from 'src/mail/mail.service';
-import { UsersService } from 'src/users/users.service';
+import { pgErrorCodes } from '../database/database-error-codes';
+import { MailService } from '../mail/mail.service';
+import { UsersService } from '../users/users.service';
 
 import {
   RequestPasswordDto,

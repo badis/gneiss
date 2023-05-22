@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const router = useRouter();
   const {
-    session: { isAuthenticated, loading, signout },
+    session: { isAuthenticated, loading },
   } = useSession();
 
   useEffect(() => {
