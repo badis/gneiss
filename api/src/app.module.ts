@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { AtGuard } from './auth/guards';
-import { MailModule } from './mail/mail.module';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AppController } from '@/app.controller';
+import { AppService } from '@/app.service';
+import { AuthModule } from '@/auth/auth.module';
+import { AtGuard } from '@/auth/guards';
+import { MailModule } from '@/mail/mail.module';
 
 @Module({
   imports: [
