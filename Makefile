@@ -1,25 +1,27 @@
 help:
-	@echo   $(info make dev:        | Start dev environment for UI, Rest API, GraphQL API, DB) \
-			$(info make down:       | Shutdown dev environment) 
-			$(info make testui:     | Test UI) \
-			$(info make testapi:    | Test API) \
-			$(info make test:       | Test)  
+	@echo   $(info make build:       | Build all services(UI, Rest API, GraphQL API, DB)) \
+			$(info make up:          | Start all services)  \
+			$(info make down:        | Shutdown all services) \
+			$(info make console:     | Start hasura console) \
+			$(info make migrate:     | Run database migrations) \
+			$(info make metadata:    | Apply hasura metadata) 
 
-dev:
+build:
+	docker-compose build 
+
+up:
 	docker-compose up -d
 
 down: 
 	docker-compose down
 
-testui:
-	cd ui; npm run test:unit; npm run test:e2e
+console:
+	cd console; make console 
 
-testapi:
-	cd api; npm test
+migrate: 
+	cd console; make migrate
 
-test: testui testapi
+metadata: 
+	cd console; make metadata
 
-amend:
-	git commit --amend --no-edit && git push -f
-
-.PHONY: dev down testui testapi test amend
+.PHONY: build up down console migrate metadata
