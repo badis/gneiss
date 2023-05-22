@@ -2,3 +2,5 @@ node_modules/
 .next/
 cypress/videos/
 cypress/screenshots/
+*.snap
+coverage/

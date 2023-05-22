@@ -7,12 +7,16 @@ help:
 
 dev:
 	docker-compose up -d
+
 down: 
 	docker-compose down
+
 testui:
-	cd ui; npm test
+	cd ui; npm run test:unit; npm run test:e2e
+
 testapi:
 	cd api; npm test
+
 test: testui testapi
 
 amend:
