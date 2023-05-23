@@ -15,6 +15,7 @@ import { FC } from "react";
 const StyledDialog: FC<DialogProps> = ({ children, ...props }) => {
   return (
     <Dialog
+      disableScrollLock={true}
       sx={{
         "& .MuiDialog-paper": {
           minWidth: "500px",
