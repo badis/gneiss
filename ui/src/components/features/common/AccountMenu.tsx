@@ -1,3 +1,6 @@
+import { FC, useState } from "react";
+import { useTheme } from "@mui/material";
+
 import { PersonIcon, SettingsIcon, SignoutIcon } from "@/components/icons";
 import {
   Avatar,
@@ -10,8 +13,6 @@ import {
   MenuItem,
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
-import { useTheme } from "@mui/material";
-import { FC, useState } from "react";
 
 interface AccountMenuProps {}
 const AccountMenu: FC<AccountMenuProps> = () => {

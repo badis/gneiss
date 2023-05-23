@@ -37,12 +37,6 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
           overflow: "visible",
           filter: "drop-shadow(0px 0px 3px #dadada)",
           mt: 1.5,
-          "& .MuiAvatar-root": {
-            width: 32,
-            height: 32,
-            ml: -0.5,
-            mr: 1,
-          },
           "&:before": {
             content: '""',
             display: "block",

@@ -1,12 +1,13 @@
-import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Box, Skeleton } from "@/components/presentational";
-import { useSession } from "@/hooks/use-session";
-import { useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import { AccountMenu } from "@/components/features/common";
 import { Wall } from "@/components/features/dashboard";
+import { Skeleton } from "@/components/presentational";
+import { useSession } from "@/hooks/use-session";
+import styles from "@/styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
