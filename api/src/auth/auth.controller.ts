@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { User } from '@/users/entities';
+import { UsersService } from '@/users/users.service';
 
 import { AuthService } from './auth.service';
 import { Public, getCurrentUser, getCurrentUserId } from './decorators';
@@ -23,7 +24,10 @@ import { Tokens } from './types';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Public()
   @Post('signup')
@@ -52,8 +56,11 @@ export class AuthController {
 
   @Get('current-user')
   @HttpCode(HttpStatus.OK)
-  currentUser(@getCurrentUser() user: User) {
-    return user;
+  async currentUser(@getCurrentUser() user: User) {
+    const { id, username, email } = await this.usersService.findOne(
+      user['sub'],
+    );
+    return { id, username, email };
   }
 
   @Post('signout')

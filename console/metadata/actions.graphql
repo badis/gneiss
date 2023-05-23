@@ -63,6 +63,7 @@ type SigninOutput {
 }
 
 type CurrentUser {
+  id: Int
   username: String
   response: ErrorResponse
 }

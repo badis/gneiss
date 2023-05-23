@@ -18,12 +18,14 @@ actions:
           action: transform
           template: |-
             {
+              "id": $body?.id,
               "username": $body?.username,
               "response": $body?.response
             }
         template_engine: Kriti
         version: 2
     permissions:
+      - role: frontend_user
       - role: anonymous
     comment: Get current user
   - name: refresh
@@ -48,7 +50,7 @@ actions:
         template_engine: Kriti
         version: 2
     permissions:
-      - role: anonymous
+      - role: frontend_user
     comment: Generate new access and refresh tokens
   - name: requestPassword
     definition:
@@ -74,8 +76,6 @@ actions:
             }
         template_engine: Kriti
         version: 2
-    permissions:
-      - role: anonymous
     comment: Request new password
   - name: resetPassword
     definition:
@@ -102,8 +102,6 @@ actions:
             }
         template_engine: Kriti
         version: 2
-    permissions:
-      - role: anonymous
   - name: signin
     definition:
       kind: synchronous
@@ -153,7 +151,7 @@ actions:
         template_engine: Kriti
         version: 2
     permissions:
-      - role: anonymous
+      - role: frontend_user
     comment: Sign out a user
   - name: signup
     definition:

@@ -60,14 +60,14 @@ export class AuthService {
     email: string,
   ): Promise<Tokens> {
     const payload = {
-      sub: id,
+      sub: `${id}`,
       username,
       email,
       'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': ['user'],
-        'x-hasura-default-role': 'user',
-        'x-hasura-role': 'user',
-        'x-hasura-user-id': id,
+        'x-hasura-allowed-roles': ['anonymous', 'frontend_user'],
+        'x-hasura-default-role': 'anonymous',
+        'x-hasura-role': 'frontend_user',
+        'x-hasura-user-id': `${id}`,
       },
     };
 

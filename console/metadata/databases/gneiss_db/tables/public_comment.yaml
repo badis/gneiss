@@ -2,14 +2,16 @@ table:
   name: comment
   schema: public
 insert_permissions:
-  - role: anonymous
+  - role: frontend_user
     permission:
       check: {}
+      set:
+        user_id: x-hasura-user-id
       columns:
         - message
         - post_id
 select_permissions:
-  - role: anonymous
+  - role: frontend_user
     permission:
       columns:
         - created_at
@@ -17,8 +19,11 @@ select_permissions:
         - message
         - post_id
         - updated_at
+        - user_id
       filter: {}
 delete_permissions:
-  - role: anonymous
+  - role: frontend_user
     permission:
-      filter: {}
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

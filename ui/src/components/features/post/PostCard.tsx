@@ -12,11 +12,19 @@ import {
   Divider,
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
+import { useSession } from "@/hooks/use-session";
 
 interface PostCardProps {
   post: TPost;
 }
 export const PostCard: FC<PostCardProps> = ({ post }) => {
+  const {
+    session: { currentUser },
+  } = useSession();
+
+  const myLike = post.likes.find((l) => l.user_id == currentUser.id);
+  const liked = !!myLike;
+
   return (
     <Card>
       <CardHeader
@@ -37,10 +45,7 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         <Box>{post.message}</Box>
       </CardContent>
       <CardActions>
-        <Like
-          post_id={post.id}
-          like_id={post.likes.length > 0 ? post.likes[0].id : undefined}
-        />
+        <Like post_id={post.id} liked={liked} like_id={myLike?.id} />
         <Comment post_id={post.id} />
       </CardActions>
     </Card>
