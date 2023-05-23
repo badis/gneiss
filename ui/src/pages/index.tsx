@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Container, Skeleton } from "@/components/presentational";
+import { Box, Skeleton } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { AccountMenu, Wall } from "@/components/features/dashboard";
+import { AccountMenu } from "@/components/features/common";
+import { Wall } from "@/components/features/dashboard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,10 +34,8 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={`${styles.main} ${inter.className}`}>
-          <Container>
-            <AccountMenu />
-            <Wall />
-          </Container>
+          <AccountMenu />
+          <Wall />
         </main>
       </>
     );
