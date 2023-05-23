@@ -4,8 +4,6 @@ import {
   Menu,
   MenuItem,
   MenuItemProps,
-  MenuList,
-  MenuListProps,
   MenuProps,
 } from "@mui/material";
 import { FC } from "react";
@@ -14,7 +12,6 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
   return (
     <Menu
       elevation={1}
-      disableScrollLock={true}
       sx={{
         "& .MuiPaper-root": {
           boxShadow: "0 0 3px #dadada",
@@ -31,32 +28,6 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
           },
         },
       }}
-      PaperProps={{
-        elevation: 0,
-        sx: {
-          overflow: "visible",
-          filter: "drop-shadow(0px 0px 3px #dadada)",
-          mt: 1.5,
-          "& .MuiAvatar-root": {
-            width: 32,
-            height: 32,
-            ml: -0.5,
-            mr: 1,
-          },
-          "&:before": {
-            content: '""',
-            display: "block",
-            position: "absolute",
-            top: 0,
-            right: 14,
-            width: 10,
-            height: 10,
-            bgcolor: "background.paper",
-            transform: "translateY(-50%) rotate(45deg)",
-            zIndex: 0,
-          },
-        },
-      }}
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       {...props}
@@ -67,12 +38,6 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
 };
 
 export { StyledMenu as Menu };
-
-const StyledMenuList: FC<MenuListProps> = ({ children, ...props }) => {
-  return <MenuList {...props}>{children}</MenuList>;
-};
-
-export { StyledMenuList as MenuList };
 
 const StyledMenuItem: FC<MenuItemProps> = ({ children, ...props }) => {
   return (
