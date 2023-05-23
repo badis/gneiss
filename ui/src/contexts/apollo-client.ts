@@ -1,3 +1,4 @@
+// NOT USED !
 // ./apollo-client.ts
 
 import { ApolloClient, InMemoryCache } from "@apollo/client";

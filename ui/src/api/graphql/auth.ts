@@ -28,6 +28,7 @@ export interface RequestPasswordOutput {
 }
 
 export interface CurrentUser {
+  id: number;
   username: string;
 }
 
@@ -81,6 +82,7 @@ export const SIGNOUT = gql`
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     currentUser {
+      id
       username
       response {
         error

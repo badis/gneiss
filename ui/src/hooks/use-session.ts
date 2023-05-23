@@ -8,6 +8,7 @@ import { useApolloClient } from "@apollo/client";
 
 export interface CurrentUser {
   // TODO: add more fields for current user
+  id: number;
   username: string;
 }
 
@@ -15,6 +16,9 @@ export interface Session {
   accessToken: string;
   refreshToken: string;
   currentUser: CurrentUser;
+  isAuthenticated: boolean;
+  loading: boolean;
+  signout: () => Promise<any>;
 }
 
 export function useSession() {
@@ -71,8 +75,8 @@ export function useSession() {
       if (!loadingCurrentUserData && currentUserData) {
         setLoading(false);
         if (currentUserData.currentUser?.username) {
-          const { username } = currentUserData.currentUser;
-          setCurrentUser({ username });
+          const { id, username } = currentUserData.currentUser;
+          setCurrentUser({ id, username });
         } else {
           if (currentUserData.currentUser?.response) {
             const { statusCode } = currentUserData.currentUser?.response;
@@ -87,6 +91,9 @@ export function useSession() {
                 break;
             }
             // window.location.href = "/";
+          }
+          if (currentUserData.currentUser?.errors) {
+            console.log(currentUserData.currentUser?.errors);
           }
         }
       }
@@ -105,16 +112,12 @@ export function useSession() {
   const signout = async () => {
     try {
       await signoutOnServer();
-    } catch (e) {
-      console.error("Error occured: unable to sign out on server", e);
-    }
-    try {
       await client.clearStore();
+      clearLocalStorage();
+      window.location.href = "/auth/signin";
     } catch (e) {
-      console.error("Error occured: unable to clear apollo store", e);
+      console.error("Error occured: unable to sign out", e);
     }
-    clearLocalStorage();
-    router.push("/auth/signin");
   };
 
   return {
@@ -125,6 +128,6 @@ export function useSession() {
       refreshToken,
       currentUser,
       signout,
-    },
+    } as Session,
   };
 }

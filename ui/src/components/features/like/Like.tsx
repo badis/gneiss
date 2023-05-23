@@ -7,8 +7,9 @@ import { FC } from "react";
 interface LikeProps {
   post_id: number;
   like_id?: number;
+  liked: boolean;
 }
-export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
+export const Like: FC<LikeProps> = ({ post_id, like_id, liked }) => {
   const [createLike] = useMutation(CREATE_LIKE, {
     refetchQueries: ["GetPosts"],
   });
@@ -18,7 +19,7 @@ export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
   });
 
   const handleToggleLike = async () => {
-    if (like_id) {
+    if (liked) {
       try {
         await deleteLike({ variables: { id: like_id } });
       } catch (e) {
@@ -26,7 +27,7 @@ export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
       }
     } else {
       try {
-        await createLike({ variables: { post_id: post_id } });
+        await createLike({ variables: { post_id } });
       } catch (e) {
         console.error("Error occured: not able to like");
       }
@@ -35,7 +36,7 @@ export const Like: FC<LikeProps> = ({ post_id, like_id }) => {
 
   return (
     <IconButton onClick={handleToggleLike}>
-      {like_id ? (
+      {liked ? (
         <FavoriteIcon fontSize="small" color="primary" />
       ) : (
         <FavoriteBorderIcon fontSize="small" />

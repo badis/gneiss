@@ -20,6 +20,8 @@ export const GET_POSTS = gql`
       updated_at
       likes {
         id
+        post_id
+        user_id
       }
     }
   }
@@ -34,10 +36,13 @@ export const GET_POST_BY_ID = gql`
       updated_at
       likes {
         id
+        post_id
+        user_id
       }
       comments(order_by: { created_at: asc }) {
         id
         post_id
+        user_id
         message
         created_at
         updated_at

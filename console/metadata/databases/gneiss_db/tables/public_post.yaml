@@ -17,28 +17,21 @@ array_relationships:
           name: like
           schema: public
 insert_permissions:
-  - role: anonymous
+  - role: frontend_user
     permission:
       check: {}
+      set:
+        user_id: x-hasura-User-Id
       columns:
         - message
 select_permissions:
-  - role: anonymous
+  - role: frontend_user
     permission:
       columns:
         - created_at
         - id
         - message
         - updated_at
-      filter: {}
-update_permissions:
-  - role: anonymous
-    permission:
-      columns:
-        - message
-      filter: {}
-      check: {}
-delete_permissions:
-  - role: anonymous
-    permission:
-      filter: {}
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

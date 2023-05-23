@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useMemo } from "react";
+import { PropsWithChildren, useMemo } from "react";
 import {
   ApolloClient,
   ApolloLink,
@@ -21,16 +21,27 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
   if (refresh) {
     token = refreshToken;
   }
-
   const client = useMemo(() => {
     const authMiddleware = new ApolloLink((operation, forward) => {
       // add the authorization to the headers
-      operation.setContext(({ headers = {} }) => ({
-        headers: {
-          ...headers,
-          authorization: token ? `Bearer ${token}` : "",
-        },
-      }));
+      operation.setContext(({ headers = {} }) => {
+        if (token) {
+          return {
+            headers: {
+              ...headers,
+              Authorization: `Bearer ${token}`,
+              "x-hasura-role": "frontend_user",
+            },
+          };
+        } else {
+          return {
+            headers: {
+              ...headers,
+              "x-hasura-role": "anonymous",
+            },
+          };
+        }
+      });
 
       return forward(operation);
     });

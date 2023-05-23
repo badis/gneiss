@@ -18,7 +18,6 @@ import {
   Typography,
 } from "@/components/presentational";
 import { SIGNIN } from "@/api/graphql/auth";
-import { useRouter } from "next/router";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 
 const validationSchema = Yup.object({
@@ -37,7 +36,6 @@ export const Signin: FC<SigninProps> = () => {
   const [, setAccessToken] = useLocalStorage("accessToken");
   const [, setRefreshToken] = useLocalStorage("refreshToken");
 
-  const router = useRouter();
   const [signin] = useMutation(SIGNIN);
 
   const handleCloseSnackbar = () => {

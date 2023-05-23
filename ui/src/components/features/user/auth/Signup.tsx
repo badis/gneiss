@@ -75,7 +75,7 @@ export const Signup: FC<SignupProps> = () => {
             message: "Signed up successfully. redirecting ...",
             severity: "success",
           });
-          router.push("/");
+          window.location.href = "/";
           return;
         }
         if (response.data?.signup.response) {
