@@ -88,9 +88,7 @@ export function useSession() {
                 break;
             }
           }
-          if (currentUserData.currentUser?.errors) {
-            console.log(currentUserData.currentUser?.errors);
-          }
+          console.error(currentUserData);
         }
       }
     }
