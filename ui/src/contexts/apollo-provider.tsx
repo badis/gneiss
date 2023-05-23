@@ -7,24 +7,24 @@ import {
   InMemoryCache,
   from,
 } from "@apollo/client";
-import { useLocalStorage } from "@/hooks/use-local-storage";
 
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL_API_URL,
 });
 
 export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
-  const [accessToken] = useLocalStorage("accessToken");
-  const [refreshToken] = useLocalStorage("refreshToken");
-  const [refresh] = useLocalStorage("refresh");
-  let token = accessToken;
-  if (refresh) {
-    token = refreshToken;
-  }
   const client = useMemo(() => {
     const authMiddleware = new ApolloLink((operation, forward) => {
-      // add the authorization to the headers
       operation.setContext(({ headers = {} }) => {
+        const accessToken = localStorage.getItem("accessToken") || null;
+        const refreshToken = localStorage.getItem("refreshToken") || null;
+        const refresh = localStorage.getItem("refresh") || null;
+
+        let token = accessToken ? JSON.parse(accessToken) : accessToken;
+        if (refresh) {
+          token = refreshToken ? JSON.parse(refreshToken) : refreshToken;
+        }
+
         if (token) {
           return {
             headers: {
@@ -50,7 +50,7 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
       link: from([authMiddleware, httpLink]),
       cache: new InMemoryCache(),
     });
-  }, [token]);
+  }, []);
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

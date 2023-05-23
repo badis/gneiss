@@ -7,7 +7,6 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 
 export interface CurrentUser {
-  // TODO: add more fields for current user
   id: number;
   username: string;
 }
@@ -40,8 +39,7 @@ export function useSession() {
   const [getNewRefreshToken, { loading: refreshing, data: refreshTokenData }] =
     useLazyQuery(REFRESH_TOKEN);
 
-  const [signoutOnServer, { loading: signingout, data: signoutResponse }] =
-    useLazyQuery(SIGNOUT);
+  const [signoutOnServer] = useLazyQuery(SIGNOUT);
 
   useEffect(() => {
     if (refresh) {
@@ -58,10 +56,8 @@ export function useSession() {
             case 401: // Unauthorized
               signout();
               break;
-            case 403: // Forbidden
-              // console.log(statusCode);
-              break;
             default:
+              console.error(statusCode);
               break;
           }
         }
@@ -88,9 +84,9 @@ export function useSession() {
                 }
                 break;
               default:
+                console.error(statusCode);
                 break;
             }
-            // window.location.href = "/";
           }
           if (currentUserData.currentUser?.errors) {
             console.log(currentUserData.currentUser?.errors);
@@ -114,7 +110,7 @@ export function useSession() {
       await signoutOnServer();
       await client.clearStore();
       clearLocalStorage();
-      window.location.href = "/auth/signin";
+      router.push("/auth/signin");
     } catch (e) {
       console.error("Error occured: unable to sign out", e);
     }

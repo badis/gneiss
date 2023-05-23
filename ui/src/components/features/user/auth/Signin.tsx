@@ -19,6 +19,7 @@ import {
 } from "@/components/presentational";
 import { SIGNIN } from "@/api/graphql/auth";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useRouter } from "next/router";
 
 const validationSchema = Yup.object({
   username: Yup.string().required("Username is required"),
@@ -27,6 +28,7 @@ const validationSchema = Yup.object({
 
 interface SigninProps {}
 export const Signin: FC<SigninProps> = () => {
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState<{
@@ -65,8 +67,7 @@ export const Signin: FC<SigninProps> = () => {
             severity: "success",
           });
 
-          // Hard reload on redirect to allow Apollo detect access token saved in local storage
-          window.location.href = "/";
+          router.push("/");
           return;
         }
         if (response.data?.signin.response) {
