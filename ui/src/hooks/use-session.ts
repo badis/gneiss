@@ -7,7 +7,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 
 export interface CurrentUser {
-  // TODO: add more fields for current user
+  id: number;
   username: string;
 }
 
@@ -15,6 +15,9 @@ export interface Session {
   accessToken: string;
   refreshToken: string;
   currentUser: CurrentUser;
+  isAuthenticated: boolean;
+  loading: boolean;
+  signout: () => Promise<any>;
 }
 
 export function useSession() {
@@ -36,8 +39,7 @@ export function useSession() {
   const [getNewRefreshToken, { loading: refreshing, data: refreshTokenData }] =
     useLazyQuery(REFRESH_TOKEN);
 
-  const [signoutOnServer, { loading: signingout, data: signoutResponse }] =
-    useLazyQuery(SIGNOUT);
+  const [signoutOnServer] = useLazyQuery(SIGNOUT);
 
   useEffect(() => {
     if (refresh) {
@@ -54,10 +56,8 @@ export function useSession() {
             case 401: // Unauthorized
               signout();
               break;
-            case 403: // Forbidden
-              // console.log(statusCode);
-              break;
             default:
+              console.error(statusCode);
               break;
           }
         }
@@ -71,8 +71,8 @@ export function useSession() {
       if (!loadingCurrentUserData && currentUserData) {
         setLoading(false);
         if (currentUserData.currentUser?.username) {
-          const { username } = currentUserData.currentUser;
-          setCurrentUser({ username });
+          const { id, username } = currentUserData.currentUser;
+          setCurrentUser({ id, username });
         } else {
           if (currentUserData.currentUser?.response) {
             const { statusCode } = currentUserData.currentUser?.response;
@@ -84,10 +84,11 @@ export function useSession() {
                 }
                 break;
               default:
+                console.error(statusCode);
                 break;
             }
-            // window.location.href = "/";
           }
+          console.error(currentUserData);
         }
       }
     }
@@ -105,16 +106,12 @@ export function useSession() {
   const signout = async () => {
     try {
       await signoutOnServer();
-    } catch (e) {
-      console.error("Error occured: unable to sign out on server", e);
-    }
-    try {
       await client.clearStore();
+      clearLocalStorage();
+      router.push("/auth/signin");
     } catch (e) {
-      console.error("Error occured: unable to clear apollo store", e);
+      console.error("Error occured: unable to sign out", e);
     }
-    clearLocalStorage();
-    router.push("/auth/signin");
   };
 
   return {
@@ -125,6 +122,6 @@ export function useSession() {
       refreshToken,
       currentUser,
       signout,
-    },
+    } as Session,
   };
 }
