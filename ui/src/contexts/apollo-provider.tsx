@@ -7,12 +7,15 @@ import {
   InMemoryCache,
   from,
 } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL_API_URL,
 });
 
 export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
+
   const client = useMemo(() => {
     const authMiddleware = new ApolloLink((operation, forward) => {
       operation.setContext(({ headers = {} }) => {
@@ -20,12 +23,10 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
         const refreshToken = localStorage.getItem("refreshToken") || null;
         const refresh = localStorage.getItem("refresh") || null;
 
-        let token = accessToken ? JSON.parse(accessToken) : accessToken;
-        if (refresh) {
-          token = refreshToken ? JSON.parse(refreshToken) : refreshToken;
-        }
+        let token = "";
 
-        if (token) {
+        if (!refresh && accessToken) {
+          token = JSON.parse(accessToken);
           return {
             headers: {
               ...headers,
@@ -33,17 +34,29 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
               "x-hasura-role": "frontend_user",
             },
           };
-        } else {
+        }
+
+        if (refresh && refreshToken) {
+          token = refreshToken ? JSON.parse(refreshToken) : refreshToken;
           return {
             headers: {
               ...headers,
-              "x-hasura-role": "anonymous",
+              Refresh: `Bearer ${token}`,
             },
           };
         }
+
+        return {
+          headers,
+        };
       });
 
-      return forward(operation);
+      return forward(operation).map((data) => {
+        if (data && data.errors) {
+          console.error(data.errors);
+        }
+        return data;
+      });
     });
 
     return new ApolloClient({
