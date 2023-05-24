@@ -7,6 +7,7 @@ export {
   FavoriteBorder as FavoriteBorderIcon,
   Logout as SignoutIcon,
   MoreVert as MoreVertIcon,
-  Person as PersonIcon,
-  Settings as SettingsIcon,
+  ManageAccounts as MyAccountIcon,
+  Person as MyProfileIcon,
+  Settings as AdministrationIcon,
 } from "@mui/icons-material";

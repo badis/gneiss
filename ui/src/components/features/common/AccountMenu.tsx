@@ -1,7 +1,12 @@
 import { FC, useState } from "react";
 import { useTheme } from "@mui/material";
 
-import { PersonIcon, SettingsIcon, SignoutIcon } from "@/components/icons";
+import {
+  AdministrationIcon,
+  MyAccountIcon,
+  MyProfileIcon,
+  SignoutIcon,
+} from "@/components/icons";
 import {
   Avatar,
   Box,
@@ -83,20 +88,29 @@ const AccountMenu: FC<AccountMenuProps> = () => {
           onClick={handleClose}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          bgcolor={theme.palette.primary.main}
+          color={theme.palette.primary.contrastText}
         >
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
-              <PersonIcon fontSize="small" />
+              <MyProfileIcon fontSize="small" />
             </ListItemIcon>
             My profile
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
-              <SettingsIcon fontSize="small" />
+              <MyAccountIcon fontSize="small" />
             </ListItemIcon>
-            Settings
+            My account
           </MenuItem>
-          <Divider />
+          <Divider sx={{ bgcolor: theme.palette.primary.main }} />
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <AdministrationIcon fontSize="small" />
+            </ListItemIcon>
+            Administration
+          </MenuItem>
+          <Divider sx={{ bgcolor: theme.palette.primary.main }} />
           <MenuItem onClick={signout}>
             <ListItemIcon>
               <SignoutIcon fontSize="small" />
