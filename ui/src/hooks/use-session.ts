@@ -30,71 +30,83 @@ export function useSession() {
   const [currentUser, setCurrentUser, removeCurrentUser] =
     useLocalStorage("user");
 
+  const isAuthenticated = !!currentUser?.username && !!accessToken;
+
   const router = useRouter();
   const client = useApolloClient();
 
-  const { data: currentUserData, loading: loadingCurrentUserData } =
-    useQuery(GET_CURRENT_USER);
+  const {
+    data: currentUserData,
+    loading: fetchingCurrentUser,
+    error: fetchingCurrentUserError,
+  } = useQuery(GET_CURRENT_USER);
 
-  const [getNewRefreshToken, { loading: refreshing, data: refreshTokenData }] =
-    useLazyQuery(REFRESH_TOKEN);
+  const [
+    refreshAccessToken,
+    {
+      data: newAccessTokenData,
+      loading: refreshingAccessToken,
+      error: refreshingAccessTokenError,
+    },
+  ] = useLazyQuery(REFRESH_TOKEN);
 
   const [signoutOnServer] = useLazyQuery(SIGNOUT);
 
   useEffect(() => {
-    if (refresh) {
-      getNewRefreshToken();
-      setLoading(false);
-      if (refreshTokenData?.refresh?.accessToken) {
-        setAccessToken(refreshTokenData.refresh.accessToken);
-        setRefreshToken(refreshTokenData.refresh.refreshToken);
-        removeRefresh();
-      } else {
-        if (refreshTokenData?.refresh?.response) {
-          const { statusCode } = refreshTokenData?.refresh?.response;
-          switch (statusCode) {
-            case 401: // Unauthorized
-              signout();
-              break;
-            default:
-              console.error(statusCode);
-              break;
-          }
-        }
-      }
+    if (fetchingCurrentUserError && !refresh) {
+      removeAccessToken();
+      router.reload();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh, refreshing, refreshTokenData]);
+  }, [fetchingCurrentUserError]);
 
   useEffect(() => {
-    if (!refresh) {
-      if (!loadingCurrentUserData && currentUserData) {
+    if (currentUserData && !refresh) {
+      if (currentUserData?.currentUser.username) {
+        const { id, username } = currentUserData.currentUser;
+        setCurrentUser({ id, username });
         setLoading(false);
-        if (currentUserData.currentUser?.username) {
-          const { id, username } = currentUserData.currentUser;
-          setCurrentUser({ id, username });
+      }
+
+      if (currentUserData?.currentUser.response) {
+        removeAccessToken();
+        if (refreshToken) {
+          setRefresh(true);
         } else {
-          if (currentUserData.currentUser?.response) {
-            const { statusCode } = currentUserData.currentUser?.response;
-            switch (statusCode) {
-              case 401: // Unauthorized
-                if (refreshToken) {
-                  setRefresh(true);
-                  window.location.reload();
-                }
-                break;
-              default:
-                console.error(statusCode);
-                break;
-            }
-          }
-          console.error(currentUserData);
+          // signout();
+          setLoading(false);
         }
       }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingCurrentUserData, currentUserData]);
+  }, [currentUserData]);
+
+  useEffect(() => {
+    if (refresh && refreshingAccessTokenError) {
+      // signout();
+      // setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshingAccessTokenError]);
+
+  useEffect(() => {
+    if (refresh) {
+      refreshAccessToken();
+      if (newAccessTokenData) {
+        if (newAccessTokenData?.refresh?.accessToken) {
+          setAccessToken(newAccessTokenData.refresh.accessToken);
+          setRefreshToken(newAccessTokenData.refresh.refreshToken);
+          removeRefresh();
+          router.reload();
+        } else {
+          signout();
+        }
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh, newAccessTokenData]);
 
   const clearLocalStorage = () => {
     removeAccessToken();
@@ -104,19 +116,26 @@ export function useSession() {
   };
 
   const signout = async () => {
+    if (isAuthenticated) {
+      try {
+        await signoutOnServer();
+      } catch (e) {
+        console.error("Error occured: unable to sign out on server", e);
+      }
+    }
+
     try {
-      await signoutOnServer();
       await client.clearStore();
       clearLocalStorage();
       router.push("/auth/signin");
     } catch (e) {
-      console.error("Error occured: unable to sign out", e);
+      console.error("Error occured: unable to sign out on client", e);
     }
   };
 
   return {
     session: {
-      isAuthenticated: !!currentUser?.username && !!accessToken,
+      isAuthenticated,
       loading,
       accessToken,
       refreshToken,

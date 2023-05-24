@@ -51,6 +51,7 @@ actions:
         version: 2
     permissions:
       - role: frontend_user
+      - role: anonymous
     comment: Generate new access and refresh tokens
   - name: requestPassword
     definition:
