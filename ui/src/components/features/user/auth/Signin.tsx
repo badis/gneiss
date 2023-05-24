@@ -63,7 +63,7 @@ export const Signin: FC<SigninProps> = () => {
           formik.resetForm();
           setSubmitting(false);
           setOpenSnackbar({
-            message: "Signed up successfully. redirecting ...",
+            message: "Signed in successfully. redirecting ...",
             severity: "success",
           });
 

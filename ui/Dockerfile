@@ -1,4 +1,5 @@
-# Use debian version of node instead of alpine because Cypress requires some dependencies that are unavailable for Alpine image.
+# Use debian version of node instead of alpine because Cypress requires some dependencies 
+# that are not available for Alpine image.
 FROM node:20
 
 RUN apt-get update
