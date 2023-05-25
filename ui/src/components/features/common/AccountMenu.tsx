@@ -92,6 +92,7 @@ const AccountMenu: FC<AccountMenuProps> = () => {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar
+              src="https://badis.github.io/assets/photo.png"
               sx={{
                 width: 32,
                 height: 32,
