@@ -16,9 +16,11 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  Typography,
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface AccountMenuProps {}
 const AccountMenu: FC<AccountMenuProps> = () => {
@@ -60,10 +62,27 @@ const AccountMenu: FC<AccountMenuProps> = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
             textAlign: "center",
           }}
         >
+          <Link href="/">
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  height: "40px",
+                  width: "40px",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  display: "inline-block",
+                  margin: "5px",
+                }}
+              ></Box>
+              <Typography variant="h1" color="white">
+                Gneiss
+              </Typography>
+            </Box>
+          </Link>
           <IconButton
             onClick={handleClick}
             size="small"

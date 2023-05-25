@@ -107,6 +107,7 @@ const theme = createTheme({
     fontSize: 14,
     h1: {
       fontSize: "22px",
+      fontWeight: fontWeights.Bold,
     },
     h2: {
       fontSize: "20px",
@@ -119,9 +120,11 @@ const theme = createTheme({
     },
     subtitle2: {
       fontSize: "20px",
+      fontWeight: fontWeights.SemiBold,
     },
     body1: {
       fontSize: "14px",
+      fontWeight: fontWeights.Light,
     },
     body2: {
       fontSize: "12px",

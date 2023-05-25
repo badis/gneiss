@@ -31,8 +31,16 @@ const StyledCardHeader: FC<CardHeaderProps> = (props) => {
   return <CardHeader sx={{ padding: 0 }} {...props} />;
 };
 
-const StyledCardContent: FC<CardContentProps> = ({ children }) => {
-  return <CardContent sx={{ padding: 0 }}>{children}</CardContent>;
+const StyledCardContent: FC<CardContentProps> = ({
+  children,
+  sx,
+  ...props
+}) => {
+  return (
+    <CardContent sx={{ padding: 0, ...sx }} {...props}>
+      {children}
+    </CardContent>
+  );
 };
 
 const StyledCardMedia: FC<CardMediaProps> = ({ children, ...props }) => {
