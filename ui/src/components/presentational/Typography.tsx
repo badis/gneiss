@@ -1,8 +1,9 @@
 import { Typography, TypographyProps } from "@mui/material";
+import { CommonProps } from "@mui/material/OverridableComponent";
 import { ElementType, FC } from "react";
 
 interface OwnProps {
-  component: ElementType<any>;
+  component?: ElementType<any>;
 }
 const StyledTypography: FC<TypographyProps & OwnProps> = ({
   children,
@@ -10,7 +11,7 @@ const StyledTypography: FC<TypographyProps & OwnProps> = ({
   ...props
 }) => {
   return (
-    <Typography component={component} {...props}>
+    <Typography {...{ component }} {...props}>
       {children}
     </Typography>
   );

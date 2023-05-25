@@ -18,12 +18,14 @@ import {
   MenuItem,
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
+import { useRouter } from "next/router";
 
 interface AccountMenuProps {}
 const AccountMenu: FC<AccountMenuProps> = () => {
   const {
-    session: { signout },
+    session: { currentUser, signout },
   } = useSession();
+  const router = useRouter();
 
   const theme = useTheme();
 
@@ -35,6 +37,10 @@ const AccountMenu: FC<AccountMenuProps> = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const gotoMyProfile = () => {
+    router.push("/" + currentUser.username);
   };
 
   return (
@@ -91,7 +97,7 @@ const AccountMenu: FC<AccountMenuProps> = () => {
           bgcolor={theme.palette.primary.main}
           color={theme.palette.primary.contrastText}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={gotoMyProfile}>
             <ListItemIcon>
               <MyProfileIcon fontSize="small" />
             </ListItemIcon>
