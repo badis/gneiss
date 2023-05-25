@@ -35,3 +35,12 @@ select_permissions:
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+update_permissions:
+  - role: frontend_user
+    permission:
+      columns:
+        - message
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

@@ -38,8 +38,8 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
           }}
         >
           <Avatar
-            alt="Remy Sharp"
-            src="https://mui.com/static/images/avatar/1.jpg"
+            alt="Badis Merabet"
+            src="https://badis.github.io/assets/photo.png"
             sx={{
               width: 150,
               height: 150,
