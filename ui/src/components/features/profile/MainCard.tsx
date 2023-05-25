@@ -60,7 +60,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
             }}
           >
             <Box>
-              <Typography variant="subtitle2">Badis Merabet</Typography>
+              <Typography variant="h4">Badis Merabet</Typography>
               <Typography variant="body1" color="text.secondary">
                 @{username}
               </Typography>

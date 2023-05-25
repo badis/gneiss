@@ -2,7 +2,7 @@ import { Open_Sans } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
 export const roboto = Open_Sans({
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   display: "swap",
   fallback: ["Helvetica", "Arial", "sans-serif"],
@@ -14,6 +14,7 @@ export const fontWeights = {
   Medium: 500,
   SemiBold: 600,
   Bold: 700,
+  ExtraBold: 800,
 };
 
 const grays = {
@@ -107,27 +108,31 @@ const theme = createTheme({
     fontSize: 14,
     h1: {
       fontSize: "22px",
-      fontWeight: fontWeights.Bold,
+      fontWeight: fontWeights.ExtraBold,
     },
     h2: {
       fontSize: "20px",
+      fontWeight: fontWeights.Bold,
     },
     h4: {
       fontSize: "18px",
+      fontWeight: fontWeights.SemiBold,
     },
     subtitle1: {
       fontSize: "22px",
+      fontWeight: fontWeights.SemiBold,
     },
     subtitle2: {
       fontSize: "20px",
-      fontWeight: fontWeights.SemiBold,
+      fontWeight: fontWeights.Medium,
     },
     body1: {
       fontSize: "14px",
-      fontWeight: fontWeights.Light,
+      fontWeight: fontWeights.Normal,
     },
     body2: {
       fontSize: "12px",
+      fontWeight: fontWeights.Light,
     },
   },
   breakpoints: {
