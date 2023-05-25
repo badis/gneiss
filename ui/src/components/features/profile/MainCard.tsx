@@ -27,7 +27,6 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
         <CardMedia
           sx={{ height: 140, borderRadius: "4px" }}
           image="https://www.aquasabi.de/media/image/product/9211/lg/black-rocks.jpg"
-          title="green iguana"
         />
         <CardContent
           sx={{
