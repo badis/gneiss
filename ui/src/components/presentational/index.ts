@@ -4,6 +4,7 @@ export * from "./Box";
 export * from "./Button";
 export * from "./Card";
 export * from "./Container";
+export * from "./DatePicker";
 export * from "./Dialog";
 export * from "./Divider";
 export * from "./Grid";

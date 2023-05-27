@@ -1,11 +1,10 @@
-import { Profile } from "@/components/features/profile";
+import { Inter } from "next/font/google";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
-import Head from "next/head";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Container } from "@mui/material";
+import styles from "@/styles/layout.module.css";
 import { AccountMenu } from "@/components/features/common";
+import { Profile } from "@/components/features/user/profile";
 
 const inter = Inter({ subsets: ["latin"] });
 

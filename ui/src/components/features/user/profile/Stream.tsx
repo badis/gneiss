@@ -1,8 +1,9 @@
-import { GET_POSTS, TPost } from "@/api/graphql/post";
-import { Container, Skeleton } from "@/components/presentational";
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
-import { PostCard, PostCreateForm } from "@/components/features/post";
+
+import { GET_POSTS, TPost } from "@/api/graphql/post";
+import { PostCard } from "@/components/features/post";
+import { Container, Skeleton } from "@/components/presentational";
 
 interface StreamProps {}
 const Stream: FC<StreamProps> = () => {

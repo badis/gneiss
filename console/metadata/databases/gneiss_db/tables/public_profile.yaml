@@ -1,3 +1,35 @@
 table:
   name: profile
   schema: public
+select_permissions:
+  - role: frontend_user
+    permission:
+      columns:
+        - about
+        - birthday
+        - country
+        - firstname
+        - gender
+        - lastname
+        - mobile
+        - title
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: frontend_user
+    permission:
+      columns:
+        - about
+        - birthday
+        - country
+        - firstname
+        - gender
+        - lastname
+        - mobile
+        - title
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

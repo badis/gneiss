@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/layout.module.css";
 import { Header } from "@/components/header";
 import { Container } from "@mui/material";
 

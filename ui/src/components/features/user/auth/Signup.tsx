@@ -20,6 +20,7 @@ import {
 import { SIGNUP } from "@/api/graphql/auth";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { fontWeights } from "@/theme";
 
 const validationSchema = Yup.object({
   username: Yup.string().required("Username is required"),
@@ -105,7 +106,7 @@ export const Signup: FC<SignupProps> = () => {
                 <Typography
                   variant="h2"
                   component="h2"
-                  sx={{ marginBottom: "10px" }}
+                  sx={{ marginBottom: "10px", fontWeight: fontWeights.Light }}
                 >
                   <strong>Sign</strong> up
                 </Typography>

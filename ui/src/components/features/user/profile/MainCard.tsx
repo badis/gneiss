@@ -8,12 +8,19 @@ import {
   Container,
   Typography,
 } from "@/components/presentational";
+import { useRouter } from "next/router";
 import { FC } from "react";
 
 interface MainCardProps {
   username: string;
 }
 const MainCard: FC<MainCardProps> = ({ username }) => {
+  const router = useRouter();
+
+  const gotoEditProfile = () => {
+    router.push("/settings/profile");
+  };
+
   return (
     <Container>
       <Card
@@ -34,6 +41,9 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
             paddingLeft: "180px",
             paddingTop: "15px",
             minHeight: "80px",
+            "&:last-child": {
+              paddingBottom: 0,
+            },
           }}
         >
           <Avatar
@@ -56,6 +66,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
               justifyContent: "space-between",
               alignItems: "flex-end",
               marginRight: "15px",
+              minHeight: "50px",
             }}
           >
             <Box>
@@ -64,7 +75,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
                 @{username}
               </Typography>
             </Box>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" onClick={gotoEditProfile}>
               Edit profile
             </Button>
           </Box>

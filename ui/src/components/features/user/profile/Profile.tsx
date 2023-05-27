@@ -1,5 +1,5 @@
-import { Container } from "@/components/presentational";
 import { FC } from "react";
+
 import { MainCard } from "./MainCard";
 import { Stream } from "./Stream";
 
