@@ -2,6 +2,8 @@ import { gql } from "@apollo/client";
 
 export interface TProfile {
   user_id: number;
+  guid: string;
+  username: string;
   firstname: string;
   lastname: string;
   title: string;
@@ -14,6 +16,8 @@ export interface TProfile {
 
 export const PROFILE_FIELDS = gql`
   fragment ProfileFields on profile {
+    guid
+    username
     firstname
     lastname
     title
@@ -57,10 +61,20 @@ export const UPDATE_PROFILE = gql`
   }
 `;
 
-export const GET_PROFILE = gql`
+export const GET_PROFILE_BY_ID = gql`
   ${PROFILE_FIELDS}
-  query GetProfile($user_id: Int!) {
+  query GetProfileById($user_id: Int!) {
     profile: profile_by_pk(user_id: $user_id) {
+      user_id
+      ...ProfileFields
+    }
+  }
+`;
+
+export const GET_PROFILE_BY_USERNAME = gql`
+  ${PROFILE_FIELDS}
+  query GetProfileByUsername($username: String!) {
+    profiles: profile(where: { username: { _eq: $username } }) {
       user_id
       ...ProfileFields
     }

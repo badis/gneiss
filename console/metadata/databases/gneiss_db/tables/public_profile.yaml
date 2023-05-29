@@ -10,13 +10,13 @@ select_permissions:
         - country
         - firstname
         - gender
+        - guid
         - lastname
         - mobile
         - title
         - user_id
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+        - username
+      filter: {}
 update_permissions:
   - role: frontend_user
     permission:

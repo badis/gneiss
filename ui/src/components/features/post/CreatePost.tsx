@@ -16,12 +16,14 @@ const validationSchema = Yup.object({
   message: Yup.string().required("Write something!"),
 });
 
-interface PostCreateFormProps {}
-const PostCreateForm: FC<PostCreateFormProps> = () => {
+interface PostCreateFormProps {
+  origin: "profile" | "wall";
+}
+const PostCreateForm: FC<PostCreateFormProps> = ({ origin }) => {
   const [submitting, setSubmitting] = useState(false);
 
   const [createPost] = useMutation(CREATE_POST, {
-    refetchQueries: ["GetPosts"],
+    refetchQueries: [origin === "profile" ? "GetPostsByUser" : "GetAllPosts"],
   });
 
   const formik = useFormik({

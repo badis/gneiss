@@ -45,8 +45,8 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         <Box>{post.message}</Box>
       </CardContent>
       <CardActions>
-        <Like post_id={post.id} liked={liked} like_id={myLike?.id} />
-        <Comment post_id={post.id} />
+        <Like post={post} liked={liked} like_id={myLike?.id} />
+        <Comment post={post} />
       </CardActions>
     </Card>
   );

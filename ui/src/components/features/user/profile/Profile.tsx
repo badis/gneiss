@@ -7,10 +7,12 @@ interface ProfileProps {
   username: string;
 }
 const Profile: FC<ProfileProps> = ({ username }) => {
+  if (!username) return <></>;
+
   return (
     <>
       <MainCard username={username} />
-      <Stream />
+      <Stream username={username} />
     </>
   );
 };

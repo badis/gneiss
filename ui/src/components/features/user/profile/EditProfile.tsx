@@ -4,7 +4,11 @@ import { DateTime } from "luxon";
 import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
 
-import { GET_PROFILE, TProfile, UPDATE_PROFILE } from "@/api/graphql/profile";
+import {
+  GET_PROFILE_BY_ID,
+  TProfile,
+  UPDATE_PROFILE,
+} from "@/api/graphql/profile";
 import {
   Alert,
   AlertColor,
@@ -42,12 +46,12 @@ const EditProfile: FC<EditProfileProps> = () => {
   } = useSession();
 
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
-    refetchQueries: ["GetProfile"],
+    refetchQueries: ["GetProfileById", "GetProfileByUsername"],
   });
 
   const [fetchProfile, { data: profileData }] = useLazyQuery<{
     profile: TProfile;
-  }>(GET_PROFILE);
+  }>(GET_PROFILE_BY_ID);
 
   useEffect(() => {
     if (currentUser) {

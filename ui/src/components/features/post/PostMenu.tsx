@@ -71,7 +71,7 @@ export const PostMenu: FC<PostMenuProps> = ({ post }) => {
         onClose={handleCloseEditPostModal}
       />
       <DeletePostDialog
-        id={post.id}
+        post={post}
         open={openDeletePostDialog}
         onClose={handleCloseDeletePostDialog}
       />

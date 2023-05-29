@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { FC, useState } from "react";
-import { DELETE_POST } from "@/api/graphql/post";
+import { DELETE_POST, TPost } from "@/api/graphql/post";
 import {
   AlertColor,
   Button,
@@ -13,12 +13,12 @@ import {
 } from "@/components/presentational";
 
 interface DeletePostDialogProps {
-  id: number;
+  post: TPost;
   open: boolean;
   onClose: () => void;
 }
 export const DeletePostDialog: FC<DeletePostDialogProps> = ({
-  id,
+  post,
   open,
   onClose,
 }) => {
@@ -29,7 +29,9 @@ export const DeletePostDialog: FC<DeletePostDialogProps> = ({
   } | null>(null);
 
   const [deletePost] = useMutation(DELETE_POST, {
-    refetchQueries: ["GetPosts"],
+    refetchQueries: [
+      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
+    ],
   });
 
   const handleCloseSnackbar = () => {
@@ -39,7 +41,7 @@ export const DeletePostDialog: FC<DeletePostDialogProps> = ({
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      const response = await deletePost({ variables: { id } });
+      const response = await deletePost({ variables: { id: post.id } });
       if (response.data?.delete_post_by_pk.id) {
         setOpenSnackbar({
           message: "Post successfully deleted",

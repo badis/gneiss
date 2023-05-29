@@ -9,11 +9,31 @@ export interface TPost {
   updated_at: string;
   likes: Array<TLike>;
   comments: Array<TComment>;
+  origin: "profile" | "wall";
 }
 
-export const GET_POSTS = gql`
-  query GetPosts {
+export const GET_ALL_POSTS = gql`
+  query GetAllPosts {
     posts: post(order_by: { created_at: desc }, limit: 5, offset: 0) {
+      id
+      message
+      created_at
+      updated_at
+      likes {
+        id
+        post_id
+        user_id
+      }
+    }
+  }
+`;
+
+export const GET_POSTS_BY_USER = gql`
+  query GetPostsByUser($username: String!) {
+    posts: post(
+      where: { user: { username: { _eq: $username } } }
+      order_by: { created_at: desc }
+    ) {
       id
       message
       created_at
