@@ -47,6 +47,8 @@ update_permissions:
         user_id:
           _eq: X-Hasura-User-Id
       check: null
+      set:
+        user_id: x-hasura-user-id
 delete_permissions:
   - role: frontend_user
     permission:

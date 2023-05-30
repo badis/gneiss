@@ -10,9 +10,11 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  Typography,
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { useSession } from "@/hooks/use-session";
+import { useTheme } from "@mui/material";
 
 interface PostCardProps {
   post: TPost;
@@ -22,8 +24,13 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
     session: { currentUser },
   } = useSession();
 
+  const theme = useTheme();
+
   const myLike = post.likes.find((l) => l.user_id == currentUser.id);
   const liked = !!myLike;
+
+  const { firstname, lastname } = post.user.profiles[0];
+  const fullname = firstname + " " + lastname;
 
   return (
     <Card>
@@ -31,11 +38,16 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         action={<PostMenu post={post} />}
         subheader={
           <Box>
-            <Box component="span" sx={{ fontSize: "12px" }}>
-              {timeAgo(post.created_at)}
-            </Box>
-            <Box component="span" sx={{ fontSize: "12px" }}>
-              {post.created_at !== post.updated_at ? " (edited)" : null}
+            <Typography variant="subtitle1" color={theme.palette.grey[900]}>
+              {fullname}
+            </Typography>
+            <Box>
+              <Box component="span" sx={{ fontSize: "12px" }}>
+                {timeAgo(post.created_at)}
+              </Box>
+              <Box component="span" sx={{ fontSize: "12px" }}>
+                {post.created_at !== post.updated_at ? " (edited)" : null}
+              </Box>
             </Box>
           </Box>
         }

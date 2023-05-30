@@ -3,7 +3,13 @@ import { useQuery } from "@apollo/client";
 import { useTheme } from "@mui/material";
 import { GET_POST_BY_ID, TPost } from "@/api/graphql/post";
 import { CommentMenu, CreateComment } from "@/components/features/comment";
-import { Box, Dialog, DialogContent, Grid } from "@/components/presentational";
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  Grid,
+  Typography,
+} from "@/components/presentational";
 import { timeAgoShort } from "@/utils/datetime";
 
 interface CommentDialogProps {
@@ -40,7 +46,13 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                 borderRight: "1px solid #efefef",
               }}
             >
-              {message}
+              <Box
+                sx={{
+                  paddingRight: "20px",
+                }}
+              >
+                {message}
+              </Box>
             </Box>
           </Grid>
 
@@ -59,6 +71,9 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                 }}
               >
                 {comments.map((comment, index) => {
+                  const { firstname, lastname } = comment.user.profiles[0];
+                  const fullname = firstname + " " + lastname;
+
                   return (
                     <Box sx={{ marginTop: "20px" }} key={index}>
                       <Box>
@@ -69,9 +84,26 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                             justifyContent: "space-between",
                           }}
                         >
-                          <Box component="span" sx={{ fontSize: "12px" }}>
-                            {/* <strong>Badis Merabet</strong> . */}
-                            {" " + timeAgoShort(comment.created_at)}
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <Typography
+                              variant="subtitle2"
+                              color={theme.palette.grey[900]}
+                            >
+                              {fullname}
+                            </Typography>
+
+                            <Box
+                              component="span"
+                              sx={{ fontSize: "12px", paddingLeft: "5px" }}
+                            >
+                              {/* <strong>Badis Merabet</strong> . */}
+                              {" . " + timeAgoShort(comment.created_at)}
+                            </Box>
                           </Box>
 
                           <CommentMenu comment={comment} />
@@ -80,6 +112,7 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                           sx={{
                             fontSize: "12px",
                             color: theme.palette.grey[700],
+                            paddingRight: "15px",
                           }}
                         >
                           {comment.message}

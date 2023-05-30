@@ -9,14 +9,21 @@ import {
 } from "@/components/presentational";
 import { DeleteIcon, MoreVertIcon } from "@/components/icons";
 import { DeleteCommentDialog } from "@/components/features/comment/DeleteCommentDialog";
+import { useSession } from "@/hooks/use-session";
 
 interface CommentMenuProps {
   comment: TComment;
 }
 export const CommentMenu: FC<CommentMenuProps> = ({ comment }) => {
+  const {
+    session: { currentUser },
+  } = useSession();
+
   const [openDeletePostDialog, setOpenDeletePostDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
+
+  if (currentUser.id !== comment.user_id) return <></>;
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
@@ -36,7 +43,7 @@ export const CommentMenu: FC<CommentMenuProps> = ({ comment }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{ position: "relative", top: "-5px" }}>
       <IconButton onClick={handleClick}>
         <MoreVertIcon fontSize="small" />
       </IconButton>

@@ -10,15 +10,22 @@ import {
   Menu,
   MenuItem,
 } from "@/components/presentational";
+import { useSession } from "@/hooks/use-session";
 
 interface PostMenuProps {
   post: TPost;
 }
 export const PostMenu: FC<PostMenuProps> = ({ post }) => {
+  const {
+    session: { currentUser },
+  } = useSession();
+
   const [openEditPostModal, setOpenEditPostModal] = useState(false);
   const [openDeletePostDialog, setOpenDeletePostDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
+
+  if (currentUser.id !== post.user_id) return <></>;
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);

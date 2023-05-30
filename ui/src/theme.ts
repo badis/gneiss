@@ -118,13 +118,17 @@ const theme = createTheme({
       fontSize: "18px",
       fontWeight: fontWeights.SemiBold,
     },
+    h6: {
+      fontSize: "16px",
+      fontWeight: fontWeights.Bold,
+    },
     subtitle1: {
-      fontSize: "22px",
-      fontWeight: fontWeights.SemiBold,
+      fontSize: "14px",
+      fontWeight: fontWeights.Bold,
     },
     subtitle2: {
-      fontSize: "20px",
-      fontWeight: fontWeights.Medium,
+      fontSize: "12px",
+      fontWeight: fontWeights.SemiBold,
     },
     body1: {
       fontSize: "14px",
