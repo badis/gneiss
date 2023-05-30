@@ -137,7 +137,7 @@ const EditProfile: FC<EditProfileProps> = () => {
       <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
         <Card>
           <CardContent>
-            <Typography variant="h2" sx={{ marginBottom: "10px" }}>
+            <Typography variant="h2" sx={{ marginBottom: "20px" }}>
               Profile
             </Typography>
             <Grid container spacing={2}>
