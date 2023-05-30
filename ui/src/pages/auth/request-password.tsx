@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function SigninPage() {
+export default function RequestPasswordPage() {
   const router = useRouter();
   const {
     session: { isAuthenticated, loading },
