@@ -10,6 +10,7 @@ export * from "./Divider";
 export * from "./Grid";
 export * from "./Link";
 export * from "./Menu";
+export * from "./Popper";
 export * from "./Skeleton";
 export * from "./Snackbar";
 export * from "./Stack";
