@@ -11,6 +11,7 @@ export interface TComment {
     profiles: Array<{
       firstname: string;
       lastname: string;
+      username: string;
     }>;
   };
 }
@@ -26,6 +27,7 @@ export const COMMENT_FIELDS = gql`
       profiles {
         firstname
         lastname
+        username
       }
     }
   }

@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { FC } from "react";
+import { useTheme } from "@mui/material";
+
 import { TPost } from "@/api/graphql/post";
 import { Comment } from "@/components/features/comment";
 import { Like } from "@/components/features/like";
@@ -14,7 +17,6 @@ import {
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { useSession } from "@/hooks/use-session";
-import { useTheme } from "@mui/material";
 
 interface PostCardProps {
   post: TPost;
@@ -29,7 +31,7 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
   const myLike = post.likes.find((l) => l.user_id == currentUser.id);
   const liked = !!myLike;
 
-  const { firstname, lastname } = post.user.profiles[0];
+  const { firstname, lastname, username } = post.user.profiles[0];
   const fullname = firstname + " " + lastname;
 
   return (
@@ -38,9 +40,11 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         action={<PostMenu post={post} />}
         subheader={
           <Box>
-            <Typography variant="subtitle1" color={theme.palette.grey[900]}>
-              {fullname}
-            </Typography>
+            <Link href={"/" + username}>
+              <Typography variant="subtitle1" color={theme.palette.grey[900]}>
+                {fullname}
+              </Typography>
+            </Link>
             <Box>
               <Box component="span" sx={{ fontSize: "12px" }}>
                 {timeAgo(post.created_at)}

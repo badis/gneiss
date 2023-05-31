@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC } from "react";
 import { useQuery } from "@apollo/client";
 import { useTheme } from "@mui/material";
@@ -71,7 +72,8 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                 }}
               >
                 {comments.map((comment, index) => {
-                  const { firstname, lastname } = comment.user.profiles[0];
+                  const { firstname, lastname, username } =
+                    comment.user.profiles[0];
                   const fullname = firstname + " " + lastname;
 
                   return (
@@ -90,12 +92,14 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                               flexDirection: "row",
                             }}
                           >
-                            <Typography
-                              variant="subtitle2"
-                              color={theme.palette.grey[900]}
-                            >
-                              {fullname}
-                            </Typography>
+                            <Link href={"/" + username}>
+                              <Typography
+                                variant="subtitle2"
+                                color={theme.palette.grey[900]}
+                              >
+                                {fullname}
+                              </Typography>
+                            </Link>
 
                             <Box
                               component="span"

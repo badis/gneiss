@@ -12,7 +12,7 @@ export interface TPost {
   origin: "profile" | "wall";
   user_id: number;
   user: {
-    profiles: Array<{ firstname: string; lastname: string }>;
+    profiles: Array<{ firstname: string; lastname: string; username: string }>;
   };
 }
 
@@ -37,6 +37,7 @@ export const POST_FIELDS = gql`
       profiles {
         firstname
         lastname
+        username
       }
     }
   }
