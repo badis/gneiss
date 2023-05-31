@@ -112,7 +112,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
               }}
             >
               <Box>
-                <Typography variant="h4">{fullname}</Typography>
+                <Typography variant="h2">{fullname}</Typography>
                 <Typography variant="body1" color="text.secondary">
                   @{username}
                 </Typography>
