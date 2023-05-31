@@ -101,7 +101,6 @@ export const CommentDialog: FC<CommentDialogProps> = ({
                               component="span"
                               sx={{ fontSize: "12px", paddingLeft: "5px" }}
                             >
-                              {/* <strong>Badis Merabet</strong> . */}
                               {" . " + timeAgoShort(comment.created_at)}
                             </Box>
                           </Box>
