@@ -19,6 +19,7 @@ import {
 } from "@/components/presentational";
 import { RESET_PASSWORD } from "@/api/graphql/auth";
 import { useRouter } from "next/router";
+import { fontWeights } from "@/theme";
 
 const validationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
@@ -115,7 +116,7 @@ export const ResetPassword: FC<ResetPasswordProps> = () => {
                 <Typography
                   variant="h2"
                   component="h2"
-                  sx={{ marginBottom: "30px" }}
+                  sx={{ marginBottom: "30px", fontWeight: fontWeights.Light }}
                 >
                   <strong>Reset</strong> password
                 </Typography>

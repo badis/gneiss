@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { TComment } from "./comment";
+import { COMMENT_FIELDS, TComment } from "./comment";
 import { TLike } from "./like";
 
 export interface TPost {
@@ -9,44 +9,69 @@ export interface TPost {
   updated_at: string;
   likes: Array<TLike>;
   comments: Array<TComment>;
+  origin: "profile" | "wall";
+  user_id: number;
+  user: {
+    profiles: Array<{ firstname: string; lastname: string; username: string }>;
+  };
 }
 
-export const GET_POSTS = gql`
-  query GetPosts {
-    posts: post(order_by: { created_at: desc }, limit: 5, offset: 0) {
+export const POST_FIELDS = gql`
+  ${COMMENT_FIELDS}
+  fragment PostFields on post {
+    id
+    message
+    created_at
+    updated_at
+    user_id
+    likes {
       id
-      message
-      created_at
-      updated_at
-      likes {
-        id
-        post_id
-        user_id
+      post_id
+      user_id
+    }
+    comments(order_by: { created_at: asc }) {
+      id
+      ...CommentFields
+    }
+    user {
+      profiles {
+        firstname
+        lastname
+        username
       }
     }
   }
 `;
 
+export const GET_ALL_POSTS = gql`
+  ${POST_FIELDS}
+  query GetAllPosts {
+    posts: post(order_by: { created_at: desc }) {
+      id
+      ...PostFields
+    }
+  }
+`;
+
+export const GET_POSTS_BY_USER = gql`
+  ${POST_FIELDS}
+  query GetPostsByUser($username: String!) {
+    posts: post(
+      where: { user: { username: { _eq: $username } } }
+      order_by: { created_at: desc }
+    ) {
+      id
+      ...PostFields
+    }
+  }
+`;
+
 export const GET_POST_BY_ID = gql`
+  ${POST_FIELDS}
   query GetPostById($id: Int!) {
     post: post_by_pk(id: $id) {
       id
-      message
-      created_at
-      updated_at
-      likes {
-        id
-        post_id
-        user_id
-      }
-      comments(order_by: { created_at: asc }) {
-        id
-        post_id
-        user_id
-        message
-        created_at
-        updated_at
-      }
+      ...PostFields
     }
   }
 `;
@@ -55,8 +80,6 @@ export const CREATE_POST = gql`
   mutation CreatePost($message: String!) {
     insert_post_one(object: { message: $message }) {
       id
-      message
-      created_at
     }
   }
 `;
@@ -65,7 +88,6 @@ export const UPDATE_POST = gql`
   mutation UpdatePost($id: Int!, $message: String!) {
     update_post_by_pk(pk_columns: { id: $id }, _set: { message: $message }) {
       id
-      message
     }
   }
 `;

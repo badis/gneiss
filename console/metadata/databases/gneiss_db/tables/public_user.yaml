@@ -1,15 +1,18 @@
 table:
   name: user
   schema: public
+array_relationships:
+  - name: profiles
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: profile
+          schema: public
 select_permissions:
   - role: frontend_user
     permission:
       columns:
-        - email
-        - hashed_refresh_token
         - id
-        - password
         - username
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+      filter: {}

@@ -1,6 +1,7 @@
 - "!include public_comment.yaml"
 - "!include public_like.yaml"
 - "!include public_post.yaml"
+- "!include public_profile.yaml"
 - "!include public_user.yaml"
 - "!include public_user_password_reset_token.yaml"
 - "!include public_user_status.yaml"

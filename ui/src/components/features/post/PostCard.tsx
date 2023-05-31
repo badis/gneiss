@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { FC } from "react";
+import { useTheme } from "@mui/material";
+
 import { TPost } from "@/api/graphql/post";
 import { Comment } from "@/components/features/comment";
 import { Like } from "@/components/features/like";
@@ -10,6 +13,7 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  Typography,
 } from "@/components/presentational";
 import { timeAgo } from "@/utils/datetime";
 import { useSession } from "@/hooks/use-session";
@@ -22,8 +26,13 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
     session: { currentUser },
   } = useSession();
 
+  const theme = useTheme();
+
   const myLike = post.likes.find((l) => l.user_id == currentUser.id);
   const liked = !!myLike;
+
+  const { firstname, lastname, username } = post.user.profiles[0];
+  const fullname = firstname + " " + lastname;
 
   return (
     <Card>
@@ -31,11 +40,18 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         action={<PostMenu post={post} />}
         subheader={
           <Box>
-            <Box component="span" sx={{ fontSize: "12px" }}>
-              {timeAgo(post.created_at)}
-            </Box>
-            <Box component="span" sx={{ fontSize: "12px" }}>
-              {post.created_at !== post.updated_at ? " (edited)" : null}
+            <Link href={"/" + username}>
+              <Typography variant="subtitle1" color={theme.palette.grey[900]}>
+                {fullname}
+              </Typography>
+            </Link>
+            <Box>
+              <Box component="span" sx={{ fontSize: "12px" }}>
+                {timeAgo(post.created_at)}
+              </Box>
+              <Box component="span" sx={{ fontSize: "12px" }}>
+                {post.created_at !== post.updated_at ? " (edited)" : null}
+              </Box>
             </Box>
           </Box>
         }
@@ -45,8 +61,8 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
         <Box>{post.message}</Box>
       </CardContent>
       <CardActions>
-        <Like post_id={post.id} liked={liked} like_id={myLike?.id} />
-        <Comment post_id={post.id} />
+        <Like post={post} liked={liked} like_id={myLike?.id} />
+        <Comment post={post} />
       </CardActions>
     </Card>
   );

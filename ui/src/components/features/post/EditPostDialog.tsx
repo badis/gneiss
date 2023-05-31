@@ -35,7 +35,9 @@ export const EditPostDialog: FC<EditPostDialogProps> = ({
   } | null>(null);
 
   const [updatePost] = useMutation(UPDATE_POST, {
-    refetchQueries: ["GetPosts"],
+    refetchQueries: [
+      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
+    ],
   });
   const handleCloseSnackbar = () => {
     setOpenSnackbar(null);

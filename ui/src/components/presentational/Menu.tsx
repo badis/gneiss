@@ -10,13 +10,25 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
+interface MyMenuProps extends MenuProps {
+  bgcolor?: string;
+  color?: string;
+}
+
+const StyledMenu: FC<MyMenuProps> = ({
+  children,
+  bgcolor,
+  color,
+  ...props
+}) => {
   return (
     <Menu
       elevation={1}
       disableScrollLock={true}
       sx={{
         "& .MuiPaper-root": {
+          bgcolor: bgcolor,
+          color: color,
           boxShadow: "0 0 3px #dadada",
           minWidth: "150px",
           "& .MuiMenu": {
@@ -26,6 +38,7 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
             fontSize: "default",
             padding: "4px 12px",
             "& .MuiListItemIcon-root": {
+              color: color,
               minWidth: "25px",
             },
           },
@@ -45,7 +58,7 @@ const StyledMenu: FC<MenuProps> = ({ children, ...props }) => {
             right: 14,
             width: 10,
             height: 10,
-            bgcolor: "background.paper",
+            bgcolor: bgcolor ?? "white",
             transform: "translateY(-50%) rotate(45deg)",
             zIndex: 0,
           },
