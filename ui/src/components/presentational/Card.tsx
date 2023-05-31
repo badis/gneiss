@@ -6,6 +6,8 @@ import {
   CardContentProps,
   CardHeader,
   CardHeaderProps,
+  CardMedia,
+  CardMediaProps,
   CardProps,
 } from "@mui/material";
 import { FC } from "react";
@@ -29,8 +31,20 @@ const StyledCardHeader: FC<CardHeaderProps> = (props) => {
   return <CardHeader sx={{ padding: 0 }} {...props} />;
 };
 
-const StyledCardContent: FC<CardContentProps> = ({ children }) => {
-  return <CardContent sx={{ padding: 0 }}>{children}</CardContent>;
+const StyledCardContent: FC<CardContentProps> = ({
+  children,
+  sx,
+  ...props
+}) => {
+  return (
+    <CardContent sx={{ padding: 0, ...sx }} {...props}>
+      {children}
+    </CardContent>
+  );
+};
+
+const StyledCardMedia: FC<CardMediaProps> = ({ children, ...props }) => {
+  return <CardMedia {...props}>{children}</CardMedia>;
 };
 
 const StyledCardActions: FC<CardActionsProps> = ({ children }) => {
@@ -45,5 +59,6 @@ export {
   StyledCard as Card,
   StyledCardHeader as CardHeader,
   StyledCardContent as CardContent,
+  StyledCardMedia as CardMedia,
   StyledCardActions as CardActions,
 };

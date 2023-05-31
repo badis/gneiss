@@ -2,7 +2,7 @@ import { Colors } from "@/theme";
 import { TextField, TextFieldProps } from "@mui/material";
 import { FC } from "react";
 
-const StyledTextField: FC<TextFieldProps> = ({ sx, ...props }) => {
+const StyledTextField: FC<TextFieldProps> = ({ sx, SelectProps, ...props }) => {
   return (
     <TextField
       sx={{
@@ -25,6 +25,16 @@ const StyledTextField: FC<TextFieldProps> = ({ sx, ...props }) => {
           // },
         },
         ...sx,
+      }}
+      SelectProps={{
+        MenuProps: {
+          sx: {
+            "& .MuiPaper-root": {
+              boxShadow: "0 0 3px #dadada",
+            },
+          },
+        },
+        ...SelectProps,
       }}
       {...props}
     />

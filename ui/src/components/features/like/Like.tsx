@@ -1,21 +1,26 @@
 import { CREATE_LIKE, DELETE_LIKE } from "@/api/graphql/like";
+import { TPost } from "@/api/graphql/post";
 import { FavoriteBorderIcon, FavoriteIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
 import { useMutation } from "@apollo/client";
 import { FC } from "react";
 
 interface LikeProps {
-  post_id: number;
+  post: TPost;
   like_id?: number;
   liked: boolean;
 }
-export const Like: FC<LikeProps> = ({ post_id, like_id, liked }) => {
+export const Like: FC<LikeProps> = ({ post, like_id, liked }) => {
   const [createLike] = useMutation(CREATE_LIKE, {
-    refetchQueries: ["GetPosts"],
+    refetchQueries: [
+      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
+    ],
   });
 
   const [deleteLike] = useMutation(DELETE_LIKE, {
-    refetchQueries: ["GetPosts"],
+    refetchQueries: [
+      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
+    ],
   });
 
   const handleToggleLike = async () => {
@@ -27,7 +32,7 @@ export const Like: FC<LikeProps> = ({ post_id, like_id, liked }) => {
       }
     } else {
       try {
-        await createLike({ variables: { post_id } });
+        await createLike({ variables: { post_id: post.id } });
       } catch (e) {
         console.error("Error occured: not able to like");
       }

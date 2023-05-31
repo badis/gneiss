@@ -11,11 +11,11 @@ Gneiss is an open-source social network kit that allows you to build your own pr
 * **Likes**: Like/unlike posts
 * **Comments**: Create and delete comments on posts
 * **User management**: Sign in, sign up, sign out, reset password
+* **Wall**: Display posts on user wall
+* **Profile**: User profile
 
 ### TODO
 
-* **Profile**: User profile
-* **Wall**: Display posts on user wall
 * **Notifications**: Display internal and email notifications
 * **Spaces**: Dedicated place for a subset of users to connect and share privately
 * **Follow**: User can follow another user

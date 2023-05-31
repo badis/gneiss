@@ -1,7 +1,12 @@
 import { FC, useState } from "react";
 import { useTheme } from "@mui/material";
 
-import { PersonIcon, SettingsIcon, SignoutIcon } from "@/components/icons";
+import {
+  AdministrationIcon,
+  MyAccountIcon,
+  MyProfileIcon,
+  SignoutIcon,
+} from "@/components/icons";
 import {
   Avatar,
   Box,
@@ -11,14 +16,18 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  Typography,
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface AccountMenuProps {}
 const AccountMenu: FC<AccountMenuProps> = () => {
   const {
-    session: { signout },
+    session: { currentUser, signout },
   } = useSession();
+  const router = useRouter();
 
   const theme = useTheme();
 
@@ -30,6 +39,10 @@ const AccountMenu: FC<AccountMenuProps> = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const gotoMyProfile = () => {
+    router.push("/" + currentUser.username);
   };
 
   return (
@@ -49,10 +62,27 @@ const AccountMenu: FC<AccountMenuProps> = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
             textAlign: "center",
           }}
         >
+          <Link href="/">
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  height: "40px",
+                  width: "40px",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  display: "inline-block",
+                  margin: "5px",
+                }}
+              ></Box>
+              <Typography variant="h1" color="white">
+                Gneiss
+              </Typography>
+            </Box>
+          </Link>
           <IconButton
             onClick={handleClick}
             size="small"
@@ -62,6 +92,7 @@ const AccountMenu: FC<AccountMenuProps> = () => {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar
+              src="https://badis.github.io/assets/photo.png"
               sx={{
                 width: 32,
                 height: 32,
@@ -83,20 +114,29 @@ const AccountMenu: FC<AccountMenuProps> = () => {
           onClick={handleClose}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          bgcolor={theme.palette.primary.main}
+          color={theme.palette.primary.contrastText}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={gotoMyProfile}>
             <ListItemIcon>
-              <PersonIcon fontSize="small" />
+              <MyProfileIcon fontSize="small" />
             </ListItemIcon>
             My profile
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
-              <SettingsIcon fontSize="small" />
+              <MyAccountIcon fontSize="small" />
             </ListItemIcon>
-            Settings
+            My account
           </MenuItem>
-          <Divider />
+          <Divider sx={{ bgcolor: theme.palette.primary.main }} />
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <AdministrationIcon fontSize="small" />
+            </ListItemIcon>
+            Administration
+          </MenuItem>
+          <Divider sx={{ bgcolor: theme.palette.primary.main }} />
           <MenuItem onClick={signout}>
             <ListItemIcon>
               <SignoutIcon fontSize="small" />

@@ -2,11 +2,12 @@ import { FC, useState } from "react";
 import { CommentDialog } from "@/components/features/comment";
 import { ChatBubbleOutlineRoundedIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
+import { TPost } from "@/api/graphql/post";
 
 interface CommentProps {
-  post_id: number;
+  post: TPost;
 }
-export const Comment: FC<CommentProps> = ({ post_id }) => {
+export const Comment: FC<CommentProps> = ({ post }) => {
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
   const handleOpenCommentDialog = () => {
@@ -25,7 +26,7 @@ export const Comment: FC<CommentProps> = ({ post_id }) => {
       <CommentDialog
         open={openCommentDialog}
         onClose={handleCloseCommentDialog}
-        post_id={post_id}
+        post_id={post.id}
       />
     </>
   );

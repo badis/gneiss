@@ -19,6 +19,7 @@ import {
 } from "@/components/presentational";
 import { REQUEST_PASSWORD, RequestPasswordOutput } from "@/api/graphql/auth";
 import { useRouter } from "next/router";
+import { fontWeights } from "@/theme";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Email is not valid").required("Email is required"),
@@ -103,7 +104,7 @@ export const RequestPassword: FC<RequestPasswordProps> = () => {
                 <Typography
                   variant="h2"
                   component="h2"
-                  sx={{ marginBottom: "10px" }}
+                  sx={{ marginBottom: "10px", fontWeight: fontWeights.Light }}
                 >
                   <strong>Password</strong> recovery
                 </Typography>
