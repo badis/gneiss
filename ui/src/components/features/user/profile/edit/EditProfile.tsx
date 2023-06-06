@@ -28,11 +28,16 @@ import {
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import { countries } from "@/utils/constants";
+import { PictureUploader } from "./PictureUploader";
+import { BannerUploader } from "./BannerUploader";
 
 const validationSchema = Yup.object({});
 
 interface EditProfileProps {}
 const EditProfile: FC<EditProfileProps> = () => {
+  const [banner, setBanner] = useState<File>();
+  const [picture, setPicture] = useState<File>();
+
   const [profile, setProfile] = useState<Partial<TProfile>>();
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -89,6 +94,11 @@ const EditProfile: FC<EditProfileProps> = () => {
 
     onSubmit: async (values) => {
       setSubmitting(true);
+
+      // TODO: Save profile picture here
+
+      // TODO: Save profile banner here
+
       const variables: Partial<TProfile> = {
         user_id: currentUser.id,
         firstname: Boolean(values.firstname) ? values.firstname : undefined,
@@ -132,6 +142,10 @@ const EditProfile: FC<EditProfileProps> = () => {
     setOpenSnackbar(null);
   };
 
+  const handlePictureChange = (pic: File) => {
+    setPicture(pic);
+  };
+
   return (
     <Container>
       <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
@@ -141,6 +155,16 @@ const EditProfile: FC<EditProfileProps> = () => {
               Profile
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={4} sm={3} md={2}>
+                <PictureUploader
+                  picture={picture}
+                  onPictureChange={handlePictureChange}
+                />
+              </Grid>
+              <Grid item xs={8} sm={9} md={10}>
+                <BannerUploader />
+              </Grid>
+
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   fullWidth={true}

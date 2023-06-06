@@ -1,11 +1,16 @@
 table:
   name: profile
   schema: public
+object_relationships:
+  - name: userById
+    using:
+      foreign_key_constraint_on: user_id
 select_permissions:
   - role: frontend_user
     permission:
       columns:
         - about
+        - banner
         - birthday
         - country
         - firstname
@@ -13,6 +18,7 @@ select_permissions:
         - guid
         - lastname
         - mobile
+        - picture
         - title
         - user_id
         - username

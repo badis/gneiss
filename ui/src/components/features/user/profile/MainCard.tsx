@@ -75,7 +75,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
         >
           <CardMedia
             sx={{ height: 140, borderRadius: "4px" }}
-            image="https://www.aquasabi.de/media/image/product/9211/lg/black-rocks.jpg"
+            image="/banner.jpg"
           />
           <CardContent
             sx={{
@@ -90,7 +90,7 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
           >
             <Avatar
               alt={fullname}
-              src="https://badis.github.io/assets/photo.png"
+              src="/photo2.webp"
               sx={{
                 width: 150,
                 height: 150,
