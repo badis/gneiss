@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { MainCard } from "./MainCard";
+import { MainCard } from "./main-card";
 import { Stream } from "./Stream";
 
 interface ProfileProps {

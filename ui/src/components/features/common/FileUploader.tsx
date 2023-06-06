@@ -3,10 +3,10 @@ import { IconButton } from "@/components/presentational";
 import { FC, useRef } from "react";
 
 interface FileUploaderProps {
-  accept: string;
+  image?: boolean;
   onChange: (f: File) => void;
 }
-const FileUploader: FC<FileUploaderProps> = ({ accept, onChange }) => {
+const FileUploader: FC<FileUploaderProps> = ({ image, onChange }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -17,6 +17,11 @@ const FileUploader: FC<FileUploaderProps> = ({ accept, onChange }) => {
     if (e.target.files && e.target.files.length > 0)
       onChange(e.target.files[0]);
   };
+
+  const accept =
+    image === true
+      ? "image/jpeg,image/jpg,image/png,image/webp"
+      : "image/*,audio/*,video/*,.pdf,.doc";
 
   return (
     <>

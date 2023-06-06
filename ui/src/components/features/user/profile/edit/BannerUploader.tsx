@@ -1,14 +1,20 @@
-import { DeleteIcon, UploadIcon } from "@/components/icons";
+import { FileUploader } from "@/components/features/common";
+import { DeleteIcon, ProfilePictureIcon } from "@/components/icons";
 import { Box, IconButton, Img } from "@/components/presentational";
 import { useTheme } from "@mui/material";
 import { FC } from "react";
 
-interface BannerUploaderProps {}
-const BannerUploader: FC<BannerUploaderProps> = (props) => {
+interface BannerUploaderProps {
+  banner?: File | string;
+  onBannerChange: (f: File) => void;
+  onRemoveProfileBanner: () => void;
+}
+const BannerUploader: FC<BannerUploaderProps> = ({
+  banner,
+  onBannerChange,
+  onRemoveProfileBanner,
+}) => {
   const theme = useTheme();
-
-  const handleUploadBanner = () => {};
-  const handleRemoveBanner = () => {};
 
   return (
     <Box
@@ -21,17 +27,31 @@ const BannerUploader: FC<BannerUploaderProps> = (props) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        overflow: "hidden",
       }}
     >
-      <Img
-        width={1200}
-        height={150}
-        src="/banner.jpg"
-        alt="Profile banner of Badis Merabet"
-        style={{
-          maxHeight: "150px",
-        }}
-      />
+      {banner && (
+        <Img
+          width={1200}
+          height={150}
+          src={typeof banner == "string" ? banner : URL.createObjectURL(banner)}
+          alt="Profile banner"
+          style={{
+            objectFit: "unset",
+          }}
+        />
+      )}
+      {!banner && (
+        <Img
+          width={1200}
+          height={150}
+          src="../banner.svg"
+          alt="Profile banner"
+          style={{
+            objectFit: "unset",
+          }}
+        />
+      )}
 
       <Box
         sx={{
@@ -43,14 +63,12 @@ const BannerUploader: FC<BannerUploaderProps> = (props) => {
           bgcolor: theme.palette.danger.contrastText,
         }}
       >
-        <IconButton sx={{}} onClick={handleUploadBanner}>
-          <UploadIcon fontSize="small" />
-        </IconButton>
+        <FileUploader image={true} onChange={onBannerChange} />
         <IconButton
           sx={{
             color: theme.palette.danger.main,
           }}
-          onClick={handleRemoveBanner}
+          onClick={onRemoveProfileBanner}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>

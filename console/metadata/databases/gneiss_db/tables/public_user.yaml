@@ -2,13 +2,6 @@ table:
   name: user
   schema: public
 array_relationships:
-  - name: files
-    using:
-      foreign_key_constraint_on:
-        column: user_id
-        table:
-          name: file
-          schema: public
   - name: profiles
     using:
       foreign_key_constraint_on:

@@ -12,6 +12,8 @@ export interface TProfile {
   country: string;
   gender: boolean;
   birthday: string;
+  picture: string;
+  banner: string;
 }
 
 export const PROFILE_FIELDS = gql`
@@ -26,6 +28,8 @@ export const PROFILE_FIELDS = gql`
     country
     gender
     birthday
+    picture
+    banner
   }
 `;
 

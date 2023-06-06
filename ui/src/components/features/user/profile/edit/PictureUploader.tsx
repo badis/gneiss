@@ -7,14 +7,14 @@ import { FC } from "react";
 interface PictureUploaderProps {
   picture?: File | string;
   onPictureChange: (f: File) => void;
+  onRemoveProfilePicture: () => void;
 }
 const PictureUploader: FC<PictureUploaderProps> = ({
   picture,
   onPictureChange,
+  onRemoveProfilePicture,
 }) => {
   const theme = useTheme();
-
-  const handleRemoveProfilePicture = () => {};
 
   return (
     <Box
@@ -36,7 +36,7 @@ const PictureUploader: FC<PictureUploaderProps> = ({
           src={
             typeof picture == "string" ? picture : URL.createObjectURL(picture)
           }
-          alt="Picture of Badis Merabet"
+          alt="Profile picture"
           style={{
             maxHeight: "150px",
           }}
@@ -58,12 +58,12 @@ const PictureUploader: FC<PictureUploaderProps> = ({
           bgcolor: theme.palette.danger.contrastText,
         }}
       >
-        <FileUploader accept="*/*" onChange={onPictureChange} />
+        <FileUploader image={true} onChange={onPictureChange} />
         <IconButton
           sx={{
             color: theme.palette.danger.main,
           }}
-          onClick={handleRemoveProfilePicture}
+          onClick={onRemoveProfilePicture}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
