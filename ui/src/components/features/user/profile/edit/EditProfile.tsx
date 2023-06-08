@@ -145,6 +145,48 @@ const EditProfile: FC<EditProfileProps> = () => {
         }
       }
 
+      if (profile?.picture && !picture) {
+        try {
+          const res = await removeFile(
+            "/files/profile/picture/" + profile?.picture,
+            accessToken
+          );
+          if (res && res.response.statusCode === 204) {
+            setPicture(undefined);
+            setOpenSnackbar({
+              message: "Profile picture removed successfully",
+              severity: "success",
+            });
+          }
+        } catch (e) {
+          setOpenSnackbar({
+            message: "Error occured: unable to remove profile picture",
+            severity: "error",
+          });
+        }
+      }
+
+      if (profile?.banner && !banner) {
+        try {
+          const res = await removeFile(
+            "/files/profile/banner/" + profile?.banner,
+            accessToken
+          );
+          if (res && res.response.statusCode === 204) {
+            setBanner(undefined);
+            setOpenSnackbar({
+              message: "Profile banner removed successfully",
+              severity: "success",
+            });
+          }
+        } catch (e) {
+          setOpenSnackbar({
+            message: "Error occured: unable to remove profile banner",
+            severity: "error",
+          });
+        }
+      }
+
       const variables: Partial<TProfile> = {
         user_id: currentUser.id,
         firstname: Boolean(values.firstname) ? values.firstname : undefined,
@@ -188,52 +230,12 @@ const EditProfile: FC<EditProfileProps> = () => {
     setOpenSnackbar(null);
   };
 
-  const handlePictureChange = (p: File) => {
+  const handlePictureChange = (p: File | undefined) => {
     setPicture(p);
   };
 
-  const handleRemovePicture = async () => {
-    if (typeof picture === "string") {
-      try {
-        const res = await removeFile(picture, accessToken);
-        if (res && res.response.statusCode === 204) {
-          setPicture(undefined);
-          setOpenSnackbar({
-            message: "Profile picture removed successfully",
-            severity: "success",
-          });
-        }
-      } catch (e) {
-        setOpenSnackbar({
-          message: "Error occured: unable to remove profile picture",
-          severity: "error",
-        });
-      }
-    }
-  };
-
-  const handleBannerChange = (b: File) => {
+  const handleBannerChange = (b: File | undefined) => {
     setBanner(b);
-  };
-
-  const handleRemoveBanner = async () => {
-    if (typeof banner === "string") {
-      try {
-        const res = await removeFile(banner, accessToken);
-        if (res && res.response.statusCode === 204) {
-          setBanner(undefined);
-          setOpenSnackbar({
-            message: "Profile banner removed successfully",
-            severity: "success",
-          });
-        }
-      } catch (e) {
-        setOpenSnackbar({
-          message: "Error occured: unable to remove profile banner",
-          severity: "error",
-        });
-      }
-    }
   };
 
   return (
@@ -249,7 +251,6 @@ const EditProfile: FC<EditProfileProps> = () => {
                 <PictureUploader
                   picture={picture}
                   onPictureChange={handlePictureChange}
-                  onRemoveProfilePicture={handleRemovePicture}
                 />
               </Grid>
               <Grid item xs={8} sm={9} md={10}>
@@ -257,7 +258,6 @@ const EditProfile: FC<EditProfileProps> = () => {
                   <BannerUploader
                     banner={banner}
                     onBannerChange={handleBannerChange}
-                    onRemoveProfileBanner={handleRemoveBanner}
                   />
                 }
               </Grid>

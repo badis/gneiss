@@ -6,13 +6,11 @@ import { FC } from "react";
 
 interface BannerUploaderProps {
   banner?: File | string;
-  onBannerChange: (f: File) => void;
-  onRemoveProfileBanner: () => void;
+  onBannerChange: (f: File | undefined) => void;
 }
 const BannerUploader: FC<BannerUploaderProps> = ({
   banner,
   onBannerChange,
-  onRemoveProfileBanner,
 }) => {
   const theme = useTheme();
 
@@ -68,7 +66,7 @@ const BannerUploader: FC<BannerUploaderProps> = ({
           sx={{
             color: theme.palette.danger.main,
           }}
-          onClick={onRemoveProfileBanner}
+          onClick={() => onBannerChange(undefined)}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>

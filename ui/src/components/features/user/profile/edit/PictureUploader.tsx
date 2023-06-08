@@ -6,13 +6,11 @@ import { FC } from "react";
 
 interface PictureUploaderProps {
   picture?: File | string;
-  onPictureChange: (f: File) => void;
-  onRemoveProfilePicture: () => void;
+  onPictureChange: (f: File | undefined) => void;
 }
 const PictureUploader: FC<PictureUploaderProps> = ({
   picture,
   onPictureChange,
-  onRemoveProfilePicture,
 }) => {
   const theme = useTheme();
 
@@ -63,7 +61,7 @@ const PictureUploader: FC<PictureUploaderProps> = ({
           sx={{
             color: theme.palette.danger.main,
           }}
-          onClick={onRemoveProfilePicture}
+          onClick={() => onPictureChange(undefined)}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
