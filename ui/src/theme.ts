@@ -36,11 +36,13 @@ export const Colors = {
 
 declare module "@mui/material/styles" {
   interface Palette {
+    danger: Palette["primary"];
     default: Palette["primary"];
   }
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
+    danger?: PaletteOptions["primary"];
     default?: PaletteOptions["primary"];
   }
 }
@@ -48,6 +50,7 @@ declare module "@mui/material/styles" {
 // @babel-ignore-comment-in-output Update the Button's color prop options
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
+    danger: true;
     default: true;
   }
 }
@@ -68,6 +71,10 @@ const theme = createTheme({
       contrastText: "#fff",
     },
     error: {
+      main: "#fc4a64",
+      contrastText: "#fff",
+    },
+    danger: {
       main: "#fc4a64",
       contrastText: "#fff",
     },

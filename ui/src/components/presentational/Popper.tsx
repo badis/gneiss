@@ -6,6 +6,7 @@ const StyledPopper: FC<PopperProps> = ({ children, ...props }) => {
     <Popper
       {...props}
       sx={{
+        zIndex: 2,
         "& .MuiPickersPopper-paper": {
           boxShadow: "0 0 3px #dadada",
         },

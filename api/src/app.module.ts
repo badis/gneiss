@@ -8,6 +8,7 @@ import { AppService } from '@/app.service';
 import { AuthModule } from '@/auth/auth.module';
 import { AtGuard } from '@/auth/guards';
 import { MailModule } from '@/mail/mail.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MailModule } from '@/mail/mail.module';
     // }),
     AuthModule,
     MailModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [

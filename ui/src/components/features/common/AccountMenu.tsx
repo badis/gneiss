@@ -1,10 +1,15 @@
-import { FC, useState } from "react";
+import { useQuery } from "@apollo/client";
 import { useTheme } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC, useState } from "react";
 
+import { GET_PROFILE_BY_USERNAME, TProfile } from "@/api/graphql/profile";
 import {
   AdministrationIcon,
   MyAccountIcon,
   MyProfileIcon,
+  ProfilePictureIcon,
   SignoutIcon,
 } from "@/components/icons";
 import {
@@ -19,8 +24,6 @@ import {
   Typography,
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
 interface AccountMenuProps {}
 const AccountMenu: FC<AccountMenuProps> = () => {
@@ -33,6 +36,18 @@ const AccountMenu: FC<AccountMenuProps> = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const { data, loading } = useQuery<{ profiles: TProfile[] }>(
+    GET_PROFILE_BY_USERNAME,
+    {
+      variables: {
+        username: currentUser?.username,
+      },
+    }
+  );
+
+  const profile = data?.profiles[0];
+  const fullname = (profile?.firstname ?? "") + " " + (profile?.lastname ?? "");
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -91,18 +106,29 @@ const AccountMenu: FC<AccountMenuProps> = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar
-              src="https://badis.github.io/assets/photo.png"
-              sx={{
-                width: 32,
-                height: 32,
-                fontSize: "12px",
-                color: `${theme.palette.primary.main}`,
-                bgcolor: `${theme.palette.primary.contrastText}`,
-              }}
-            >
-              BM
-            </Avatar>
+            {profile?.picture && (
+              <Avatar
+                alt={fullname}
+                src={"/files/profile/picture/" + profile?.picture}
+                sx={{
+                  width: 32,
+                  height: 32,
+                }}
+                variant="circular"
+              />
+            )}
+            {!profile?.picture && (
+              <ProfilePictureIcon
+                sx={{
+                  width: 32,
+                  height: 32,
+                  padding: "2px",
+                  borderRadius: "50%",
+                  color: theme.palette.grey[200],
+                  bgcolor: "white",
+                }}
+              />
+            )}
           </IconButton>
         </Box>
 

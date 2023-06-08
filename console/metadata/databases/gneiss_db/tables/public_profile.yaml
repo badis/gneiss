@@ -6,6 +6,7 @@ select_permissions:
     permission:
       columns:
         - about
+        - banner
         - birthday
         - country
         - firstname
@@ -13,6 +14,7 @@ select_permissions:
         - guid
         - lastname
         - mobile
+        - picture
         - title
         - user_id
         - username

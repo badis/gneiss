@@ -1,6 +1,9 @@
+import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
+import { FC } from "react";
+
 import { GET_PROFILE_BY_USERNAME, TProfile } from "@/api/graphql/profile";
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -10,15 +13,18 @@ import {
   Skeleton,
   Typography,
 } from "@/components/presentational";
-import { useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
-import { FC } from "react";
+import { useSession } from "@/hooks/use-session";
+
+import { ProfilePicture } from "./ProfilePicture";
 
 interface MainCardProps {
   username: string;
 }
 const MainCard: FC<MainCardProps> = ({ username }) => {
   const router = useRouter();
+  const {
+    session: { currentUser },
+  } = useSession();
 
   const { data, loading } = useQuery<{ profiles: TProfile[] }>(
     GET_PROFILE_BY_USERNAME,
@@ -74,8 +80,16 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
           }}
         >
           <CardMedia
-            sx={{ height: 140, borderRadius: "4px" }}
-            image="https://www.aquasabi.de/media/image/product/9211/lg/black-rocks.jpg"
+            sx={{
+              height: 140,
+              borderRadius: "4px 4px 0 0 ",
+              borderBottom: "1px solid #eeeeee",
+            }}
+            image={
+              profile?.banner
+                ? "/files/profile/picture/" + profile?.banner
+                : "./banner.svg"
+            }
           />
           <CardContent
             sx={{
@@ -88,20 +102,8 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
               },
             }}
           >
-            <Avatar
-              alt={fullname}
-              src="https://badis.github.io/assets/photo.png"
-              sx={{
-                width: 150,
-                height: 150,
-                top: "-75px",
-                left: "15px",
-                position: "absolute",
-                border: "4px solid white",
-                borderRadius: "8px",
-              }}
-              variant="rounded"
-            />
+            <ProfilePicture fullname={fullname} picture={profile?.picture} />
+
             <Box
               sx={{
                 display: "flex",
@@ -117,9 +119,15 @@ const MainCard: FC<MainCardProps> = ({ username }) => {
                   @{username}
                 </Typography>
               </Box>
-              <Button variant="outlined" size="small" onClick={gotoEditProfile}>
-                Edit profile
-              </Button>
+              {currentUser.id === profile?.user_id && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={gotoEditProfile}
+                >
+                  Edit profile
+                </Button>
+              )}
             </Box>
           </CardContent>
         </Card>

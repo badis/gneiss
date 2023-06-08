@@ -8,6 +8,7 @@ export * from "./DatePicker";
 export * from "./Dialog";
 export * from "./Divider";
 export * from "./Grid";
+export * from "./Image";
 export * from "./Link";
 export * from "./Menu";
 export * from "./Popper";
