@@ -2,6 +2,25 @@ import { UploadIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
 import { FC, useRef } from "react";
 
+const allowedImageMimeTypes = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+];
+
+const allowedFileMimeTypes = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+  "audio/mpeg",
+  "audio/mp4",
+  "video/mp4",
+  "video/webm",
+  "application/pdf",
+];
+
 interface FileUploaderProps {
   image?: boolean;
   onChange: (f: File) => void;
@@ -20,8 +39,8 @@ const FileUploader: FC<FileUploaderProps> = ({ image, onChange }) => {
 
   const accept =
     image === true
-      ? "image/jpeg,image/jpg,image/png,image/webp"
-      : "image/*,audio/*,video/*,.pdf,.doc";
+      ? allowedImageMimeTypes.join(",")
+      : allowedFileMimeTypes.join(",");
 
   return (
     <>

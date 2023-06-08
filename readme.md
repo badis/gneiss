@@ -13,9 +13,6 @@ Gneiss is an open-source social network kit that allows you to build your own pr
 * **User management**: Sign in, sign up, sign out, reset password
 * **Wall**: Display posts on user wall
 * **Profile**: User profile
-
-### In Progress
-
 * **Files and photos management**: Add ability to upload and display images and files
 
 ### TODO
