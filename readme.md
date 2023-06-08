@@ -24,6 +24,32 @@ Gneiss is an open-source social network kit that allows you to build your own pr
 * **Mentioning**: User can mention another user in a post or a comment
 * **Activity**: Display activities of users  
 
+## Setup
+
+```bash
+make build
+make up
+
+cd console
+make migrate
+make metadata
+```
+
+## GraphQL console
+
+```bash
+make console
+```
+
+## Endpoints
+
+| Port        | Service     |
+| ----------- | ----------- |
+| 3333        | UI          |
+| 5555        | Rest API    |
+| 8080        | GraphQL API |
+| 8888        | Adminer     |
+
 ## License
 
 MIT License

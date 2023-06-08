@@ -20,6 +20,7 @@ import { Public, getCurrentUserId } from '@/auth/decorators';
 import { FilesService } from './files.service';
 import { FileDto } from './dto/file.dto';
 import { ProfilesService } from '@/profiles/profiles.service';
+import { ApiParam } from '@nestjs/swagger';
 
 const unlinkAsync = promisify(fs.unlink);
 
@@ -127,6 +128,9 @@ export class FilesController {
 
   @Public()
   @Get('profile/picture/:guid')
+  @ApiParam({
+    name: 'guid',
+  })
   async viewProfilePicture(@Param('guid') guid, @Res() res) {
     try {
       const picture = await this.filesService.findOneByGuid(guid);
