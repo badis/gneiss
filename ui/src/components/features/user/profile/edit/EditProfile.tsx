@@ -9,6 +9,8 @@ import {
   TProfile,
   UPDATE_PROFILE,
 } from "@/api/graphql/profile";
+import { removeFile, uploadFile } from "@/api/rest/files";
+
 import {
   Alert,
   AlertColor,
@@ -28,11 +30,16 @@ import {
 } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import { countries } from "@/utils/constants";
+import { PictureUploader } from "./PictureUploader";
+import { BannerUploader } from "./BannerUploader";
 
 const validationSchema = Yup.object({});
 
 interface EditProfileProps {}
 const EditProfile: FC<EditProfileProps> = () => {
+  const [banner, setBanner] = useState<File | string>();
+  const [picture, setPicture] = useState<File | string>();
+
   const [profile, setProfile] = useState<Partial<TProfile>>();
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -42,7 +49,7 @@ const EditProfile: FC<EditProfileProps> = () => {
   } | null>(null);
 
   const {
-    session: { currentUser },
+    session: { currentUser, accessToken },
   } = useSession();
 
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
@@ -67,6 +74,17 @@ const EditProfile: FC<EditProfileProps> = () => {
   useEffect(() => {
     if (profileData && profileData?.profile) {
       setProfile(profileData.profile);
+      if (profileData.profile.picture) {
+        setPicture("/files/profile/picture/" + profileData.profile.picture);
+      } else {
+        setPicture(undefined);
+      }
+
+      if (profileData.profile.banner) {
+        setBanner("/files/profile/banner/" + profileData.profile.banner);
+      } else {
+        setBanner(undefined);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileData]);
@@ -89,6 +107,86 @@ const EditProfile: FC<EditProfileProps> = () => {
 
     onSubmit: async (values) => {
       setSubmitting(true);
+
+      if (picture instanceof File) {
+        const data = new FormData();
+        data.append("picture", picture);
+        const res = await uploadFile(
+          "/files/profile/picture",
+          data,
+          accessToken
+        );
+        if (res && res.response.statusCode !== 201) {
+          setSubmitting(false);
+          setOpenSnackbar({
+            message: "Not supported format for profile picture",
+            severity: "error",
+          });
+          return;
+        }
+      }
+
+      if (banner instanceof File) {
+        const data = new FormData();
+        data.append("banner", banner);
+        const res = await uploadFile(
+          "/files/profile/banner",
+          data,
+          accessToken
+        );
+        if (res && res.response.statusCode !== 201) {
+          setSubmitting(false);
+          setOpenSnackbar({
+            message: "Not supported format for profile banner",
+            severity: "error",
+          });
+
+          return;
+        }
+      }
+
+      if (profile?.picture && !picture) {
+        try {
+          const res = await removeFile(
+            "/files/profile/picture/" + profile?.picture,
+            accessToken
+          );
+          if (res && res.response.statusCode === 204) {
+            setPicture(undefined);
+            setOpenSnackbar({
+              message: "Profile picture removed successfully",
+              severity: "success",
+            });
+          }
+        } catch (e) {
+          setOpenSnackbar({
+            message: "Error occured: unable to remove profile picture",
+            severity: "error",
+          });
+        }
+      }
+
+      if (profile?.banner && !banner) {
+        try {
+          const res = await removeFile(
+            "/files/profile/banner/" + profile?.banner,
+            accessToken
+          );
+          if (res && res.response.statusCode === 204) {
+            setBanner(undefined);
+            setOpenSnackbar({
+              message: "Profile banner removed successfully",
+              severity: "success",
+            });
+          }
+        } catch (e) {
+          setOpenSnackbar({
+            message: "Error occured: unable to remove profile banner",
+            severity: "error",
+          });
+        }
+      }
+
       const variables: Partial<TProfile> = {
         user_id: currentUser.id,
         firstname: Boolean(values.firstname) ? values.firstname : undefined,
@@ -132,6 +230,14 @@ const EditProfile: FC<EditProfileProps> = () => {
     setOpenSnackbar(null);
   };
 
+  const handlePictureChange = (p: File | undefined) => {
+    setPicture(p);
+  };
+
+  const handleBannerChange = (b: File | undefined) => {
+    setBanner(b);
+  };
+
   return (
     <Container>
       <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
@@ -141,6 +247,21 @@ const EditProfile: FC<EditProfileProps> = () => {
               Profile
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={4} sm={3} md={2}>
+                <PictureUploader
+                  picture={picture}
+                  onPictureChange={handlePictureChange}
+                />
+              </Grid>
+              <Grid item xs={8} sm={9} md={10}>
+                {
+                  <BannerUploader
+                    banner={banner}
+                    onBannerChange={handleBannerChange}
+                  />
+                }
+              </Grid>
+
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   fullWidth={true}

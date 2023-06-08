@@ -1,6 +1,7 @@
 export {
   ChatBubbleOutlineRounded as ChatBubbleOutlineRoundedIcon,
   ChevronRightSharp as ChevronRightSharpIcon,
+  CloudUpload as UploadIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   Favorite as FavoriteIcon,
@@ -9,5 +10,6 @@ export {
   MoreVert as MoreVertIcon,
   ManageAccounts as MyAccountIcon,
   Person as MyProfileIcon,
+  Person as ProfilePictureIcon,
   Settings as AdministrationIcon,
 } from "@mui/icons-material";
