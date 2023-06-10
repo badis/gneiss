@@ -22,10 +22,15 @@ async function bootstrap() {
     .setTitle('Gneiss')
     .setDescription('Gneiss API')
     .setVersion('1.0')
-    .addTag('users')
+    .addBearerAuth()
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   // To disable `x-powered-by` header
   app.getHttpAdapter().getInstance().disable('x-powered-by');

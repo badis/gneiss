@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { User } from '@/users/entities';
 import { UsersService } from '@/users/users.service';
@@ -54,6 +55,7 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
+  @ApiBearerAuth()
   @Get('current-user')
   @HttpCode(HttpStatus.OK)
   async currentUser(@getCurrentUser() user: User) {
