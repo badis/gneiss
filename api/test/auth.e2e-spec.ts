@@ -59,8 +59,6 @@ describe('Authentication', () => {
       .set('Authorization', `Bearer ${jwtToken}`)
       .expect(200);
 
-    const data = response.body.data;
-    // add assertions that reflect your test data
-    // expect(data).toHaveLength(3)
+    expect(Object.keys(response.body).length).toBe(6);
   });
 });
