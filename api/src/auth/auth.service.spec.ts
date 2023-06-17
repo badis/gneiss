@@ -8,9 +8,26 @@ import { UsersModule } from '@/users/users.module';
 
 import { authProviders } from './auth.providers';
 import { AuthService } from './auth.service';
+import { Tokens } from './types';
 
 describe('AuthService', () => {
   let service: AuthService;
+
+  const dto = {
+    username: 'username',
+    password: 'password',
+    email: 'email@email.com',
+  };
+
+  const mockUsersService = {
+    create: jest.fn(dto => {
+      return {
+        id: Date.now(),
+        username: dto.username,
+        email: dto.email,
+      };
+    }),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,5 +48,24 @@ describe('AuthService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should be able to signup', async () => {
+    const password = await service.generateHash(dto.password);
+    const newUser = mockUsersService.create({
+      ...dto,
+      password,
+    });
+
+    const tokens: Tokens = await service.generateTokens(
+      newUser.id,
+      newUser.username,
+      newUser.email,
+    );
+
+    expect(!!tokens.accessToken).toBe(true);
+    expect(typeof tokens.accessToken).toBe('string');
+    expect(!!tokens.refreshToken).toBe(true);
+    expect(typeof tokens.refreshToken).toBe('string');
   });
 });
