@@ -7,8 +7,8 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { ApiBearerAuth } from '@nestjs/swagger';
-
 import { User } from '@/users/entities';
 import { UsersService } from '@/users/users.service';
 
@@ -28,6 +28,8 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private usersService: UsersService,
+    @InjectPinoLogger(AuthController.name)
+    private readonly logger: PinoLogger,
   ) {}
 
   @Public()
@@ -62,6 +64,9 @@ export class AuthController {
     const { id, username, email } = await this.usersService.findOne(
       user['sub'],
     );
+
+    this.logger.info('current user: %s', username);
+
     return { id, username, email };
   }
 
