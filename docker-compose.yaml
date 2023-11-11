@@ -3,6 +3,10 @@ services:
   frontend:
     build: ./ui
     container_name: gneiss_frontend
+    mem_limit: 4g
+    mem_reservation: 2g
+    cpus: 6
+    cpuset: "0,1,2,3,4,5"
     ports:
       - "3333:3000"
     environment:
@@ -14,6 +18,10 @@ services:
   backend-rest:
     build: ./api
     container_name: gneiss_backend_rest
+    mem_limit: 1g
+    mem_reservation: 500m
+    cpus: 1
+    cpuset: "6"
     ports:
       - "5555:3000"
     depends_on:
@@ -25,6 +33,10 @@ services:
   backend-graphql:
     image: hasura/graphql-engine:v2.24.1
     container_name: gneiss_backend_graphql
+    mem_limit: 1g
+    mem_reservation: 500m
+    cpus: 1
+    cpuset: "7"
     ports:
       - "8080:8080"
     depends_on:
@@ -50,6 +62,10 @@ services:
   database:
     build: ./db
     container_name: gneiss_database
+    mem_limit: 1g
+    mem_reservation: 500m
+    cpus: 1
+    cpuset: "8"
     ports:
       - "5432:5432"
     environment:
@@ -62,6 +78,10 @@ services:
   adminer:
     image: adminer
     container_name: gneiss_adminer
+    mem_limit: 1g
+    mem_reservation: 500m
+    cpus: 1
+    cpuset: "9"
     ports:
       - "8888:8080"
     depends_on:
