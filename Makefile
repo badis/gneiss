@@ -11,7 +11,7 @@ build:
 	docker-compose build 
 
 up:
-	docker-compose up -d
+	docker-compose up
 
 restart:
 	docker-compose restart 

@@ -3,10 +3,10 @@ services:
   frontend:
     build: ./ui
     container_name: gneiss_frontend
-    mem_limit: 4g
-    mem_reservation: 2g
-    cpus: 6
-    cpuset: "0,1,2,3,4,5"
+    mem_limit: 6g
+    mem_reservation: 4g
+    cpus: 7
+    cpuset: "0,1,2,3,4,5,6"
     ports:
       - "3333:3000"
     environment:
@@ -18,10 +18,10 @@ services:
   backend-rest:
     build: ./api
     container_name: gneiss_backend_rest
-    mem_limit: 1g
-    mem_reservation: 500m
-    cpus: 1
-    cpuset: "6"
+    mem_limit: 2g
+    mem_reservation: 1g
+    cpus: 2
+    cpuset: "7,8"
     ports:
       - "5555:3000"
     depends_on:
@@ -36,7 +36,7 @@ services:
     mem_limit: 1g
     mem_reservation: 500m
     cpus: 1
-    cpuset: "7"
+    cpuset: "9"
     ports:
       - "8080:8080"
     depends_on:
@@ -62,10 +62,10 @@ services:
   database:
     build: ./db
     container_name: gneiss_database
-    mem_limit: 1g
-    mem_reservation: 500m
-    cpus: 1
-    cpuset: "8"
+    mem_limit: 500m
+    mem_reservation: 256m
+    cpus: 0.5
+    cpuset: "10"
     ports:
       - "5432:5432"
     environment:
@@ -74,15 +74,69 @@ services:
       POSTGRES_DB: gneiss_db
     volumes:
       - ./db/data:/var/lib/postgresql/data
+      - ./db/postgresql.conf:/etc/postgresql/postgresql.config
+    command:
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gneiss_user -d gneiss_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
     container_name: gneiss_adminer
-    mem_limit: 1g
-    mem_reservation: 500m
-    cpus: 1
-    cpuset: "9"
+    mem_limit: 256m
+    mem_reservation: 128m
+    cpus: 0.25
+    cpuset: "10"
     ports:
       - "8888:8080"
     depends_on:
       - database
+
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:latest
+    container_name: gneiss_postgres_exporter
+    mem_limit: 256m
+    mem_reservation: 128m
+    cpus: 0.25
+    cpuset: "10"
+    environment:
+      DATA_SOURCE_NAME: "postgresql://gneiss_user:gneiss_password@database:5432/gneiss_db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - database
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: gneiss_prometheus
+    volumes:
+      - ./devops/prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    mem_limit: 500m
+    mem_reservation: 256m
+    cpus: 0.5
+    cpuset: "11"
+    ports:
+      - "9090:9090"
+    depends_on:
+      - postgres_exporter
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: gneiss_grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    mem_limit: 500m
+    mem_reservation: 256m
+    cpus: 0.5
+    cpuset: "11"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
