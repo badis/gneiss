@@ -58,6 +58,15 @@ services:
       POSTGRES_DB: gneiss_db
     volumes:
       - ./db/data:/var/lib/postgresql/data
+      - ./db/postgresql.conf:/etc/postgresql/postgresql.config
+    command:
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gneiss_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
@@ -66,3 +75,24 @@ services:
       - "8888:8080"
     depends_on:
       - database
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./devops/prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    depends_on:
+      - database
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
