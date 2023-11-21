@@ -1,0 +1,3 @@
+table:
+  name: space_membership
+  schema: public
