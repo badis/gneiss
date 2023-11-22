@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useQuery } from "@apollo/client";
 import { useTheme } from "@mui/material";
 import { GET_POST_BY_ID, TPost } from "@/api/graphql/post";
-import { CommentMenu, CreateComment } from "@/components/features/comment";
+import { CommentMenu, CreateComment } from "@/components/core/comment";
 import {
   Box,
   Dialog,

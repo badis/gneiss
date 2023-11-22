@@ -1,5 +1,4 @@
 import { Typography, TypographyProps } from "@mui/material";
-import { CommonProps } from "@mui/material/OverridableComponent";
 import { ElementType, FC } from "react";
 
 interface OwnProps {

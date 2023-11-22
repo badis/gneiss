@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { FC } from "react";
 
 import { GET_POSTS_BY_USER, TPost } from "@/api/graphql/post";
-import { PostCard } from "@/components/features/post";
+import { PostCard } from "@/components/core/post";
 import { Container, Skeleton } from "@/components/presentational";
 
 interface StreamProps {

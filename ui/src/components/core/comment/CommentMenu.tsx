@@ -8,7 +8,7 @@ import {
   MenuItem,
 } from "@/components/presentational";
 import { DeleteIcon, MoreVertIcon } from "@/components/icons";
-import { DeleteCommentDialog } from "@/components/features/comment/DeleteCommentDialog";
+import { DeleteCommentDialog } from "@/components/core/comment/DeleteCommentDialog";
 import { useSession } from "@/hooks/use-session";
 
 interface CommentMenuProps {

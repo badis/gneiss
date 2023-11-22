@@ -3,9 +3,9 @@ import { FC } from "react";
 import { useTheme } from "@mui/material";
 
 import { TPost } from "@/api/graphql/post";
-import { Comment } from "@/components/features/comment";
-import { Like } from "@/components/features/like";
-import { PostMenu } from "@/components/features/post";
+import { Comment } from "@/components/core/comment";
+import { Like } from "@/components/core/like";
+import { PostMenu } from "@/components/core/post";
 import {
   Box,
   Card,

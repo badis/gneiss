@@ -1,4 +1,4 @@
-import { FileUploader } from "@/components/features/common";
+import { FileUploader } from "@/components/core/common";
 import { DeleteIcon, ProfilePictureIcon } from "@/components/icons";
 import { Box, IconButton, Img } from "@/components/presentational";
 import { useTheme } from "@mui/material";

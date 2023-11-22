@@ -3,8 +3,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import { AccountMenu } from "@/components/features/common";
-import { Wall } from "@/components/features/dashboard";
+import { AccountMenu } from "@/components/core/common";
+import { Wall } from "@/components/core/dashboard";
 import { Skeleton } from "@/components/presentational";
 import { useSession } from "@/hooks/use-session";
 import styles from "@/styles/layout.module.css";

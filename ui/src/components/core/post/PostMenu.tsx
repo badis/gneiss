@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { TPost } from "@/api/graphql/post";
-import { DeletePostDialog } from "@/components/features/post/DeletePostDialog";
-import { EditPostDialog } from "@/components/features/post/EditPostDialog";
+import { DeletePostDialog } from "@/components/core/post/DeletePostDialog";
+import { EditPostDialog } from "@/components/core/post/EditPostDialog";
 import { DeleteIcon, EditIcon, MoreVertIcon } from "@/components/icons";
 import {
   Box,

@@ -100,12 +100,8 @@ const AccountMenu: FC<AccountMenuProps> = () => {
             </Box>
           </Link>
           <Link href="/spaces">
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                <Button
-                  sx={{ my: 1, color: 'white', display: 'block' }}
-                >
-                  Spaces
-                </Button>
+            <Box sx={{ flexGrow: 1, display: "flex" }}>
+              <Button sx={{ color: "white", display: "block" }}>Spaces</Button>
             </Box>
           </Link>
           <IconButton

@@ -3,8 +3,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "@/styles/layout.module.css";
-import { AccountMenu } from "@/components/features/common";
-import { Space } from "@/components/features/space";
+import { AccountMenu } from "@/components/core/common";
+import { Space } from "@/components/core/space";
 
 const inter = Inter({ subsets: ["latin"] });
 
