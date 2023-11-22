@@ -11,5 +11,6 @@ export {
   ManageAccounts as MyAccountIcon,
   Person as MyProfileIcon,
   Person as ProfilePictureIcon,
+  Person as SpacePictureIcon,
   Settings as AdministrationIcon,
 } from "@mui/icons-material";

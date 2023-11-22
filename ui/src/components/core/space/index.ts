@@ -1,3 +1,3 @@
-export * from "./Space";
-export * from "./SpaceCard";
-export * from "./Spaces";
+export * from "./details/";
+export * from "./list/";
+

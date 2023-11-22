@@ -5,6 +5,8 @@ export interface TSpace {
   name: string;
   memberships: Array<{ user: { id: number; username: string } }>;
   description: string;
+  banner?: string;
+  picture?: string;
   created_at: string;
   updated_at: string;
 }
