@@ -15,6 +15,7 @@ import {
 import {
   Avatar,
   Box,
+  Button,
   Container,
   Divider,
   IconButton,
@@ -96,6 +97,15 @@ const AccountMenu: FC<AccountMenuProps> = () => {
               <Typography variant="h1" color="white">
                 Gneiss
               </Typography>
+            </Box>
+          </Link>
+          <Link href="/spaces">
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Button
+                  sx={{ my: 1, color: 'white', display: 'block' }}
+                >
+                  Spaces
+                </Button>
             </Box>
           </Link>
           <IconButton
