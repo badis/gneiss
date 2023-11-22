@@ -11,6 +11,7 @@ import {
   MyProfileIcon,
   ProfilePictureIcon,
   SignoutIcon,
+  SpacePictureIcon,
 } from "@/components/icons";
 import {
   Avatar,
@@ -100,7 +101,19 @@ const AccountMenu: FC<AccountMenuProps> = () => {
             </Box>
           </Link>
           <Link href="/spaces">
-            <Box sx={{ flexGrow: 1, display: "flex" }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: "flex",
+                alignItems: "center",
+                color: "white",
+                borderBottom: "1px solid transparent",
+                "&:hover": {
+                  borderBottom: "1px solid #fff",
+                },
+              }}
+            >
+              <SpacePictureIcon fontSize="medium" />
               <Button sx={{ color: "white", display: "block" }}>Spaces</Button>
             </Box>
           </Link>
