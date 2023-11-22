@@ -8,7 +8,7 @@ import {
   Skeleton,
   Typography,
 } from "@/components/presentational";
-import { SpaceCard } from "..";
+import { SpaceCard } from "./SpaceCard";
 
 interface SpacesProps {}
 const Spaces: FC<SpacesProps> = () => {

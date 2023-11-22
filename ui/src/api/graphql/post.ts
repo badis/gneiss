@@ -9,7 +9,7 @@ export interface TPost {
   updated_at: string;
   likes: Array<TLike>;
   comments: Array<TComment>;
-  origin: "profile" | "wall";
+  origin: "profile" | "wall" | "space";
   user_id: number;
   user: {
     profiles: Array<{ firstname: string; lastname: string; username: string }>;

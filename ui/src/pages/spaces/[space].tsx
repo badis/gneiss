@@ -24,7 +24,7 @@ export default function SpacePage() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <AccountMenu />
-        <Space id={router.query.space as string} />
+        <Space space={router.query.space as string} />
       </main>
     </>
   );

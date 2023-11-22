@@ -18,43 +18,11 @@ interface MainCardProps {
   id: number;
 }
 const MainCard: FC<MainCardProps> = ({ id }) => {
-  
-  const { data, loading } = useQuery<{ space: TSpace }>(
-    GET_SPACE_BY_ID,
-    {
-      variables: {
-        id,
-      },
-    }
-  );
-
-  if (!loading && data?.space )
-    return (
-      <Container>
-        <Card>
-          <CardContent>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "50vh",
-                flexDirection: "column",
-              }}
-            >
-              <Typography variant="h2">
-                Space doesn&#39;t exist
-              </Typography>
-              <Typography variant="body1">
-                Try searching for another.
-              </Typography>
-            </Box>
-          </CardContent>
-        </Card>
-      </Container>
-    );
-
-
+  const { data, loading } = useQuery<{ space: TSpace }>(GET_SPACE_BY_ID, {
+    variables: {
+      id,
+    },
+  });
 
   if (!loading && data) {
     const space = data?.space;
@@ -105,10 +73,9 @@ const MainCard: FC<MainCardProps> = ({ id }) => {
               <Box>
                 <Typography variant="h2">{space.name}</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  @{space.name}
+                  {space.description}
                 </Typography>
               </Box>
-              
             </Box>
           </CardContent>
         </Card>
