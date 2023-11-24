@@ -2,6 +2,8 @@ import { gql } from "@apollo/client";
 import { COMMENT_FIELDS, TComment } from "./comment";
 import { TLike } from "./like";
 
+export type TPostOrigin =  "profile" | "wall" | "space";
+
 export interface TPost {
   id: number;
   message: string;
@@ -9,7 +11,7 @@ export interface TPost {
   updated_at: string;
   likes: Array<TLike>;
   comments: Array<TComment>;
-  origin: "profile" | "wall" | "space";
+  origin: TPostOrigin;
   user_id: number;
   user: {
     profiles: Array<{ firstname: string; lastname: string; username: string }>;
@@ -58,6 +60,19 @@ export const GET_POSTS_BY_USER = gql`
   query GetPostsByUser($username: String!) {
     posts: post(
       where: { user: { username: { _eq: $username } } }
+      order_by: { created_at: desc }
+    ) {
+      id
+      ...PostFields
+    }
+  }
+`;
+
+export const GET_POSTS_BY_USER_AND_SPACE = gql`
+  ${POST_FIELDS}
+  query GetPostsByUserAndSpace($space_id: Int!, $username: String!) {
+    posts: post(
+      where: { user: { username: { _eq: $username } }, space_id: { _eq: $space_id } }
       order_by: { created_at: desc }
     ) {
       id

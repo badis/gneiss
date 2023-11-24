@@ -35,6 +35,7 @@ select_permissions:
         - created_at
         - id
         - message
+        - space_id
         - updated_at
         - user_id
       filter: {}

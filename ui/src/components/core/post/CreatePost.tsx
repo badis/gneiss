@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { CREATE_POST } from "@/api/graphql/post";
+import { CREATE_POST, TPostOrigin } from "@/api/graphql/post";
 import {
   Button,
   Card,
@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
 });
 
 interface PostCreateFormProps {
-  origin: "profile" | "wall";
+  origin: TPostOrigin;
 }
 const PostCreateForm: FC<PostCreateFormProps> = ({ origin }) => {
   const [submitting, setSubmitting] = useState(false);
