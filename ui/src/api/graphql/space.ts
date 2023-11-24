@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export interface TSpace {
+export interface SpaceInterface {
   id: number;
   name: string;
   memberships: Array<{ user: { id: number; username: string } }>;

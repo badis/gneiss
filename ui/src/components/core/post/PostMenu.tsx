@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { TPost } from "@/api/graphql/post";
+import { PostInterface } from "@/api/graphql/post";
 import { DeletePostDialog } from "@/components/core/post/DeletePostDialog";
 import { EditPostDialog } from "@/components/core/post/EditPostDialog";
 import { DeleteIcon, EditIcon, MoreVertIcon } from "@/components/icons";
@@ -13,7 +13,7 @@ import {
 import { useSession } from "@/hooks/use-session";
 
 interface PostMenuProps {
-  post: TPost;
+  post: PostInterface;
 }
 export const PostMenu: FC<PostMenuProps> = ({ post }) => {
   const {

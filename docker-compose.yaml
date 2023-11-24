@@ -5,8 +5,8 @@ services:
     container_name: gneiss_frontend
     mem_limit: 6g
     mem_reservation: 4g
-    cpus: 7
-    cpuset: "0,1,2,3,4,5,6"
+    cpus: 5
+    cpuset: "0,1,2,3,4"
     ports:
       - "3333:3000"
     environment:
@@ -65,7 +65,7 @@ services:
     mem_limit: 500m
     mem_reservation: 256m
     cpus: 0.5
-    cpuset: "10"
+    cpuset: "5"
     ports:
       - "5432:5432"
     environment:
@@ -90,7 +90,7 @@ services:
     mem_limit: 256m
     mem_reservation: 128m
     cpus: 0.25
-    cpuset: "10"
+    cpuset: "5"
     ports:
       - "8888:8080"
     depends_on:
@@ -102,7 +102,7 @@ services:
     mem_limit: 256m
     mem_reservation: 128m
     cpus: 0.25
-    cpuset: "10"
+    cpuset: "5"
     environment:
       DATA_SOURCE_NAME: "postgresql://gneiss_user:gneiss_password@database:5432/gneiss_db?sslmode=disable"
     ports:
@@ -120,7 +120,7 @@ services:
     mem_limit: 500m
     mem_reservation: 256m
     cpus: 0.5
-    cpuset: "11"
+    cpuset: "6"
     ports:
       - "9090:9090"
     depends_on:
@@ -135,7 +135,7 @@ services:
     mem_limit: 500m
     mem_reservation: 256m
     cpus: 0.5
-    cpuset: "11"
+    cpuset: "6"
     ports:
       - "3000:3000"
     depends_on:

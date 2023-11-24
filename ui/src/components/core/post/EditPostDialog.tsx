@@ -2,7 +2,13 @@ import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { TPost, UPDATE_POST } from "@/api/graphql/post";
+
+import {
+  PostInterface,
+  PostOriginEnum,
+  PostRefetchQueries,
+  UPDATE_POST,
+} from "@/api/graphql/post";
 import {
   AlertColor,
   Button,
@@ -19,7 +25,7 @@ const validationSchema = Yup.object({
 });
 
 interface EditPostDialogProps {
-  post: TPost;
+  post: PostInterface;
   open: boolean;
   onClose: () => void;
 }
@@ -34,10 +40,24 @@ export const EditPostDialog: FC<EditPostDialogProps> = ({
     severity: AlertColor;
   } | null>(null);
 
+  const refetchQueries = [];
+  switch (post.origin) {
+    case PostOriginEnum.Profile:
+      refetchQueries.push(PostRefetchQueries.GetPostsByUserWithoutSpaces);
+      break;
+    case PostOriginEnum.Wall:
+      refetchQueries.push(PostRefetchQueries.GetAllPosts);
+      break;
+    case PostOriginEnum.Space:
+      refetchQueries.push(PostRefetchQueries.GetPostsBySpace);
+      break;
+    default:
+      console.error("Unknown post origin");
+      break;
+  }
+
   const [updatePost] = useMutation(UPDATE_POST, {
-    refetchQueries: [
-      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
-    ],
+    refetchQueries,
   });
   const handleCloseSnackbar = () => {
     setOpenSnackbar(null);

@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { TComment } from "@/api/graphql/comment";
+import { CommentInterface } from "@/api/graphql/comment";
 import {
   Box,
   IconButton,
@@ -12,7 +12,7 @@ import { DeleteCommentDialog } from "@/components/core/comment/DeleteCommentDial
 import { useSession } from "@/hooks/use-session";
 
 interface CommentMenuProps {
-  comment: TComment;
+  comment: CommentInterface;
 }
 export const CommentMenu: FC<CommentMenuProps> = ({ comment }) => {
   const {

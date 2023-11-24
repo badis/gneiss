@@ -2,9 +2,11 @@ import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { CREATE_COMMENT } from "@/api/graphql/comment";
+
+import { INSERT_COMMENT } from "@/api/graphql/comment";
 import { ChevronRightSharpIcon } from "@/components/icons";
 import { Box, IconButton, TextField } from "@/components/presentational";
+import { PostRefetchQueries } from "@/api/graphql/post";
 
 const validationSchema = Yup.object({
   comment_message: Yup.string().required("Write something!"),
@@ -16,8 +18,8 @@ interface CreateCommentProps {
 export const CreateComment: FC<CreateCommentProps> = ({ post_id }) => {
   const [submitting, setSubmitting] = useState(false);
 
-  const [createComment] = useMutation(CREATE_COMMENT, {
-    refetchQueries: ["GetPostById"],
+  const [createComment] = useMutation(INSERT_COMMENT, {
+    refetchQueries: [PostRefetchQueries.GetPostById],
   });
 
   const formik = useFormik({

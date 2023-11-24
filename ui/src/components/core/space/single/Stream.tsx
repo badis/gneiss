@@ -1,7 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
 
-import { GET_POSTS_BY_USER_AND_SPACE, TPost } from "@/api/graphql/post";
+import {
+  GET_POSTS_BY_SPACE,
+  PostInterface,
+  PostOriginEnum,
+} from "@/api/graphql/post";
 import { PostCard, PostCreateForm } from "@/components/core/post";
 import { Container, Skeleton } from "@/components/presentational";
 
@@ -9,20 +13,24 @@ interface StreamProps {
   space_id: number;
   username: string;
 }
-const Stream: FC<StreamProps> = ({ username, space_id }) => {
-  const { data, loading: loadingPosts } = useQuery(GET_POSTS_BY_USER_AND_SPACE, {
+const Stream: FC<StreamProps> = ({ space_id }) => {
+  const { data, loading: loadingPosts } = useQuery(GET_POSTS_BY_SPACE, {
     variables: {
-      username,
-      space_id
+      space_id,
     },
   });
 
   if (data && !loadingPosts) {
     return (
       <Container>
-        <PostCreateForm origin="space" />
-        {data.posts.map((p: TPost, index: number) => {
-          return <PostCard key={index} post={{ ...p, origin: "space" }} />;
+        <PostCreateForm space_id={space_id} />
+        {data.posts.map((post: PostInterface, index: number) => {
+          return (
+            <PostCard
+              key={index}
+              post={{ ...post, origin: PostOriginEnum.Space }}
+            />
+          );
         })}
       </Container>
     );

@@ -1,6 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { FC, useState } from "react";
-import { DELETE_POST, TPost } from "@/api/graphql/post";
+import {
+  DELETE_POST,
+  PostInterface,
+  PostOriginEnum,
+  PostRefetchQueries,
+} from "@/api/graphql/post";
 import {
   AlertColor,
   Button,
@@ -13,7 +18,7 @@ import {
 } from "@/components/presentational";
 
 interface DeletePostDialogProps {
-  post: TPost;
+  post: PostInterface;
   open: boolean;
   onClose: () => void;
 }
@@ -30,7 +35,9 @@ export const DeletePostDialog: FC<DeletePostDialogProps> = ({
 
   const [deletePost] = useMutation(DELETE_POST, {
     refetchQueries: [
-      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
+      PostRefetchQueries.GetAllPosts,
+      PostRefetchQueries.GetPostsBySpace,
+      PostRefetchQueries.GetPostsByUserWithoutSpaces,
     ],
   });
 

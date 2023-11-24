@@ -1,26 +1,42 @@
-import { CREATE_LIKE, DELETE_LIKE } from "@/api/graphql/like";
-import { TPost } from "@/api/graphql/post";
+import { INSERT_LIKE, DELETE_LIKE } from "@/api/graphql/like";
+import {
+  PostInterface,
+  PostOriginEnum,
+  PostRefetchQueries,
+} from "@/api/graphql/post";
 import { FavoriteBorderIcon, FavoriteIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
 import { useMutation } from "@apollo/client";
 import { FC } from "react";
 
 interface LikeProps {
-  post: TPost;
+  post: PostInterface;
   like_id?: number;
   liked: boolean;
 }
 export const Like: FC<LikeProps> = ({ post, like_id, liked }) => {
-  const [createLike] = useMutation(CREATE_LIKE, {
-    refetchQueries: [
-      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
-    ],
+  const refetchQueries = [];
+  switch (post.origin) {
+    case PostOriginEnum.Profile:
+      refetchQueries.push(PostRefetchQueries.GetPostsByUserWithoutSpaces);
+      break;
+    case PostOriginEnum.Wall:
+      refetchQueries.push(PostRefetchQueries.GetAllPosts);
+      break;
+    case PostOriginEnum.Space:
+      refetchQueries.push(PostRefetchQueries.GetPostsBySpace);
+      break;
+    default:
+      console.error("Unknown post origin");
+      break;
+  }
+
+  const [createLike] = useMutation(INSERT_LIKE, {
+    refetchQueries,
   });
 
   const [deleteLike] = useMutation(DELETE_LIKE, {
-    refetchQueries: [
-      post.origin === "profile" ? "GetPostsByUser" : "GetAllPosts",
-    ],
+    refetchQueries,
   });
 
   const handleToggleLike = async () => {

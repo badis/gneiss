@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
 
-import { GET_ALL_SPACES, TSpace } from "@/api/graphql/space";
+import { GET_ALL_SPACES, SpaceInterface } from "@/api/graphql/space";
 import {
   Container,
   Grid,
@@ -26,7 +26,7 @@ const Spaces: FC<SpacesProps> = () => {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {data.spaces.map((s: TSpace, index: number) => {
+          {data.spaces.map((s: SpaceInterface, index: number) => {
             return (
               <Grid item xs={2} sm={4} md={4} key={index}>
                 <SpaceCard key={index} space={{ ...s }} />

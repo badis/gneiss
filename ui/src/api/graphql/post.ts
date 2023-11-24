@@ -1,21 +1,35 @@
 import { gql } from "@apollo/client";
-import { COMMENT_FIELDS, TComment } from "./comment";
-import { TLike } from "./like";
 
-export type TPostOrigin =  "profile" | "wall" | "space";
+import { COMMENT_FIELDS, CommentInterface } from "./comment";
+import { LikeInterface } from "./like";
 
-export interface TPost {
+export enum PostOriginEnum {
+  Profile = "Profile",
+  Space = "Space",
+  Wall = "Wall",
+}
+
+export enum PostRefetchQueries {
+  GetPostById = "GetPostById",
+  GetAllPosts = "GetAllPosts",
+  GetPostsByUser = "GetPostsByUser",
+  GetPostsByUserWithoutSpaces = "GetPostsByUserWithoutSpaces",
+  GetPostsBySpace = "GetPostsBySpace",
+}
+
+export interface PostInterface {
   id: number;
+  user_id: number;
+  space_id: number;
   message: string;
   created_at: string;
   updated_at: string;
-  likes: Array<TLike>;
-  comments: Array<TComment>;
-  origin: TPostOrigin;
-  user_id: number;
+  likes: Array<LikeInterface>;
+  comments: Array<CommentInterface>;
   user: {
     profiles: Array<{ firstname: string; lastname: string; username: string }>;
   };
+  origin: PostOriginEnum;
 }
 
 export const POST_FIELDS = gql`
@@ -55,6 +69,23 @@ export const GET_ALL_POSTS = gql`
   }
 `;
 
+// Posts displayed in Profile
+export const GET_POSTS_BY_USER_WITHOUT_SPACES = gql`
+  ${POST_FIELDS}
+  query GetPostsByUserWithoutSpaces($username: String!) {
+    posts: post(
+      where: {
+        user: { username: { _eq: $username } }
+        space_id: { _is_null: true }
+      }
+      order_by: { created_at: desc }
+    ) {
+      id
+      ...PostFields
+    }
+  }
+`;
+
 export const GET_POSTS_BY_USER = gql`
   ${POST_FIELDS}
   query GetPostsByUser($username: String!) {
@@ -68,11 +99,11 @@ export const GET_POSTS_BY_USER = gql`
   }
 `;
 
-export const GET_POSTS_BY_USER_AND_SPACE = gql`
+export const GET_POSTS_BY_SPACE = gql`
   ${POST_FIELDS}
-  query GetPostsByUserAndSpace($space_id: Int!, $username: String!) {
+  query GetPostsBySpace($space_id: Int!) {
     posts: post(
-      where: { user: { username: { _eq: $username } }, space_id: { _eq: $space_id } }
+      where: { space_id: { _eq: $space_id } }
       order_by: { created_at: desc }
     ) {
       id
@@ -91,9 +122,9 @@ export const GET_POST_BY_ID = gql`
   }
 `;
 
-export const CREATE_POST = gql`
-  mutation CreatePost($message: String!) {
-    insert_post_one(object: { message: $message }) {
+export const INSERT_POST = gql`
+  mutation InsertPost($message: String!, $space_id: Int) {
+    insert_post_one(object: { message: $message, space_id: $space_id }) {
       id
     }
   }

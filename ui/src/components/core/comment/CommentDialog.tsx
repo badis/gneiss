@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { useQuery } from "@apollo/client";
 import { useTheme } from "@mui/material";
-import { GET_POST_BY_ID, TPost } from "@/api/graphql/post";
+import { GET_POST_BY_ID, PostInterface } from "@/api/graphql/post";
 import { CommentMenu, CreateComment } from "@/components/core/comment";
 import {
   Box,
@@ -25,7 +25,7 @@ export const CommentDialog: FC<CommentDialogProps> = ({
 }) => {
   const theme = useTheme();
 
-  const { data } = useQuery<{ post: TPost }>(GET_POST_BY_ID, {
+  const { data } = useQuery<{ post: PostInterface }>(GET_POST_BY_ID, {
     variables: {
       id: post_id,
     },

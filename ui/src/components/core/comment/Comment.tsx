@@ -3,10 +3,10 @@ import { FC, useState } from "react";
 import { CommentDialog } from "@/components/core/comment";
 import { ChatBubbleOutlineRoundedIcon } from "@/components/icons";
 import { IconButton } from "@/components/presentational";
-import { TPost } from "@/api/graphql/post";
+import { PostInterface } from "@/api/graphql/post";
 
 interface CommentProps {
-  post: TPost;
+  post: PostInterface;
 }
 export const Comment: FC<CommentProps> = ({ post }) => {
   const [openCommentDialog, setOpenCommentDialog] = useState(false);

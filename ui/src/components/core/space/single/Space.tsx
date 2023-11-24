@@ -13,12 +13,12 @@ const Space: FC<SpaceProps> = ({ space }) => {
     session: { currentUser },
   } = useSession();
 
-  const id = parseInt(space, 10); 
-  if(!id) return <></>;
+  const space_id = parseInt(space, 10); 
+  if(!space_id) return <></>;
     return (
       <>
-        <MainCard id={id} />
-        <Stream username={currentUser?.username} space_id={id} />
+        <MainCard space_id={space_id} />
+        <Stream username={currentUser?.username} space_id={space_id} />
       </>
     );
 };

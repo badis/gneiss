@@ -1,13 +1,13 @@
 import { gql } from "@apollo/client";
 
-export interface TLike {
+export interface LikeInterface {
   id: number;
   post_id: number;
   user_id: number;
 }
 
-export const CREATE_LIKE = gql`
-  mutation CreateLike($post_id: Int!) {
+export const INSERT_LIKE = gql`
+  mutation InsertLike($post_id: Int!) {
     insert_like_one(object: { post_id: $post_id }) {
       id
     }

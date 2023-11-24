@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { FC, useState } from "react";
+
 import { DELETE_COMMENT } from "@/api/graphql/comment";
 import {
   AlertColor,
@@ -11,6 +12,7 @@ import {
   DialogTitle,
   EnhancedSnackbar,
 } from "@/components/presentational";
+import { PostRefetchQueries } from "@/api/graphql/post";
 
 interface DeleteCommentDialogProps {
   id: number;
@@ -29,7 +31,7 @@ export const DeleteCommentDialog: FC<DeleteCommentDialogProps> = ({
   } | null>(null);
 
   const [deleteComment] = useMutation(DELETE_COMMENT, {
-    refetchQueries: ["GetPostById"],
+    refetchQueries: [PostRefetchQueries.GetPostById],
   });
 
   const handleCloseSnackbar = () => {

@@ -2,7 +2,8 @@ import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
-import { CREATE_POST, TPostOrigin } from "@/api/graphql/post";
+
+import { INSERT_POST, PostRefetchQueries } from "@/api/graphql/post";
 import {
   Button,
   Card,
@@ -17,13 +18,20 @@ const validationSchema = Yup.object({
 });
 
 interface PostCreateFormProps {
-  origin: TPostOrigin;
+  space_id?: number;
 }
-const PostCreateForm: FC<PostCreateFormProps> = ({ origin }) => {
+const PostCreateForm: FC<PostCreateFormProps> = ({ space_id }) => {
   const [submitting, setSubmitting] = useState(false);
 
-  const [createPost] = useMutation(CREATE_POST, {
-    refetchQueries: [origin === "profile" ? "GetPostsByUser" : "GetAllPosts"],
+  const refetchQueries = [PostRefetchQueries.GetAllPosts];
+  if (!!space_id) {
+    refetchQueries.push(PostRefetchQueries.GetPostsBySpace);
+  } else {
+    refetchQueries.push(PostRefetchQueries.GetPostsByUserWithoutSpaces);
+  }
+
+  const [createPost] = useMutation(INSERT_POST, {
+    refetchQueries,
   });
 
   const formik = useFormik({
@@ -34,7 +42,7 @@ const PostCreateForm: FC<PostCreateFormProps> = ({ origin }) => {
     onSubmit: async (values) => {
       setSubmitting(true);
       const response = await createPost({
-        variables: { message: values.message },
+        variables: { message: values.message, space_id },
       });
       if (response.data?.insert_post_one.id) {
         formik.resetForm();

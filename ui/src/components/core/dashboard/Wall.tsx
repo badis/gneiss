@@ -1,8 +1,13 @@
-import { GET_ALL_POSTS, TPost } from "@/api/graphql/post";
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
-import { PostCard, PostCreateForm } from "../post";
+
+import {
+  GET_ALL_POSTS,
+  PostInterface,
+  PostOriginEnum,
+} from "@/api/graphql/post";
 import { Container, Skeleton } from "@/components/presentational";
+import { PostCard } from "../post";
 
 interface WallProps {}
 const Wall: FC<WallProps> = () => {
@@ -11,9 +16,13 @@ const Wall: FC<WallProps> = () => {
   if (data && !loadingPosts) {
     return (
       <Container>
-        <PostCreateForm origin="wall" />
-        {data.posts.map((p: TPost, index: number) => {
-          return <PostCard key={index} post={{ ...p, origin: "wall" }} />;
+        {data.posts.map((post: PostInterface, index: number) => {
+          return (
+            <PostCard
+              key={index}
+              post={{ ...post, origin: PostOriginEnum.Wall }}
+            />
+          );
         })}
       </Container>
     );

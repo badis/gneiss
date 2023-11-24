@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { useTheme } from "@mui/material";
 
-import { TSpace } from "@/api/graphql/space";
+import { SpaceInterface } from "@/api/graphql/space";
 import {
   Box,
   Card,
@@ -13,7 +13,7 @@ import {
 } from "@/components/presentational";
 
 interface SpaceCardProps {
-  space: TSpace;
+  space: SpaceInterface;
 }
 export const SpaceCard: FC<SpaceCardProps> = ({ space }) => {
   const theme = useTheme();

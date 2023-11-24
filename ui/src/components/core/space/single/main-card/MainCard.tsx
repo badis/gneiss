@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
 
-import { GET_SPACE_BY_ID, TSpace } from "@/api/graphql/space";
+import { GET_SPACE_BY_ID, SpaceInterface } from "@/api/graphql/space";
 import {
   Box,
   Card,
@@ -15,12 +15,12 @@ import {
 import { SpacePicture } from "./SpacePicture";
 
 interface MainCardProps {
-  id: number;
+  space_id: number;
 }
-const MainCard: FC<MainCardProps> = ({ id }) => {
-  const { data, loading } = useQuery<{ space: TSpace }>(GET_SPACE_BY_ID, {
+const MainCard: FC<MainCardProps> = ({ space_id }) => {
+  const { data, loading } = useQuery<{ space: SpaceInterface }>(GET_SPACE_BY_ID, {
     variables: {
-      id,
+      id: space_id,
     },
   });
 

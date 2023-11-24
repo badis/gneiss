@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { useTheme } from "@mui/material";
 
-import { TPost } from "@/api/graphql/post";
+import { PostInterface } from "@/api/graphql/post";
 import { Comment } from "@/components/core/comment";
 import { Like } from "@/components/core/like";
 import { PostMenu } from "@/components/core/post";
@@ -19,7 +19,7 @@ import { timeAgo } from "@/utils/datetime";
 import { useSession } from "@/hooks/use-session";
 
 interface PostCardProps {
-  post: TPost;
+  post: PostInterface;
 }
 export const PostCard: FC<PostCardProps> = ({ post }) => {
   const {

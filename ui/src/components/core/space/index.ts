@@ -1,3 +1,3 @@
-export * from "./details/";
-export * from "./list/";
+export * from "./single";
+export * from "./overview";
 
