@@ -1,6 +1,6 @@
 # Use debian version of node instead of alpine because Cypress requires some dependencies 
 # that are not available for Alpine image.
-FROM node:20.9.0-alpine
+FROM node:21.2.0-alpine
 
 # RUN apt-get update
 # Uncomment this line to be able to run e2e tests using cypress.
