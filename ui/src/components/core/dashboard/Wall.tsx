@@ -29,7 +29,7 @@ const Wall: FC<WallProps> = () => {
   }
   return (
     <Container>
-      <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />;
+      <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />
     </Container>
   );
 };

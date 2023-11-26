@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { FC, useState } from "react";
+
 import {
   DELETE_POST,
   PostInterface,
-  PostOriginEnum,
   PostRefetchQueries,
 } from "@/api/graphql/post";
 import {

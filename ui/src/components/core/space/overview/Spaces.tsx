@@ -3,14 +3,16 @@ import { FC } from "react";
 
 import { GET_ALL_SPACES, SpaceInterface } from "@/api/graphql/space";
 import {
+  Button,
   Container,
   Grid,
   Skeleton,
   Typography,
 } from "@/components/presentational";
 import { SpaceCard } from "./SpaceCard";
+import { CreateSpace } from "./create-space";
 
-interface SpacesProps {}
+interface SpacesProps { }
 const Spaces: FC<SpacesProps> = () => {
   const { data, loading: loadingSpaces } = useQuery(GET_ALL_SPACES);
 
@@ -20,7 +22,7 @@ const Spaces: FC<SpacesProps> = () => {
         <Typography variant="h6" component="h4" sx={{ marginBottom: "20px" }}>
           Spaces
         </Typography>
-
+        <CreateSpace />
         <Grid
           container
           spacing={{ xs: 2, md: 3 }}
@@ -39,7 +41,7 @@ const Spaces: FC<SpacesProps> = () => {
   }
   return (
     <Container>
-      <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />;
+      <Skeleton variant="rectangular" width={"100hw"} height={"1vh"} />
     </Container>
   );
 };
