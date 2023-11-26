@@ -14,10 +14,10 @@ Gneiss is an open-source social network kit that allows you to build your own pr
 * **Wall**: Display posts on user wall
 * **Profile**: User profile
 * **Files and photos management**: Add ability to upload and display images and files
+* **Spaces**: Dedicated place for a subset of users to connect and share privately
 
 ### TODO
 
-* **Spaces**: Dedicated place for a subset of users to connect and share privately
 * **Notifications**: Display internal and email notifications
 * **Follow**: User can follow another user
 * **Invite**: User can invite another user to join the network

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export interface TComment {
+export interface CommentInterface {
   id: number;
   post_id: number;
   message: string;
@@ -33,9 +33,9 @@ export const COMMENT_FIELDS = gql`
   }
 `;
 
-export const CREATE_COMMENT = gql`
+export const INSERT_COMMENT = gql`
   ${COMMENT_FIELDS}
-  mutation CreateComment($post_id: Int!, $message: String!) {
+  mutation InsertComment($post_id: Int!, $message: String!) {
     insert_comment_one(object: { post_id: $post_id, message: $message }) {
       id
       ...CommentFields

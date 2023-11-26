@@ -3,8 +3,8 @@ import Head from "next/head";
 import React from "react";
 
 import styles from "@/styles/layout.module.css";
-import { AccountMenu } from "@/components/features/common";
-import { EditProfile } from "@/components/features/user/profile";
+import { AccountMenu } from "@/components/core/common";
+import { EditProfile } from "@/components/core/user/profile";
 
 const inter = Inter({ subsets: ["latin"] });
 
