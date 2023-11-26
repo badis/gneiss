@@ -28,6 +28,7 @@ insert_permissions:
         user_id: x-hasura-User-Id
       columns:
         - message
+        - space_id
 select_permissions:
   - role: frontend_user
     permission:
@@ -35,6 +36,7 @@ select_permissions:
         - created_at
         - id
         - message
+        - space_id
         - updated_at
         - user_id
       filter: {}

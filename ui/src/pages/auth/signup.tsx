@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import React, { useEffect } from "react";
-import { Signup } from "@/components/features/user/auth";
+import { Signup } from "@/components/core/user/auth";
 import { Container, Skeleton } from "@/components/presentational";
 import { useRouter } from "next/router";
 import { useSession } from "@/hooks/use-session";
