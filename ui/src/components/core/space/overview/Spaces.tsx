@@ -19,22 +19,31 @@ const Spaces: FC<SpacesProps> = () => {
   if (data && !loadingSpaces) {
     return (
       <Container>
-        <Typography variant="h6" component="h4" sx={{ marginBottom: "20px" }}>
-          Spaces
-        </Typography>
-        <CreateSpace />
         <Grid
           container
-          spacing={{ xs: 2, md: 3 }}
+          direction="column"
+          spacing={{ xs: 2 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {data.spaces.map((s: SpaceInterface, index: number) => {
-            return (
-              <Grid item xs={2} sm={4} md={4} key={index}>
-                <SpaceCard key={index} space={{ ...s }} />
-              </Grid>
-            );
-          })}
+          <Grid container item sx={{justifyContent: "space-between"}}>
+            <Grid item>
+              <Typography variant="h6" component="h4" sx={{ marginBottom: "20px" }}>
+                Spaces
+              </Typography>
+            </Grid>
+            <Grid item>
+              <CreateSpace />
+            </Grid>
+          </Grid>
+          <Grid item>
+            {data.spaces.map((s: SpaceInterface, index: number) => {
+              return (
+                <Grid item xs={2} sm={4} md={4} key={index}>
+                  <SpaceCard key={index} space={{ ...s }} />
+                </Grid>
+              );
+            })}
+          </Grid>
         </Grid>
       </Container>
     );

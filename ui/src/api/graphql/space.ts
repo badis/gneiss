@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client";
 
+export enum SpaceRefetchQueries {
+  GetAllSpaces = "GetAllSpaces",
+}
+
 export interface SpaceInterface {
   id: number;
   name: string;
@@ -46,3 +50,12 @@ export const GET_SPACE_BY_ID = gql`
     }
   }
 `;
+
+export const INSERT_SPACE = gql`
+  mutation InsertSpace($name: String!, $description: String) {
+    insert_space_one(object: { name: $name, description: $description }) {
+      id
+    }
+  }
+`;
+

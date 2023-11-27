@@ -1,0 +1,5 @@
+# Set text files to be normalized (i.e., convert to LF on checkout)
+* text=auto
+
+# Explicitly declare files that should always have LF
+*.sh text eol=lf
