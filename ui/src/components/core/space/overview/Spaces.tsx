@@ -36,10 +36,10 @@ const Spaces: FC<SpacesProps> = () => {
             </Grid>
           </Grid>
           <Grid item>
-            {data.spaces.map((s: SpaceInterface, index: number) => {
+            {data.spaces.map((space: SpaceInterface, index: number) => {
               return (
                 <Grid item xs={2} sm={4} md={4} key={index}>
-                  <SpaceCard key={index} space={{ ...s }} />
+                  <SpaceCard key={index} space={space} />
                 </Grid>
               );
             })}
