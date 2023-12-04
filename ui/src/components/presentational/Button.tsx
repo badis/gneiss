@@ -14,7 +14,7 @@ const StyledButton: FC<ButtonProps> = ({ children, ...props }) => {
       sx={{
         fontSize: "default",
         borderRadius: "3px",
-        fontWeight: fontWeights.SemiBold,
+        fontWeight: fontWeights.Normal,
         lineHeight: "1.5",
         padding: "8px 16px",
         textTransform: "capitalize",

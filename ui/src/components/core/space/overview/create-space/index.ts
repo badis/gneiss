@@ -1,2 +1,3 @@
 export * from "./CreateSpace";
-export * from "./SpaceDialog";
+export * from "./CreateSpaceDialog";
+export * from "./CreateSpaceForm";

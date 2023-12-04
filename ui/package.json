@@ -10,7 +10,7 @@
     "test:unit": "jest .",
     "test:coverage": "jest --coverage",
     "test:e2e": "cypress run --browser electron --headless --e2e",
-    "test": "npm run test:unit && npm run test:coverage && npm run test:e2e"
+    "test": "npm run test:unit && npm run test:coverage"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",

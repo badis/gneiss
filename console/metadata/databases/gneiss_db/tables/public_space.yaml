@@ -9,6 +9,13 @@ array_relationships:
         table:
           name: space_membership
           schema: public
+insert_permissions:
+  - role: frontend_user
+    permission:
+      check: {}
+      columns:
+        - description
+        - name
 select_permissions:
   - role: frontend_user
     permission:
