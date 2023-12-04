@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 
-import { SpaceDialog } from "@/components/core/space";
+import { CreateSpaceDialog } from "@/components/core/space";
 import { Button } from "@/components/presentational";
 
 interface CreateSpaceProps { }
@@ -20,7 +20,7 @@ export const CreateSpace: FC<CreateSpaceProps> = () => {
             <Button variant="contained" color="primary" onClick={handleOpenSpaceDialog}>
                 Create space
             </Button>
-            <SpaceDialog
+            <CreateSpaceDialog
                 open={openSpaceDialog}
                 onClose={handleCloseSpaceDialog}
             />
