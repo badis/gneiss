@@ -82,12 +82,6 @@ export const CreateSpaceForm: FC<CreateSpaceProps> = ({ onClose }) => {
                         maxRows={8}
                         value={formik.values.space_description}
                         onChange={formik.handleChange}
-                        error={
-                            formik.touched.space_description && Boolean(formik.errors.space_description)
-                        }
-                        helperText={
-                            formik.touched.space_description && formik.errors.space_description
-                        }
                     />
                 </Grid>
                 <Grid item container direction="row-reverse" spacing={1} xs={12} >
