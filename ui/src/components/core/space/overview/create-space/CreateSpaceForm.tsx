@@ -1,10 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
 
 import { INSERT_SPACE, SpaceRefetchQueries } from "@/api/graphql/space";
-import { Box, Button, Card, CardActions, CardContent, CardHeader, Grid, TextField, Typography } from "@/components/presentational";
+import { Button, Grid, TextField, Typography } from "@/components/presentational";
 
 const validationSchema = Yup.object({
     space_name: Yup.string().required("Space should have a name"),
@@ -15,6 +16,7 @@ interface CreateSpaceProps {
 }
 export const CreateSpaceForm: FC<CreateSpaceProps> = ({ onClose }) => {
     const [submitting, setSubmitting] = useState(false);
+    const router = useRouter();
 
     const [createSpace] = useMutation(INSERT_SPACE, {
         refetchQueries: [SpaceRefetchQueries.GetAllSpaces],
@@ -33,13 +35,13 @@ export const CreateSpaceForm: FC<CreateSpaceProps> = ({ onClose }) => {
                     variables: { name: values.space_name, description: values.space_description },
                 });
                 if (response.data?.insert_space_one.id) {
-                    formik.resetForm();
-                    setSubmitting(false);
+                    router.push("/spaces/" + response.data?.insert_space_one.id);
                     onClose();
                 }
             } catch (e) {
                 console.error("Error occured: unable to space");
             }
+            setSubmitting(false);
         },
     });
 

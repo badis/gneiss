@@ -112,7 +112,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
-    fontSize: 14,
+    fontSize: 12,
     h1: {
       fontSize: "22px",
       fontWeight: fontWeights.ExtraBold,

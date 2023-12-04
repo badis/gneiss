@@ -25,7 +25,7 @@ const Spaces: FC<SpacesProps> = () => {
           spacing={{ xs: 2 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          <Grid container item sx={{justifyContent: "space-between"}}>
+          <Grid container item sx={{ justifyContent: "space-between" }}>
             <Grid item>
               <Typography variant="h6" component="h4" sx={{ marginBottom: "20px" }}>
                 Spaces
@@ -35,7 +35,8 @@ const Spaces: FC<SpacesProps> = () => {
               <CreateSpace />
             </Grid>
           </Grid>
-          <Grid item>
+          <Grid container item spacing={{ xs: 2 }}>
+
             {data.spaces.map((space: SpaceInterface, index: number) => {
               return (
                 <Grid item xs={2} sm={4} md={4} key={index}>
