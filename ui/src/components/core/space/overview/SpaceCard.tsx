@@ -11,6 +11,7 @@ import {
   Divider,
   Typography,
 } from "@/components/presentational";
+import { SpaceMenu } from ".";
 
 interface SpaceCardProps {
   space: SpaceInterface;
@@ -21,6 +22,7 @@ export const SpaceCard: FC<SpaceCardProps> = ({ space }) => {
   return (
     <Card>
       <CardHeader
+        action={<SpaceMenu space={space} />}
         subheader={
           <Box>
             <Link href={"/spaces/" + space.id}>
