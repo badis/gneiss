@@ -13,7 +13,7 @@ const StyledTextField: FC<TextFieldProps> = ({ sx, SelectProps, ...props }) => {
           fontSize: "default",
           "& fieldset": {
             padding: "8px",
-            border: `2px solid ${Colors.grays[200]}`,
+            border: `1px solid ${Colors.grays[200]}`,
             borderRadius: "4px",
             boxShadow: "none",
           },
