@@ -26,3 +26,15 @@ select_permissions:
         - created_at
         - updated_at
       filter: {}
+update_permissions:
+  - role: frontend_user
+    permission:
+      columns:
+        - description
+        - name
+      filter: {}
+      check: null
+delete_permissions:
+  - role: frontend_user
+    permission:
+      filter: {}

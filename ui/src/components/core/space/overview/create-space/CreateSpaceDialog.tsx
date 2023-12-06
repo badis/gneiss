@@ -3,7 +3,7 @@ import {
     Dialog,
     DialogContent,
 } from "@/components/presentational";
-import { CreateSpaceForm } from "./CreateSpaceForm";
+import { CreateSpaceForm } from ".";
 
 interface CreateSpaceDialogProps {
     open: boolean;

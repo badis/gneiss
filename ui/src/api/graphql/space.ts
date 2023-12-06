@@ -59,3 +59,18 @@ export const INSERT_SPACE = gql`
   }
 `;
 
+export const UPDATE_SPACE = gql`
+  mutation UpdateSpace($id: Int!, $name: String, $description: String,) {
+    update_space_by_pk(pk_columns: { id: $id }, _set: { name: $name, description: $description }) {
+      id
+    }
+  }
+`;
+
+export const DELETE_SPACE = gql`
+  mutation DeleteSpace($id: Int!) {
+    delete_space_by_pk(id: $id) {
+      id
+    }
+  }
+`;
