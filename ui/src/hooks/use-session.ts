@@ -22,13 +22,30 @@ export interface Session {
 
 export function useSession() {
   const [loading, setLoading] = useState(true);
-  const [accessToken, setAccessToken, removeAccessToken] =
-    useLocalStorage("accessToken");
-  const [refreshToken, setRefreshToken, removeRefreshToken] =
-    useLocalStorage("refreshToken");
-  const [refresh, setRefresh, removeRefresh] = useLocalStorage("refresh");
-  const [currentUser, setCurrentUser, removeCurrentUser] =
-    useLocalStorage("user");
+
+  const {
+    value: accessToken,
+    setValue: setAccessToken,
+    removeValue: removeAccessToken,
+  } = useLocalStorage("accessToken");
+
+  const {
+    value: refreshToken,
+    setValue: setRefreshToken,
+    removeValue: removeRefreshToken,
+  } = useLocalStorage("refreshToken");
+
+  const {
+    value: refresh,
+    setValue: setRefresh,
+    removeValue: removeRefresh,
+  } = useLocalStorage("refresh");
+
+  const {
+    value: currentUser,
+    setValue: setCurrentUser,
+    removeValue: removeCurrentUser,
+  } = useLocalStorage("user");
 
   const isAuthenticated = !!currentUser?.username && !!accessToken;
 

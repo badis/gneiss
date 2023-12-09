@@ -9,6 +9,8 @@ function getStorageValue(key: string) {
 }
 
 export const useLocalStorage = (key: string) => {
+  if (!key) throw new Error("Custom hooks > useLocalStorage: missing key");
+
   const [value, setValue] = useState(() => {
     return getStorageValue(key);
   });
@@ -27,5 +29,5 @@ export const useLocalStorage = (key: string) => {
     }
   };
 
-  return [value, setValue, removeValue];
+  return { value, setValue, removeValue };
 };

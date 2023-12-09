@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
 });
 
-interface SigninProps {}
+interface SigninProps { }
 export const Signin: FC<SigninProps> = () => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -36,8 +36,8 @@ export const Signin: FC<SigninProps> = () => {
     message: string;
     severity: AlertColor;
   } | null>(null);
-  const [, setAccessToken] = useLocalStorage("accessToken");
-  const [, setRefreshToken] = useLocalStorage("refreshToken");
+  const { setValue: setAccessToken } = useLocalStorage("accessToken");
+  const { setValue: setRefreshToken } = useLocalStorage("refreshToken");
 
   const [signin] = useMutation(SIGNIN);
 
