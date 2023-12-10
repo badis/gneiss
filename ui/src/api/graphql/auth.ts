@@ -33,9 +33,9 @@ export interface CurrentUser {
 }
 
 export interface RestApiResponse {
-  statusCode: number;
   error: string;
   message: string[];
+  statusCode: number;
 }
 
 export const SIGNUP = gql`
@@ -72,8 +72,8 @@ export const SIGNOUT = gql`
       ok
       response {
         error
-        statusCode
         message
+        statusCode
       }
     }
   }
@@ -100,8 +100,8 @@ export const REFRESH_TOKEN = gql`
       refreshToken
       response {
         error
-        statusCode
         message
+        statusCode
       }
     }
   }
@@ -112,8 +112,8 @@ export const REQUEST_PASSWORD = gql`
     requestPassword(email: $email) {
       response {
         error
-        statusCode
         message
+        statusCode
       }
     }
   }
@@ -124,8 +124,8 @@ export const RESET_PASSWORD = gql`
     resetPassword(token: $token, password: $password) {
       response {
         error
-        statusCode
         message
+        statusCode
       }
     }
   }

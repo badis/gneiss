@@ -31,7 +31,7 @@ const validationSchema = Yup.object({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 
-interface SignupProps {}
+interface SignupProps { }
 export const Signup: FC<SignupProps> = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -40,8 +40,8 @@ export const Signup: FC<SignupProps> = () => {
     severity: AlertColor;
   } | null>(null);
 
-  const [, setAccessToken] = useLocalStorage("accessToken");
-  const [, setRefreshToken] = useLocalStorage("refreshToken");
+  const { setValue: setAccessToken } = useLocalStorage("accessToken");
+  const { setValue: setRefreshToken } = useLocalStorage("refreshToken");
 
   const router = useRouter();
   const [signup] = useMutation(SIGNUP);
